@@ -45,5 +45,12 @@ class MinkowskiTestWithMinkowskiEuclidsMetric(unittest.TestCase):
         returns approches one even though sets are not that similar'''
         self.completly_different_sets(10000, 0.99)
 
+    def test_with_really_big_random_sets_value_will_still_approach_one(self):
+        first = generator.randomFuzzyList(100000)
+        second = generator.randomFuzzyList(100000)
+        sim = mink.sim(first, second)
+        print "Similarity of random sets of length 100k should approach 1. Calculated value: %s" % sim
+        self.assertAlmostEqual(1.0, sim, delta=0.01)
+
 if __name__ == '__main__':
     unittest.main()
