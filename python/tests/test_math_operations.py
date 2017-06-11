@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import mathutils as mu
+
+from utils import mathutils as mu
+
 
 class BasicTestSuite(unittest.TestCase):
     """Basic test cases."""

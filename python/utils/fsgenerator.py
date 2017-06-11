@@ -9,3 +9,11 @@ def randomFuzzyList(length=20, min=0, max=1, digits=4):
         randomValue = random.uniform(min, max)
         result.append(round(randomValue, digits))
     return result
+
+
+def singletonFuzzyList(length=20, value=1, digits=4):
+    '''create an array of lenght with elements equal to value'''
+    result = []
+    for i in range(length):
+        result.append(round(value, digits))
+    return result
