@@ -20,16 +20,15 @@
   getSimilarityResponse = (dataToCalculate) => {
     console.log(JSON.stringify(dataToCalculate));
     $.ajax({
+        type: "POST",
         contentType: "application/json",
-        dataType   : "jsonp",
+        dataType   : "json",
         crossDomain: true,
         processData: false,
         url: 'http://localhost:5000/fuzzy/similarity',
-        type: 'POST',
         data: JSON.stringify(dataToCalculate),
         success: function(data) {
-            console.log('success');
-            alert(data);
+            alert(JSON.stringify(data));
         },
         error: function(data) {
             console.log('error');
