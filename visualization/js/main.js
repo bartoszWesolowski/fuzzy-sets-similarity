@@ -13,11 +13,14 @@ var SimilarityModule = (function ($) {
                     r: parseInt(rValue) || 2
                 }
             });
-            getSimilarityResponse(dataToCalculate, (response) => {
-                console.log('response: ' + JSON.stringify(response))
-                displayChart(canvas, response);
-                $resultPlaceholder.text(response.result);
-            });
+
+            if (dataToCalculate.isValid()) {
+                getSimilarityResponse(dataToCalculate, (response) => {
+                    console.log('response: ' + JSON.stringify(response))
+                    displayChart(canvas, response);
+                    $resultPlaceholder.text(response.result);
+                });
+            }
          });
     }
     /*
@@ -27,11 +30,19 @@ var SimilarityModule = (function ($) {
     getDataToCalculate = ($formDiv, configExtractor) => {
         let setAValue = $formDiv.find('.setA').val();
         let setBValue = $formDiv.find('.setB').val();
+        let setA = getArrayFromString(setAValue);
+        let setB = getArrayFromString(setBValue);
+        let method = 'minkowski';
+        let config = configExtractor($formDiv.find('.config'));
+        isValid = () => {
+            return setA.length > 0 && setB.length > 0;
+        }
         return {
-            setA: getArrayFromString(setAValue),
-            setB: getArrayFromString(setBValue),
+            setA,
+            setB,
             method: 'minkowski',
-            config: configExtractor($formDiv.find('.config'))
+            config,
+            isValid
         }
     }
 
@@ -51,7 +62,7 @@ var SimilarityModule = (function ($) {
                 success(data);
             },
             error: function (data) {
-                console.log('error');
+                alert('Error occured while calculating similiraty.');
             }
         });
     }
