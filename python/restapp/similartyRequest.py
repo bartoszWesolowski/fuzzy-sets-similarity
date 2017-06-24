@@ -1,5 +1,5 @@
 from utils import constants as c
-
+from utils import mathutils
 
 class SimilarityRequest:
     setA = []
@@ -15,8 +15,8 @@ class SimilarityRequest:
             'setB' - same as setA
             'config' - map containing key value pairs that will represent config object used to calculate similarity
         """
-        self.setA = requestParametersDict[c.SET_A_REQUEST_PARAMETER_NAME]
-        self.setB = requestParametersDict[c.SET_B_REQUEST_PARAMETER_NAME]
+        self.setA = mathutils.clamp(requestParametersDict[c.SET_A_REQUEST_PARAMETER_NAME])
+        self.setB = mathutils.clamp(requestParametersDict[c.SET_B_REQUEST_PARAMETER_NAME])
         self.method = requestParametersDict[c.METHOD_REQUEST_PARAMETER_NAME]
         self.config = requestParametersDict[c.CONFIG_REQUEST_PARAMETER_NAME]
 

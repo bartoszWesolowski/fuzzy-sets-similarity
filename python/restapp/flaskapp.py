@@ -1,13 +1,8 @@
-from flask import Flask, jsonify
-from flask import request
+from flask import Flask, jsonify, request
 from utils import constants as c
 from similartyRequest import SimilarityRequest
 import json
-
 from flask_cors import CORS
-from datetime import timedelta
-from flask import make_response, request, current_app
-from functools import update_wrapper
 
 app = Flask(__name__)
 CORS(app)
@@ -23,12 +18,15 @@ def get_implemented_similarity_calculation_methods():
 
 @app.route('/fuzzy/similarity', methods=['POST'])
 def calculate_similarity():
+    print "Got request with body: " + str(request.get_json(force=True))
     parsedRequest = SimilarityRequest(request.get_json(force=True))
     result = parsedRequest.calculate()
     return jsonify({
-        'method': parsedRequest.method,
-        'config': parsedRequest.config,
-        'result': result,
+        c.METHOD_REQUEST_PARAMETER_NAME: parsedRequest.method,
+        c.CONFIG_REQUEST_PARAMETER_NAME: parsedRequest.config,
+        c.RESULT_REQUEST_PARAMETER_NAME: result,
+        c.SET_A_REQUEST_PARAMETER_NAME: parsedRequest.setA,
+        c.SET_B_REQUEST_PARAMETER_NAME: parsedRequest.setB,
         'status': "OK"
     })
 

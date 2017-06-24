@@ -1,21 +1,25 @@
 var SimilarityModule = (function ($) {
 
-    $('.calculate-button').click((event) => {
-        const $formDiv = $(event.target).parent();
-        const canvas = $formDiv.parent().find('.chart-canvas')[0];
-        dataToCalculate = getDataToCalculate($formDiv, ($configDiv) => {
-            let rValue = $configDiv.find('.config-r').val();
-            return {
-                r: parseInt(rValue) || 2
-            }
-        });
-        getSimilarityResponse(dataToCalculate, (response) => {
-            console.log('response: ' + JSON.stringify(response))
-            displayChart(canvas, response);
-        });
-        
-    });
-
+    calculateEvent = () => {
+        $(document).on("click", ".calculate-button", (event) => {
+            console.log('adding event');
+            const $formDiv = $(event.target).parent();
+            const $mainSection = $formDiv.parent();
+            const canvas = $mainSection.find('.chart-canvas')[0];
+            const $resultPlaceholder = $mainSection.find('.result-value');
+            dataToCalculate = getDataToCalculate($formDiv, ($configDiv) => {
+                let rValue = $configDiv.find('.config-r').val();
+                return {
+                    r: parseInt(rValue) || 2
+                }
+            });
+            getSimilarityResponse(dataToCalculate, (response) => {
+                console.log('response: ' + JSON.stringify(response))
+                displayChart(canvas, response);
+                $resultPlaceholder.text(response.result);
+            });
+         });
+    }
     /*
         Extracts data from for div (set A, and set B)
         configExtractor - function that will extract config object from config node
@@ -31,6 +35,9 @@ var SimilarityModule = (function ($) {
         }
     }
 
+    /**
+     * Calls server with POST method.
+     */
     getSimilarityResponse = (dataToCalculate, success) => {
         $.ajax({
             type: "POST",
@@ -49,8 +56,11 @@ var SimilarityModule = (function ($) {
         });
     }
 
-    displayChart = ($canvas, similarityResponse) => {
-        var ctx = $canvas.getContext('2d');
+    /**
+     * Display a chart representing two fuzzy sets from simiratiryResponse object on a passed canvas.
+     */
+    displayChart = (canvas, similarityResponse) => {
+        var ctx = canvas.getContext('2d');
         var borderWidth = 5;
         const labels = _.range(Math.max(similarityResponse.setA.length, similarityResponse.setB.length))
         var myChart = new Chart(ctx, {
@@ -77,6 +87,9 @@ var SimilarityModule = (function ($) {
         });
     }
 
+    /**
+     * Converts a string with floating point numbers separated by white space, coma or colon to an array of floats
+     */
     getArrayFromString = (numbersString) => {
         const result = [];
         var splittedArray = numbersString.split(/\s+|,|;/);
@@ -94,7 +107,7 @@ var SimilarityModule = (function ($) {
     }
 
     return {
-        getArrayFromString: getArrayFromString
+        bindCalculateEvent: calculateEvent
     }
 
 })($);
