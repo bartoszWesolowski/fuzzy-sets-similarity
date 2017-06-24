@@ -9,23 +9,25 @@
         <div class="similarity-egample-segment">
             <div class="form-group">
                 <label>Set A:</label>
-                <input type="text" class="form-control setA">
+                <input type="text" class="form-control setA" value="0, 0.5, 0.7, 0.5, 0">
                 <label>Set B:</label>
+                <input type="text" class="form-control setB" value="0, 0.2, 0.5, 0.2, 0">
                 <div class="config">
-                    <input type="text" class="form-control setB">
                     <label>R:</label>
+                    <input type="text" class="form-control config-r" inputmode="numeric" value="2">
                 </div>
-                <input type="text" class="form-control config-r">
                 <button type="button" class="calculate-button btn btn-primary">Calculate</button>
             </div>
-            <div class="plot-placecholder"></div>
+            <canvas class="chart-canvas"></canvas>
         </div>
     
     </div>
-    
-    <script src="js/angular.js"></script>
+
+    <script src="js/lodash/lodash.min.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script src='js/bootstrap.min.js'></script>
+    <script src="js/chart/Chart.bundle-2.6.0.min.js"></script>
+    <script src="js/Chart-2.6.0.min.js"></script>
 </body>
 </html>
