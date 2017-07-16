@@ -2,3 +2,4 @@
 /python/*.pyc
 /python/utils/*.pyc
 /python/minkowski/*.pyc
+/python/restapp/*.pyc

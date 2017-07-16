@@ -1,14 +1,17 @@
 from minkowski import minkowskisimilarity as minSim
-
+from angle import angluardistance
 MINKOWSKI = "minkowski"
 
+ANGULAR_DISTANCE = "angular_distance"
+
 """List of implemented similarity calculation methods"""
-IMPLEMENTED_METHODS = [MINKOWSKI]
+IMPLEMENTED_METHODS = [MINKOWSKI, ANGULAR_DISTANCE]
 
 
 """Methods map"""
 SIMILARITY_METHODS_MAP = {
-    MINKOWSKI: minSim.generalSim
+    MINKOWSKI: minSim.generalSim,
+    ANGULAR_DISTANCE: angluardistance.sim
 }
 
 """Request parameters names"""

@@ -1,13 +1,20 @@
 import numpy
+
+
 class FuzzySet:
     elements = []
 
     '''konsrtuktor przyjmujacy wektor reprezentujacy zbior rozmyty'''
+
     def __init__(self, elements):
         self.elements = elements
 
-    '''zwraca stopien z jakim element o podanym indexie nalezy do tego zbioru'''
     def val(self, index):
+        """
+        Zwraca stopien z jakim element o podanym indexie nalezy do tego zbioru. Wartosc jest obcinana jest do przedzialu [0, 1]
+        :param index: 
+        :return: 
+        """
         val = 0
         if index < len(self.elements):
             val = numpy.clip(self.elements[index], 0, 1)
@@ -15,7 +22,14 @@ class FuzzySet:
         return val
 
 
-    #TODO: tnorma czy snorma?
+    def absoluteValue(self, index):
+        val = 0
+        if index < len(self.elements):
+            val = self.elements[index]
+
+        return val
+
+    # TODO: tnorma czy snorma?
     def binaryOperation(self, otherFuzzySet, binaryOperator):
         """Perform operation on all elements of the set. BinaryOperation has to be a function
         that takes two floating point arguments and returns one floating point number."""
@@ -34,8 +48,9 @@ class FuzzySet:
         """
         return self.binaryOperation(otherFuzzySet, tNorm)
 
-    #TODO: jak to sie powinno nazywac?
-    def intersect(self, otherFuzzySet, tConorm=min):
+    # TODO: jak to sie powinno nazywac?
+    def intersect(self, otherFuzzySet,
+                  tConorm=min):
         """Returns intersection of this set and the OtherFuzyzSet, using sNorm (min as the default value).
         tNorm has to be a function that takes two floating point arguments and returns one floating point number.
         Return new fuzzy set as a result.
@@ -46,3 +61,33 @@ class FuzzySet:
         """Returns max(number of elements of this set, number of elements of other set)"""
         return max(len(self.elements), len(otherFuzzySet.elements))
 
+    def complement(self):
+        """Compute complement (pol. doplnienie) of fuzzy set. Returns a fuzzy set object."""
+        result = []
+        for x in self.elements:
+            result.append(1 - x)
+        return FuzzySet(result)
+
+    def accumulate(self, transformer, accumulator, startValue=0.0):
+        """Accumulates all elements from this set to one value using transformer for transforming each value of set. 
+        Transformer has to be a function that takes one floating point argument and return a floating point number.
+        Accumulator function with two floating point parameters - first is result of previous accumulation and second is
+        transformed value of element of this set that is currently being processed.
+        """
+        result = startValue
+        for i in range(len(self.elements)):
+            transformed = transformer(self.val(i))
+            result = accumulator(result, transformed)
+        return result
+
+    def transform(self, transformer):
+        """
+        Transforms all elements in this fuzzy set using transformer.
+        :param transformer: a function that has one floating point argument and returns floating point number as a result
+        :return: FuzzySet with all elements transformed
+        """
+        result = []
+        for x in self.elements:
+            result.append(transformer(x))
+
+        return FuzzySet(result)
