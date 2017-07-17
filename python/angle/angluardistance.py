@@ -2,6 +2,7 @@ from utils.fuzzyset import FuzzySet
 from utils import mathutils as m
 import math
 
+
 def sim(A, B, config={}):
     """
     Returns similarity of two fuzzy sets represented as angular distance between them.
@@ -16,7 +17,14 @@ def sim(A, B, config={}):
     squereSumA = fuzzyA.accumulate(m.squere, m.sum)
     squereSumB = fuzzyB.accumulate(m.squere, m.sum)
     denominator = m.multiply(math.sqrt(squereSumA), math.sqrt(squereSumB))
+    #TODO: what if denominator is equal to zero????
+    if denominator == 0:
+        print "Got denominator equal to zero while calculating angular distance for sets: " + str(
+            fuzzyA.elements) + ", " + str(fuzzyB.elements)
+        return 0
+
     return m.divide(multiplied, denominator)
+
 
 def multipliedElements(fuzzyA, fuzzyB):
     result = 0.0
