@@ -1,4 +1,4 @@
-var SimilarityModule = (function ($) {
+var SimilarityModule = (function ($, methodProvider, configExtractor) {
 
     calculateEvent = () => {
         $(document).on("click", ".calculate-button", (event) => {
@@ -7,12 +7,7 @@ var SimilarityModule = (function ($) {
             const $mainSection = $formDiv.parent();
             const canvas = $mainSection.find('.chart-canvas')[0];
             const $resultPlaceholder = $mainSection.find('.result-value');
-            dataToCalculate = getDataToCalculate($formDiv, ($configDiv) => {
-                let rValue = $configDiv.find('.config-r').val();
-                return {
-                    r: parseInt(rValue) || 2
-                }
-            });
+            dataToCalculate = getDataToCalculate($formDiv, configExtractor.extractConfig);
 
             if (dataToCalculate.isValid()) {
                 getSimilarityResponse(dataToCalculate, (response) => {
@@ -32,7 +27,7 @@ var SimilarityModule = (function ($) {
         let setBValue = $formDiv.find('.setB').val();
         let setA = getArrayFromString(setAValue);
         let setB = getArrayFromString(setBValue);
-        let method = 'minkowski';
+        let method = methodProvider.getMethodName();
         let config = configExtractor($formDiv.find('.config'));
         isValid = () => {
             return setA.length > 0 && setB.length > 0;
@@ -40,7 +35,7 @@ var SimilarityModule = (function ($) {
         return {
             setA,
             setB,
-            method: 'minkowski',
+            method: methodProvider.getMethodName(),
             config,
             isValid
         }
@@ -121,4 +116,4 @@ var SimilarityModule = (function ($) {
         bindCalculateEvent: calculateEvent
     }
 
-})($);
+})($, MethodProvider, ConfigProvider);
