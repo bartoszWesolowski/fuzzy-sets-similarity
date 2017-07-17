@@ -29,7 +29,7 @@ class FuzzySet:
 
         return val
 
-    # TODO: tnorma czy snorma?
+    # TODO: tnorma, tkonorm
     def binaryOperation(self, otherFuzzySet, binaryOperator):
         """Perform operation on all elements of the set. BinaryOperation has to be a function
         that takes two floating point arguments and returns one floating point number."""
