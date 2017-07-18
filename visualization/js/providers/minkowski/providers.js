@@ -1,14 +1,12 @@
-window.ConfigProvider = window.ConfigProvider || {};
+window.MinkowskiProvider = window.MinkowskiProvider || {};
 
-ConfigProvider.extractConfig = ($configDiv) => {
+window.MinkowskiProvider.method = 'minkowski';
+
+window.MinkowskiProvider.buttonSelector = '.minkowski-calculate-button';
+
+window.MinkowskiProvider.configExtractor = ($configDiv) => {
     let rValue = $configDiv.find('.config-r').val();
     return {
         r: parseInt(rValue) || 2
-        }
-}
-
-window.MethodProvider = window.MethodProvider || {};
-
-MethodProvider.getMethodName =  () => {
-    return 'minkowski';
+    };
 }

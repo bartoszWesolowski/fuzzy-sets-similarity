@@ -1,11 +1,9 @@
-window.ConfigProvider = window.ConfigProvider || {};
+window.AngularDistanceProvider = window.AngularDistanceProvider || {};
 
-ConfigProvider.extractConfig = ($configDiv) => {
+window.AngularDistanceProvider.method = 'angular_distance';
+
+window.AngularDistanceProvider.buttonSelector = '.angular-distance-calculate-button';
+
+window.AngularDistanceProvider.configExtractor = ($configDiv) => {
     return {};
-}
-
-window.MethodProvider = window.MethodProvider || {};
-
-MethodProvider.getMethodName =  () => {
-    return 'angular_distance';
 }

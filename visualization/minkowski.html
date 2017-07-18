@@ -5,6 +5,7 @@
 </head>
 <body ng-app="app" ng-controller="fuzzySetSimilarityController" data-ng-init="init()">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div id="navigation"></div>
         <h1 class="col-xs-12 col-sm-10 col-sm-offset-1">Fuzzy set similarity examples: Minkowski similarity</h1>
         
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -22,7 +23,7 @@
                         <label>R:</label>
                         <input type="text" class="form-control config-r" inputmode="numeric" value="2">
                     </div>
-                    <button type="button" class="calculate-button btn btn-primary col-sm-12">Calculate</button>
+                    <button type="button" class="calculate-button minkowski-calculate-button  btn btn-primary col-sm-12">Calculate</button>
                 </div>
                 <canvas class="chart-canvas"></canvas>
             </div>
@@ -44,7 +45,7 @@
                             <label>R:</label>
                             <input type="text" class="form-control config-r" inputmode="numeric" value="{{ example.r }}">
                         </div>
-                        <button type="button" class="calculate-button btn btn-primary col-sm-12" style="margin-top:10px;" >Calculate</button>
+                        <button type="button" class="calculate-button minkowski-calculate-button btn btn-primary col-sm-12" style="margin-top:10px;" >Calculate</button>
                     </div>
                     <canvas class="chart-canvas"></canvas>
                 </div>
@@ -55,7 +56,7 @@
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script src='js/bootstrap.min.js'></script>
     <script src="js/chart/Chart.bundle-2.6.0.min.js"></script>
-    <script src="js/Chart-2.6.0.min.js"></script>
+    <script src="js/chart/Chart-2.6.0.min.js"></script>
     <script src="js/angular.js"></script>
     <script>
         var app = angular.module('app', []);
@@ -89,18 +90,18 @@
             ];
             $scope.init = () => {
                 console.log('init');
-                SimilarityModule.bindCalculateEvent();
+                SimilarityModule.bindCalculateEvent(MinkowskiProvider);
             }
         });
     </script>
     <script>
         setTimeout(() => {
-            $('.calculate-button').trigger('click');
+            $(MinkowskiProvider.buttonSelector).trigger('click');
             console.log('click');
         }, 200)
     </script>
+    <script type="text/javascript" src="js/navigation.js"></script>
     <script type="text/javascript" src="js/providers/minkowski/providers.js"></script>
-    <script type="text/javascript" src="js/configExtractor.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

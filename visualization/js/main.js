@@ -1,13 +1,14 @@
-var SimilarityModule = (function ($, methodProvider, configExtractor) {
+window.SimilarityModule = (function () {
 
-    calculateEvent = () => {
-        $(document).on("click", ".calculate-button", (event) => {
+    calculateEvent = (similarityMethodContextProvider) => {
+        console.log('calculate event');
+        $(document).on("click", similarityMethodContextProvider.buttonSelector, (event) => {
             console.log('adding event');
             const $formDiv = $(event.target).parent();
             const $mainSection = $formDiv.parent();
             const canvas = $mainSection.find('.chart-canvas')[0];
             const $resultPlaceholder = $mainSection.find('.result-value');
-            dataToCalculate = getDataToCalculate($formDiv, configExtractor.extractConfig);
+            dataToCalculate = getDataToCalculate($formDiv, similarityMethodContextProvider.configExtractor, similarityMethodContextProvider.method);
 
             if (dataToCalculate.isValid()) {
                 getSimilarityResponse(dataToCalculate, (response) => {
@@ -22,12 +23,11 @@ var SimilarityModule = (function ($, methodProvider, configExtractor) {
         Extracts data from for div (set A, and set B)
         configExtractor - function that will extract config object from config node
     */
-    getDataToCalculate = ($formDiv, configExtractor) => {
+    getDataToCalculate = ($formDiv, configExtractor, method) => {
         let setAValue = $formDiv.find('.setA').val();
         let setBValue = $formDiv.find('.setB').val();
         let setA = getArrayFromString(setAValue);
         let setB = getArrayFromString(setBValue);
-        let method = methodProvider.getMethodName();
         let config = configExtractor($formDiv.find('.config'));
         isValid = () => {
             return setA.length > 0 && setB.length > 0;
@@ -35,7 +35,7 @@ var SimilarityModule = (function ($, methodProvider, configExtractor) {
         return {
             setA,
             setB,
-            method: methodProvider.getMethodName(),
+            method: method,
             config,
             isValid
         }
@@ -116,4 +116,4 @@ var SimilarityModule = (function ($, methodProvider, configExtractor) {
         bindCalculateEvent: calculateEvent
     }
 
-})($, MethodProvider, ConfigProvider);
+})();

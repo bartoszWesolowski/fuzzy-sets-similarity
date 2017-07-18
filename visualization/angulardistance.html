@@ -5,6 +5,7 @@
 </head>
 <body ng-app="app" ng-controller="fuzzySetSimilarityController" data-ng-init="init()">
     <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div id="navigation"></div>
         <h1 class="col-xs-12 col-sm-10 col-sm-offset-1">Fuzzy set similarity examples: Angular distance</h1>
         
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
@@ -18,11 +19,7 @@
                     <input type="text" class="form-control setA" value="">
                     <label>Set B:</label>
                     <input type="text" class="form-control setB" value="">
-                    <div class="config">
-                        <label>R:</label>
-                        <input type="text" class="form-control config-r" inputmode="numeric" value="2">
-                    </div>
-                    <button type="button" class="calculate-button btn btn-primary col-sm-12">Calculate</button>
+                    <button type="button" class="calculate-button angular-distance-calculate-button btn btn-primary col-sm-12">Calculate</button>
                 </div>
                 <canvas class="chart-canvas"></canvas>
             </div>
@@ -39,8 +36,8 @@
                         <label>Set A:</label>
                         <input type="text" class="form-control setA" value="{{ example.setAValues }}">
                         <label>Set B:</label>
-                        <input type="text" class="form-control setB" value="{{ example.setBValues }}">\
-                        <button type="button" class="calculate-button btn btn-primary col-sm-12" style="margin-top:10px;" >Calculate</button>
+                        <input type="text" class="form-control setB" value="{{ example.setBValues }}">
+                        <button type="button" class="calculate-button angular-distance-calculate-button btn btn-primary col-sm-12" style="margin-top:10px;" >Calculate</button>
                     </div>
                     <canvas class="chart-canvas"></canvas>
                 </div>
@@ -80,16 +77,17 @@
             ];
             $scope.init = () => {
                 console.log('init');
-                SimilarityModule.bindCalculateEvent();
+                SimilarityModule.bindCalculateEvent(AngularDistanceProvider);
             }
         });
     </script>
     <script>
         setTimeout(() => {
-            $('.calculate-button').trigger('click');
+            $(AngularDistanceProvider.buttonSelector).trigger('click');
             console.log('click');
         }, 200)
     </script>
+    <script type="text/javascript" src="js/navigation.js"></script>
     <script type="text/javascript" src="js/providers/angulardistance/providers.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
