@@ -9,18 +9,18 @@
     <div class="col-xs-12 col-sm-10 col-sm-offset-1">
         <div id="navigation"></div>
         <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <h2>Coparison of two fuzzy sets with different calculation methods</h2>
+            <h2>Comparison of two fuzzy sets with different calculation methods</h2>
 
             <div class="fuzzy-sets-container">
                 <label>Set A:</label>
                 <input type="text" class="form-control comparison-setA" value="">
                 <label>Set B:</label>
                 <input type="text" class="form-control comparison-setB" value="">
-                <button type="button" class="calculate-button comparison-calculate-button btn btn-primary col-sm-12">Calculate</button>
+                <button type="button" class="comparison-calculate-button btn btn-primary col-sm-12">Calculate</button>
             </div>
 
-            <div class="similarity-egample-segment">
-                <div class="form-group">
+            <div class="similarity-egample-segment minkowski col-xs-12 col-sm-12">
+                <div class="form-group  col-xs-12 col-sm-3">
                     <h3>Minkowski Similarity</h3>
                     <h4 class="result">
                         <span>Result: </span>
@@ -32,7 +32,23 @@
                     </div>
                     <button type="button" class="calculate-button minkowski-calculate-button btn btn-primary col-sm-12">Recalculate</button>
                 </div>
-                <canvas class="chart-canvas"></canvas>
+                <div class="col-xs-12 col-sm-9">
+                    <canvas class="chart-canvas"></canvas>
+                </div>
+            </div>
+
+            <div class="similarity-egample-segment col-xs-12 col-sm-12">
+                <div class="form-group col-xs-12 col-sm-3">
+                    <h3>Angular distance</h3>
+                    <h4 class="result">
+                        <span>Result: </span>
+                        <span class="result-value"></span>
+                    </h4>
+                    <button type="button" class="calculate-button angular-distance-calculate-button btn btn-primary col-sm-12">Recalculate</button>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    <canvas class="chart-canvas"></canvas>
+                </div>
             </div>
         </div>
     </div>
@@ -49,18 +65,20 @@
 
             $scope.init = () => {
                 SimilarityModule.bindCalculateEvent(MinkowskiProvider, LocalFuzzySetExtractor.extractGlobalComparisionSets);
+                SimilarityModule.bindCalculateEvent(AngularDistanceProvider, LocalFuzzySetExtractor.extractGlobalComparisionSets);
             }
         });
     </script>
     <script>
-        setTimeout(() => {
+        $('.comparison-calculate-button').on('click', () => {
             $(MinkowskiProvider.buttonSelector).trigger('click');
-            console.log('click');
-        }, 200)
+            $(AngularDistanceProvider.buttonSelector).trigger('click');
+        });
     </script>
     <script type="text/javascript" src="js/navigation.js"></script>
     <script type="text/javascript" src="js/providers/fuzzySetExtractor.js"></script>
     <script type="text/javascript" src="js/providers/minkowski/providers.js"></script>
+    <script type="text/javascript" src="js/providers/angulardistance/providers.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 
