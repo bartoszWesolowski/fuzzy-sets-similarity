@@ -1,6 +1,6 @@
 window.SimilarityModule = (function () {
-
-    calculateEvent = (similarityMethodContextProvider) => {
+    //TODO:moze przerobic na klase kiedys
+    calculateEvent = (similarityMethodContextProvider, fuzzySetsExtractor) => {
         console.log('calculate event');
         $(document).on("click", similarityMethodContextProvider.buttonSelector, (event) => {
             console.log('adding event');
@@ -8,7 +8,10 @@ window.SimilarityModule = (function () {
             const $mainSection = $formDiv.parent();
             const canvas = $mainSection.find('.chart-canvas')[0];
             const $resultPlaceholder = $mainSection.find('.result-value');
-            dataToCalculate = getDataToCalculate($formDiv, similarityMethodContextProvider.configExtractor, similarityMethodContextProvider.method);
+            dataToCalculate = getDataToCalculate($formDiv,
+                similarityMethodContextProvider.configExtractor,
+                similarityMethodContextProvider.method,
+                fuzzySetsExtractor);
 
             if (dataToCalculate.isValid()) {
                 getSimilarityResponse(dataToCalculate, (response) => {
@@ -23,11 +26,11 @@ window.SimilarityModule = (function () {
         Extracts data from for div (set A, and set B)
         configExtractor - function that will extract config object from config node
     */
-    getDataToCalculate = ($formDiv, configExtractor, method) => {
-        let setAValue = $formDiv.find('.setA').val();
-        let setBValue = $formDiv.find('.setB').val();
-        let setA = getArrayFromString(setAValue);
-        let setB = getArrayFromString(setBValue);
+    getDataToCalculate = ($formDiv, configExtractor, method,
+        fuzzySetsExtractor) => {
+        const extractedSets = fuzzySetsExtractor($formDiv);
+        let setA = extractedSets.setA;
+        let setB = extractedSets.setB;
         let config = configExtractor($formDiv.find('.config'));
         isValid = () => {
             return setA.length > 0 && setB.length > 0;
@@ -91,25 +94,6 @@ window.SimilarityModule = (function () {
                 ]
             }
         });
-    }
-
-    /**
-     * Converts a string with floating point numbers separated by white space, coma or colon to an array of floats
-     */
-    getArrayFromString = (numbersString) => {
-        const result = [];
-        var splittedArray = numbersString.split(/\s+|,|;/);
-        console.log(JSON.stringify(splittedArray));
-        for (x of splittedArray) {
-            if (x) { //if not empty string
-                let parsed = parseFloat(x);
-                if (parsed === NaN) {
-                    throw 'Can not parse ' + x + " to float value";
-                }
-                result.push(parsed);
-            }
-        }
-        return result;
     }
 
     return {

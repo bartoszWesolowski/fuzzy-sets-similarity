@@ -90,7 +90,7 @@
             ];
             $scope.init = () => {
                 console.log('init');
-                SimilarityModule.bindCalculateEvent(MinkowskiProvider);
+                SimilarityModule.bindCalculateEvent(MinkowskiProvider, LocalFuzzySetExtractor.extractSets);
             }
         });
     </script>
@@ -101,6 +101,7 @@
         }, 200)
     </script>
     <script type="text/javascript" src="js/navigation.js"></script>
+    <script type="text/javascript" src="js/providers/fuzzySetExtractor.js"></script>
     <script type="text/javascript" src="js/providers/minkowski/providers.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>

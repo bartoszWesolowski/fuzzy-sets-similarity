@@ -1,0 +1,67 @@
+<html>
+
+<head>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body ng-app="app" ng-controller="fuzzySetSimilarityController" data-ng-init="init()">
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div id="navigation"></div>
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <h2>Coparison of two fuzzy sets with different calculation methods</h2>
+
+            <div class="fuzzy-sets-container">
+                <label>Set A:</label>
+                <input type="text" class="form-control comparison-setA" value="">
+                <label>Set B:</label>
+                <input type="text" class="form-control comparison-setB" value="">
+                <button type="button" class="calculate-button comparison-calculate-button btn btn-primary col-sm-12">Calculate</button>
+            </div>
+
+            <div class="similarity-egample-segment">
+                <div class="form-group">
+                    <h3>Minkowski Similarity</h3>
+                    <h4 class="result">
+                        <span>Result: </span>
+                        <span class="result-value"></span>
+                    </h4>
+                    <div class="config">
+                        <label>R:</label>
+                        <input type="text" class="form-control config-r" inputmode="numeric" value="2">
+                    </div>
+                    <button type="button" class="calculate-button minkowski-calculate-button btn btn-primary col-sm-12">Recalculate</button>
+                </div>
+                <canvas class="chart-canvas"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/lodash/lodash.min.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script src='js/bootstrap.min.js'></script>
+    <script src="js/chart/Chart.bundle-2.6.0.min.js"></script>
+    <script src="js/chart/Chart-2.6.0.min.js"></script>
+    <script src="js/angular.js"></script>
+    <script>
+        var app = angular.module('app', []);
+        app.controller('fuzzySetSimilarityController', function ($scope) {
+
+            $scope.init = () => {
+                SimilarityModule.bindCalculateEvent(MinkowskiProvider, LocalFuzzySetExtractor.extractGlobalComparisionSets);
+            }
+        });
+    </script>
+    <script>
+        setTimeout(() => {
+            $(MinkowskiProvider.buttonSelector).trigger('click');
+            console.log('click');
+        }, 200)
+    </script>
+    <script type="text/javascript" src="js/navigation.js"></script>
+    <script type="text/javascript" src="js/providers/fuzzySetExtractor.js"></script>
+    <script type="text/javascript" src="js/providers/minkowski/providers.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+
+</html>

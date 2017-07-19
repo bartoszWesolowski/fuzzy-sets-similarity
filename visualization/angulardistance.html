@@ -48,7 +48,7 @@
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script src='js/bootstrap.min.js'></script>
     <script src="js/chart/Chart.bundle-2.6.0.min.js"></script>
-    <script src="js/Chart-2.6.0.min.js"></script>
+    <script src="js/chart/Chart-2.6.0.min.js"></script>
     <script src="js/angular.js"></script>
     <script>
         var app = angular.module('app', []);
@@ -77,7 +77,7 @@
             ];
             $scope.init = () => {
                 console.log('init');
-                SimilarityModule.bindCalculateEvent(AngularDistanceProvider);
+                SimilarityModule.bindCalculateEvent(AngularDistanceProvider, LocalFuzzySetExtractor.extractSets);
             }
         });
     </script>
@@ -89,6 +89,7 @@
     </script>
     <script type="text/javascript" src="js/navigation.js"></script>
     <script type="text/javascript" src="js/providers/angulardistance/providers.js"></script>
+    <script type="text/javascript" src="js/providers/fuzzySetExtractor.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>
