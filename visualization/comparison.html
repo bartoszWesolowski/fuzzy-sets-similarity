@@ -19,8 +19,12 @@
                 <button type="button" class="comparison-calculate-button btn btn-primary col-sm-12">Calculate</button>
             </div>
 
+            <div class="col-xs-12 col-sm-9">
+                <canvas id="chart-canvas"></canvas>
+            </div>
+
             <div class="similarity-egample-segment minkowski col-xs-12 col-sm-12">
-                <div class="form-group  col-xs-12 col-sm-3">
+                <div class="form-group">
                     <h3>Minkowski Similarity</h3>
                     <h4 class="result">
                         <span>Result: </span>
@@ -32,22 +36,16 @@
                     </div>
                     <button type="button" class="calculate-button minkowski-calculate-button btn btn-primary col-sm-12">Recalculate</button>
                 </div>
-                <div class="col-xs-12 col-sm-9">
-                    <canvas class="chart-canvas"></canvas>
-                </div>
             </div>
 
             <div class="similarity-egample-segment col-xs-12 col-sm-12">
-                <div class="form-group col-xs-12 col-sm-3">
+                <div class="form-group">
                     <h3>Angular distance</h3>
                     <h4 class="result">
                         <span>Result: </span>
                         <span class="result-value"></span>
                     </h4>
                     <button type="button" class="calculate-button angular-distance-calculate-button btn btn-primary col-sm-12">Recalculate</button>
-                </div>
-                <div class="col-xs-12 col-sm-9">
-                    <canvas class="chart-canvas"></canvas>
                 </div>
             </div>
         </div>
@@ -64,8 +62,8 @@
         app.controller('fuzzySetSimilarityController', function ($scope) {
 
             $scope.init = () => {
-                SimilarityModule.bindCalculateEvent(MinkowskiProvider, LocalFuzzySetExtractor.extractGlobalComparisionSets);
-                SimilarityModule.bindCalculateEvent(AngularDistanceProvider, LocalFuzzySetExtractor.extractGlobalComparisionSets);
+                SimilarityModule.bindCalculateEvent(MinkowskiProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
+                SimilarityModule.bindCalculateEvent(AngularDistanceProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
             }
         });
     </script>
@@ -79,6 +77,7 @@
     <script type="text/javascript" src="js/providers/fuzzySetExtractor.js"></script>
     <script type="text/javascript" src="js/providers/minkowski/providers.js"></script>
     <script type="text/javascript" src="js/providers/angulardistance/providers.js"></script>
+    <script type="text/javascript" src="js/providers/chartCanvasExtractor.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
 

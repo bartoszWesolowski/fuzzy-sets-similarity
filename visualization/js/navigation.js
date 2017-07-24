@@ -8,6 +8,7 @@ const rootTemplate = `
     <ul class="nav navbar-nav">
       <li><a href="minkowski.html">Minkowski</a></li>
       <li><a href="angulardistance.html">Angular Dinstance</a></li>
+      <li><a href="comparison.html">Comparison page</a></li>
     </ul>
   </div>
 </nav>`

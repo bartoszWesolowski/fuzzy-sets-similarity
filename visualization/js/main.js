@@ -1,12 +1,12 @@
 window.SimilarityModule = (function () {
     //TODO:moze przerobic na klase kiedys
-    calculateEvent = (similarityMethodContextProvider, fuzzySetsExtractor) => {
+    calculateEvent = (similarityMethodContextProvider, fuzzySetsExtractor, extractChartCanvas) => {
         console.log('calculate event');
         $(document).on("click", similarityMethodContextProvider.buttonSelector, (event) => {
             console.log('adding event');
             const $formDiv = $(event.target).parent();
             const $mainSection = $formDiv.parent();
-            const canvas = $mainSection.find('.chart-canvas')[0];
+            const canvas = extractChartCanvas($mainSection);
             const $resultPlaceholder = $mainSection.find('.result-value');
             dataToCalculate = getDataToCalculate($formDiv,
                 similarityMethodContextProvider.configExtractor,

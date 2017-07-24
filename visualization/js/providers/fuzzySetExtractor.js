@@ -1,4 +1,4 @@
-window.LocalFuzzySetExtractor = (function($) {
+window.FuzzySetExtractor = (function($) {
     
     /**
      * Converts a string with floating point numbers separated by white space, coma or colon to an array of floats

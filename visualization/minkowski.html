@@ -90,7 +90,7 @@
             ];
             $scope.init = () => {
                 console.log('init');
-                SimilarityModule.bindCalculateEvent(MinkowskiProvider, LocalFuzzySetExtractor.extractSets);
+                SimilarityModule.bindCalculateEvent(MinkowskiProvider, LocalFuzzySetExtractor.extractSets, ChartCanvasExtractor.extracRelativeCanvas);
             }
         });
     </script>
@@ -102,6 +102,7 @@
     </script>
     <script type="text/javascript" src="js/navigation.js"></script>
     <script type="text/javascript" src="js/providers/fuzzySetExtractor.js"></script>
+    <script type="text/javascript" src="js/providers/chartCanvasExtractor.js"></script>
     <script type="text/javascript" src="js/providers/minkowski/providers.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </body>
