@@ -3,6 +3,9 @@
 <head>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
 </head>
 
 <body ng-app="app" ng-controller="fuzzySetSimilarityController" data-ng-init="init()">
@@ -13,9 +16,9 @@
 
             <div class="fuzzy-sets-container">
                 <label>Set A:</label>
-                <input type="text" class="form-control comparison-setA" value="">
+                <input type="text" class="form-control comparison-setA" value="0 0.3 1 1 1 0.3 0">
                 <label>Set B:</label>
-                <input type="text" class="form-control comparison-setB" value="">
+                <input type="text" class="form-control comparison-setB" value="0 0 0 0 0.3 1 1 1 0.3 0">
                 <button type="button" class="comparison-calculate-button btn btn-primary col-sm-12">Calculate</button>
             </div>
 
@@ -48,6 +51,30 @@
                     <button type="button" class="calculate-button angular-distance-calculate-button btn btn-primary col-sm-12">Recalculate</button>
                 </div>
             </div>
+
+            <div class="similarity-egample-segment col-xs-12 col-sm-12">
+                <div class="form-group">
+                    <h3>Jaccard Index</h3>
+                    <div class="calculation-formula">
+                    $$Sim(X, Y) = {g(X \cap Y) + \gamma * g(\bar{X} \cap \bar{Y}) \over
+                                  g(X \cap Y) + \alpha * g(X \cap \bar{Y}) + \beta * g(\bar{X} \cap Y)             
+                                  }.$$
+                    </div>
+                    <h4 class="result">
+                        <span>Result: </span>
+                        <span class="result-value"></span>
+                    </h4>
+                    <div class="config">
+                        <label>Alpha:</label>
+                        <input type="text" class="form-control config-alpha" inputmode="numeric" value="1">
+                        <label>Beta:</label>
+                        <input type="text" class="form-control config-beta" inputmode="numeric" value="1">
+                        <label>Gamma:</label>
+                        <input type="text" class="form-control config-gamma" inputmode="numeric" value="1">
+                    </div>
+                    <button type="button" class="calculate-button jaccard-index-calculate-button btn btn-primary col-sm-12">Recalculate</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -64,6 +91,7 @@
             $scope.init = () => {
                 SimilarityModule.bindCalculateEvent(MinkowskiProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
                 SimilarityModule.bindCalculateEvent(AngularDistanceProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
+                SimilarityModule.bindCalculateEvent(JaccardIndexProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
             }
         });
     </script>
@@ -71,11 +99,13 @@
         $('.comparison-calculate-button').on('click', () => {
             $(MinkowskiProvider.buttonSelector).trigger('click');
             $(AngularDistanceProvider.buttonSelector).trigger('click');
+            $(JaccardIndexProvider.buttonSelector).trigger('click');
         });
     </script>
     <script type="text/javascript" src="js/navigation.js"></script>
     <script type="text/javascript" src="js/providers/fuzzySetExtractor.js"></script>
     <script type="text/javascript" src="js/providers/minkowski/providers.js"></script>
+    <script type="text/javascript" src="js/providers/jaccard/providers.js"></script>
     <script type="text/javascript" src="js/providers/angulardistance/providers.js"></script>
     <script type="text/javascript" src="js/providers/chartCanvasExtractor.js"></script>
     <script type="text/javascript" src="js/main.js"></script>

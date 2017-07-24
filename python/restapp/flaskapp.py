@@ -23,7 +23,7 @@ def calculate_similarity():
     result = parsedRequest.calculate()
     return jsonify({
         c.METHOD_REQUEST_PARAMETER_NAME: parsedRequest.method,
-        c.CONFIG_REQUEST_PARAMETER_NAME: parsedRequest.config,
+        c.CONFIG_REQUEST_PARAMETER_NAME: str(parsedRequest.config),
         c.RESULT_REQUEST_PARAMETER_NAME: result,
         c.SET_A_REQUEST_PARAMETER_NAME: parsedRequest.setA,
         c.SET_B_REQUEST_PARAMETER_NAME: parsedRequest.setB,

@@ -1,5 +1,6 @@
 from utils import constants as c
 from utils import mathutils
+import configextractor
 
 class SimilarityRequest:
     setA = []
@@ -19,6 +20,7 @@ class SimilarityRequest:
         self.setB = mathutils.clamp(requestParametersDict[c.SET_B_REQUEST_PARAMETER_NAME])
         self.method = requestParametersDict[c.METHOD_REQUEST_PARAMETER_NAME]
         self.config = requestParametersDict[c.CONFIG_REQUEST_PARAMETER_NAME]
+        self.config = configextractor.extractConfig(self.method, self.config)
 
     def getCalculationMethod(self):
         return c.SIMILARITY_METHODS_MAP[self.method]
