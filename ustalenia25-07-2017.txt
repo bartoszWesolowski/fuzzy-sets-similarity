@@ -1,0 +1,5 @@
+1. Losowe zbiory
+2. konfiguracja dla metody i dla każdej konfiguracji macierz wyników
+3. generowanie plików konfiguracyjnych
+4. Wykres dla jakich miar jaka wartość podobieństwa
+5. Więcej instancji dla jednej metody z róznymi parametrami

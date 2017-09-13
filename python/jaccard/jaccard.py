@@ -1,21 +1,21 @@
 from utils.fuzzyset import FuzzySet
 from utils import fuzzysetevaluator
 from utils import mathutils as m
-
+from utils import paramethers as params
 
 def sim(A, B, config={
-    'alpha': 1,
-    'beta': 1,
-    'gamma': 1,
-    'evaluator': fuzzysetevaluator.sup
+    params.ALPHA: 1,
+    params.BETA: 1,
+    params.GAMMA: 1,
+    params.EVALUATOR: fuzzysetevaluator.sup
 }):
     """Jaccard similarity index"""
     fuzzyA = FuzzySet(A)
     fuzzyB = FuzzySet(B)
-    alpha = config['alpha']
-    beta = config['beta']
-    gamma = config['gamma']
-    evaluator = config['evaluator']
+    alpha = config[params.ALPHA]
+    beta = config[params.BETA]
+    gamma = config[params.GAMMA]
+    evaluator = config[params.EVALUATOR]
 
     nominator = m.sum(evaluator(fuzzyA.intersect(fuzzyB)),
                       gamma * evaluator(fuzzyA.complement().intersect(fuzzyB.complement())))
