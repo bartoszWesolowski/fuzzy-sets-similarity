@@ -1,6 +1,22 @@
 import paramethers as param
 import constants as const
 import fuzzysetevaluator
+
+def parseArguments(listOfArguments):
+    """Parse list of arguments to map"""
+    lenght = len(listOfArguments)
+    result = {}
+    for i in range(1, lenght, 2):
+        key = listOfArguments[i]
+        value = listOfArguments[i + 1]
+        if not key.startswith("-"):
+            raise AttributeError("A key must start with '-'")
+
+        key = key.partition("-")[2]  # removes the '-' from the argument
+        result[key] = value
+
+    return result
+
 def parseToIntOrRaiseAttributeError(value, errorMessage="Could not parse value to int."):
     """Returns value parsed to int or raises an AttributeError with error message."""
     try:
@@ -50,7 +66,7 @@ def jaccardIndexConfigParser(config):
         param.ALPHA: alpha,
         param.BETA : beta,
         param.GAMMA: gamma,
-        param.EVALUATOR: evaluator
+        param.EVALUATOR: fuzzysetevaluator.EVALUATORS[evaluator]
     }
 
 

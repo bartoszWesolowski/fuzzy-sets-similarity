@@ -11,23 +11,6 @@ SUPPORTED_METHODS = [const.MINKOWSKI, const.ANGULAR_DISTANCE, const.JACCARD_INDE
 
 DEFAULT_FILE_NAME = "config.txt"
 
-def parseArguments(listOfArguments):
-    """Parse list of arguments to map"""
-    lenght = len(listOfArguments)
-    result = {}
-    if lenght % 2 is 0:
-        raise AttributeError("Invalid number of arguments! Required even number of arguments in key value form!")
-    for i in range(1, lenght, 2):
-        key = listOfArguments[i]
-        value = listOfArguments[i + 1]
-        if not key.startswith("-"):
-            raise AttributeError("A key must start with '-'")
-
-        key = key.partition("-")[2]  # removes the '-' from the argument
-        result[key] = value
-
-    return result
-
 def getConfigFilePath(rawConfig):
     return rawConfig.get(FILE_NAME_PARAMETER, DEFAULT_FILE_NAME)
 
@@ -53,7 +36,7 @@ def saveToFile(config, filePath):
 
 try:
     print "Creating map of arguments."
-    rawArguments = parseArguments(sys.argv);
+    rawArguments = parse.parseArguments(sys.argv);
     configFile = getConfigFilePath(rawArguments)
     config = parseArgumentsToMethodConfig(rawArguments)
     saveToFile(config, configFile)

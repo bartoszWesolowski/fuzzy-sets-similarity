@@ -11,7 +11,7 @@ ANGULAR_DISTANCE = "angular_distance"
 JACCARD_INDEX = "jaccard_index"
 
 """List of implemented similarity calculation methods"""
-IMPLEMENTED_METHODS = [MINKOWSKI, ANGULAR_DISTANCE]
+IMPLEMENTED_METHODS = [MINKOWSKI, ANGULAR_DISTANCE, JACCARD_INDEX]
 
 """Methods map"""
 SIMILARITY_METHODS_MAP = {
