@@ -15,13 +15,19 @@
             <h2>Comparison of two fuzzy sets with different calculation methods</h2>
 
             <div class="fuzzy-sets-container">
-                <div class="fuzy-sets-container--left col-xs-12 col-sm-10"><div>
-                <label>Set A:</label>
-                <input type="text" class="form-control comparison-setA" value="0 0.3 1 1 1 0.3 0">
-                <label>Set B:</label>
-                <input type="text" class="form-control comparison-setB" value="0 0 0 0 0.3 1 1 1 0.3 0">
-                <button type="button" class="comparison-calculate-button btn btn-primary col-sm-12"
-                    ng-click="recalculate()">Calculate</button>
+                <div class="fuzy-sets-container--left col-xs-12 col-sm-10">
+                    <label>Set A:</label>
+                    <input type="text" class="form-control comparison-setA" value="{{ sets.a.join() }}">
+                    <label>Set B:</label>
+                    <input type="text" class="form-control comparison-setB" value="{{ sets.b.join() }}">
+                </div>
+                    
+                <div class="fuzy-sets-container--right col-xs-12 col-sm-2">
+                    <button type="button" class="comparison-calculate-button btn btn-primary col-sm-12"
+                        ng-click="recalculate()">Calculate</button>
+                    <button type="button" class="randomise-sets-button btn btn-primary col-sm-12"
+                        ng-click="randomizeSets()">Randomise</button>
+                </div>
             </div>
 
             <div class="col-xs-6 col-sm-6">
@@ -104,15 +110,41 @@
             $scope.data = []; // result values
             $scope.labels = []; // labels
 
+            $scope.sets = {
+                a: [1, 0, 1, 0],
+                b: [0, 0, 0, 1]
+            }
+
+            $scope.randomizeSets = () => {
+                let numberOfElements = _.random(10, 100);
+                $scope.sets.a = [];
+                $scope.sets.b = [];
+                for (var i = 0; i < numberOfElements; i++) {
+                    $scope.sets.a.push($scope.randomValue());
+                    $scope.sets.b.push($scope.randomValue());
+                }
+                
+                setTimeout(() => {
+                    $scope.recalculate();
+                }, 150);
+            }
+
+            $scope.randomValue = () => {
+                let rand = _.random(0.0, 1.0, true);
+                return Math.round(rand * 1000) / 1000;
+            }
+
             $scope.recalculate = () => {
                 $scope.data = []; // result values
                 $scope.labels = []; // labels
+                
                 $(MinkowskiProvider.buttonSelector).trigger('click');
                 $(AngularDistanceProvider.buttonSelector).trigger('click');
                 $(JaccardIndexProvider.buttonSelector).trigger('click');
             };
 
             $scope.init = () => {
+
                 SimilarityModule.bindCalculateEvent(MinkowskiProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
                 SimilarityModule.bindCalculateEvent(AngularDistanceProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
                 SimilarityModule.bindCalculateEvent(JaccardIndexProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
@@ -133,8 +165,9 @@
                         }
                     });
                 });
-
-                $scope.recalculate();
+                setTimeout(() => {
+                    $scope.recalculate();
+                }, 150);
             }
         });
     </script>
