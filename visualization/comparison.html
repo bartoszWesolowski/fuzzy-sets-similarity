@@ -9,21 +9,27 @@
 </head>
 
 <body ng-app="app" ng-controller="fuzzySetSimilarityController" data-ng-init="init()">
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+    <div class="col-xs-12 col-sm-12">
         <div id="navigation"></div>
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div class="col-xs-12 col-sm-12">
             <h2>Comparison of two fuzzy sets with different calculation methods</h2>
 
             <div class="fuzzy-sets-container">
+                <div class="fuzy-sets-container--left col-xs-12 col-sm-10"><div>
                 <label>Set A:</label>
                 <input type="text" class="form-control comparison-setA" value="0 0.3 1 1 1 0.3 0">
                 <label>Set B:</label>
                 <input type="text" class="form-control comparison-setB" value="0 0 0 0 0.3 1 1 1 0.3 0">
-                <button type="button" class="comparison-calculate-button btn btn-primary col-sm-12">Calculate</button>
+                <button type="button" class="comparison-calculate-button btn btn-primary col-sm-12"
+                    ng-click="recalculate()">Calculate</button>
             </div>
 
-            <div class="col-xs-12 col-sm-9">
+            <div class="col-xs-6 col-sm-6">
                 <canvas id="chart-canvas"></canvas>
+            </div>
+
+            <div class="col-xs-6 col-sm-6">
+                <canvas id="results-canvas"></canvas>
             </div>
 
             <div class="similarity-egample-segment minkowski col-xs-12 col-sm-12">
@@ -78,30 +84,13 @@
         </div>
     </div>
 
+    <script src="js/EventEmitter.min.js"></script>
     <script src="js/lodash/lodash.min.js"></script>
     <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
     <script src='js/bootstrap.min.js'></script>
     <script src="js/chart/Chart.bundle-2.6.0.min.js"></script>
     <script src="js/chart/Chart-2.6.0.min.js"></script>
     <script src="js/angular.js"></script>
-    <script>
-        var app = angular.module('app', []);
-        app.controller('fuzzySetSimilarityController', function ($scope) {
-
-            $scope.init = () => {
-                SimilarityModule.bindCalculateEvent(MinkowskiProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
-                SimilarityModule.bindCalculateEvent(AngularDistanceProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
-                SimilarityModule.bindCalculateEvent(JaccardIndexProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
-            }
-        });
-    </script>
-    <script>
-        $('.comparison-calculate-button').on('click', () => {
-            $(MinkowskiProvider.buttonSelector).trigger('click');
-            $(AngularDistanceProvider.buttonSelector).trigger('click');
-            $(JaccardIndexProvider.buttonSelector).trigger('click');
-        });
-    </script>
     <script type="text/javascript" src="js/navigation.js"></script>
     <script type="text/javascript" src="js/providers/fuzzySetExtractor.js"></script>
     <script type="text/javascript" src="js/providers/minkowski/providers.js"></script>
@@ -109,6 +98,46 @@
     <script type="text/javascript" src="js/providers/angulardistance/providers.js"></script>
     <script type="text/javascript" src="js/providers/chartCanvasExtractor.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+    <script>
+        var app = angular.module('app', []);
+        app.controller('fuzzySetSimilarityController', function ($scope) {
+            $scope.data = []; // result values
+            $scope.labels = []; // labels
+
+            $scope.recalculate = () => {
+                $scope.data = []; // result values
+                $scope.labels = []; // labels
+                $(MinkowskiProvider.buttonSelector).trigger('click');
+                $(AngularDistanceProvider.buttonSelector).trigger('click');
+                $(JaccardIndexProvider.buttonSelector).trigger('click');
+            };
+
+            $scope.init = () => {
+                SimilarityModule.bindCalculateEvent(MinkowskiProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
+                SimilarityModule.bindCalculateEvent(AngularDistanceProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
+                SimilarityModule.bindCalculateEvent(JaccardIndexProvider, FuzzySetExtractor.extractGlobalComparisionSets, ChartCanvasExtractor.extractGlobalCanvas);
+                
+                window.eventEmmiter.addListener('similarityCalculated', (data) => {
+                    console.log("event emmiter: " + JSON.stringify(data));
+                    const resultsCanvas = $('#results-canvas')[0];
+                    $scope.data.push(data.result);
+                    $scope.labels.push(data.response.method);
+                    var myChart = new Chart(resultsCanvas, {
+                        type: 'bar',
+                        data: {
+                            labels: $scope.labels,
+                            datasets: [{
+                                label: "Similarity of two sets",
+                                data: $scope.data
+                            }]
+                        }
+                    });
+                });
+
+                $scope.recalculate();
+            }
+        });
+    </script>
 </body>
 
 </html>

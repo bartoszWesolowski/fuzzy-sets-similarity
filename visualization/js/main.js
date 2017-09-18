@@ -1,4 +1,6 @@
-window.SimilarityModule = (function () {
+window.eventEmmiter = window.eventEmmiter || new EventEmitter();
+
+window.SimilarityModule = (function (ee) {
     //TODO:moze przerobic na klase kiedys
     calculateEvent = (similarityMethodContextProvider, fuzzySetsExtractor, extractChartCanvas) => {
         console.log('calculate event');
@@ -18,6 +20,11 @@ window.SimilarityModule = (function () {
                     console.log('response: ' + JSON.stringify(response))
                     displayChart(canvas, response);
                     $resultPlaceholder.text(response.result);
+                    ee.emitEvent('similarityCalculated', [{
+                        data: dataToCalculate,
+                        response,
+                        result: response.result
+                    }]);
                 });
             }
          });
@@ -100,4 +107,4 @@ window.SimilarityModule = (function () {
         bindCalculateEvent: calculateEvent
     }
 
-})();
+})(eventEmmiter);
