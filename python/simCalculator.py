@@ -1,12 +1,8 @@
 from utils import constants
 from utils import parse
-
 CONFIG_METADATA_PARAM_NAME = 'config'
-def rasultPrinter(result, metadata):
-    print "Result: {}, config: {} ".format(result, metadata[CONFIG_METADATA_PARAM_NAME])
 
-
-def calculateSimilarity(A, B, config, resultProcessor=rasultPrinter):
+def calculateSimilarity(A, B, config):
     """Calculates similarity of two sets A and B using method declared in config map.
     Config map must contain all parameters used to calculate similarity"""
     validateConfigMethod(config)
@@ -15,11 +11,7 @@ def calculateSimilarity(A, B, config, resultProcessor=rasultPrinter):
     parsedConfig = configParser(config)
     calculator = constants.SIMILARITY_METHODS_MAP[method]
     result = calculator(A, B, parsedConfig)
-    resultProcessor(result, {
-        CONFIG_METADATA_PARAM_NAME: config,
-        'A': A,
-        'B': B
-    })
+    return result
 
 def validateConfigMethod(config):
     methodKey = constants.METHOD_PARAM_NAME

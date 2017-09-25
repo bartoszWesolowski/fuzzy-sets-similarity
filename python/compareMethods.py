@@ -1,9 +1,10 @@
-from utils import parse
+from utils import parse, fileparser
 import sys
-import re
-import json
 import simCalculator
+from utils.calculationmetadata import SimilarityCalculationMetaData
+from utils.resultprocessor import ConnsoleResultProcessor
 
+#Script that calculate similarity of two sets using methods defined in confifurations passed as separate file
 SETS_PARAM_NAME = 's'
 DEFAULT_SETS_FILE_NAME = "sets.txt"
 
@@ -15,46 +16,15 @@ def parseParams():
     rawParams = parse.parseArguments(sys.argv)
     return rawParams.get(SETS_PARAM_NAME, DEFAULT_SETS_FILE_NAME), rawParams.get(CONFIG_FILE_PARAM_NAME,
                                                                                  DEFAULT_CONFIG_FILE_NAME)
-
-def parseSet(rawSet):
-    splittedSet = re.split("[\s+|,;]", rawSet)
-    result = []
-    for x in splittedSet:
-        try:
-            result.append(float(x))
-        except ValueError:
-            print "Ignoring: {} while parsing set".format(x)
-
-    return result
-
-def readSets(setsFileName):
-    with open(setsFileName) as f:
-        content = f.readlines()
-    # you may also want to remove whitespace characters like `\n` at the end of each line
-    content = [x.strip() for x in content]
-    rawA = content[0]
-    rawB = content[1]
-    A = parseSet(rawA)
-    B = parseSet(rawB)
-    return A, B
-
-def readConfigs(configFileName):
-    with open(configFileName) as f:
-        content = f.readlines()
-    # you may also want to remove whitespace characters like `\n` at the end of each line
-    content = [x.strip() for x in content]
-    configs = []
-    for conf in content:
-        parsed = json.loads(conf)
-        configs.append(parsed)
-
-    return configs
+resultProcessor = ConnsoleResultProcessor()
 
 setsFile, configFile = parseParams()
 print "Sets file: {}, config file: {}".format(setsFile, configFile)
-A, B = readSets(setsFile)
+setsList = fileparser.readSets(setsFile)
+A, B = setsList[0], setsList[1] #assumes that file with sets definition has at least two sets, and uses only those sets
 print "Parsed sets: \n\tA: {} \n\tB: {}".format(A, B)
-configs = readConfigs(configFile)
-for config in configs:
-    simCalculator.calculateSimilarity(A, B, config)
+configs = fileparser.readConfigs(configFile)
+for index, config in enumerate(configs):
+    result = simCalculator.calculateSimilarity(A, B, config)
+    resultProcessor.processResult(result, SimilarityCalculationMetaData(config, A, B, index, 0, 1))
 
