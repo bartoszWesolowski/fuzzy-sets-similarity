@@ -25,6 +25,6 @@ A, B = setsList[0], setsList[1] #assumes that file with sets definition has at l
 print "Parsed sets: \n\tA: {} \n\tB: {}".format(A, B)
 configs = fileparser.readConfigs(configFile)
 for index, config in enumerate(configs):
-    result = simCalculator.calculateSimilarity(A, B, config)
+    result = simCalculator.calculateSimilarityFromRawConfig(A, B, config)
     resultProcessor.processResult(result, SimilarityCalculationMetaData(config, A, B, index, 0, 1))
 

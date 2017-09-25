@@ -1,26 +1,23 @@
 from utils import constants
-from utils import parse
-CONFIG_METADATA_PARAM_NAME = 'config'
+from utils import rawconfigparser
 
-def calculateSimilarity(A, B, config):
+
+def calculateSimilarityFromRawConfig(A, B, rawConfig):
     """Calculates similarity of two sets A and B using method declared in config map.
-    Config map must contain all parameters used to calculate similarity"""
-    validateConfigMethod(config)
-    method = config[constants.METHOD_PARAM_NAME]
-    configParser = parse.CONFIG_PARSERS[method]
-    parsedConfig = configParser(config)
+    Config map must contain all parameters used to calculate similarity, this map can be a simple string-string map,
+    that will be parsed to desired format"""
+    parsedConfig = rawconfigparser.parse(rawConfig)
+    method = parsedConfig[constants.METHOD_PARAM_NAME]
     calculator = constants.SIMILARITY_METHODS_MAP[method]
     result = calculator(A, B, parsedConfig)
     return result
 
-def validateConfigMethod(config):
-    methodKey = constants.METHOD_PARAM_NAME
-    if methodKey not in config.keys():
-        raise AttributeError(
-            "Config {} is missing {} key with value equal to one of the following: ".format(config, methodKey,
-                                                                                            constants.IMPLEMENTED_METHODS))
-    elif config[methodKey] not in constants.IMPLEMENTED_METHODS:
-        raise AttributeError(
-            "Unrecognized method: {} . List of supported methods: {}".format(config[methodKey],
-                                                                             constants.IMPLEMENTED_METHODS))
 
+def calculateSimilarityFromParsedConfig(A, B, parsedConfig):
+    """Calculates similarity of two sets A and B using method declared in config map.
+    Config map must contain all parameters used to calculate similarity, has to be passed in format required
+    by similarity calculator"""
+    method = parsedConfig[constants.METHOD_PARAM_NAME]
+    calculator = constants.SIMILARITY_METHODS_MAP[method]
+    result = calculator(A, B, parsedConfig)
+    return result

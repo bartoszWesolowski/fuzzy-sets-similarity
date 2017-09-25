@@ -1,4 +1,4 @@
-from utils import parse, fileparser
+from utils import parse, fileparser, rawconfigparser
 import sys
 import simCalculator
 from utils.calculationmetadata import SimilarityCalculationMetaData
@@ -28,12 +28,12 @@ config = configs[0]
 print "Parsed {} configs. Remember that only first config is used by this script, in that case: {}".format(len(configs), config)
 
 resultProcessor = ExcelResultProcessor(numberOfSets)
-
+parsedConfig = rawconfigparser.validateAndParse(config)
 for i in range(numberOfSets):
     for j in range(i, numberOfSets):
         A = setsList[i]
         B = setsList[j]
-        result = simCalculator.calculateSimilarity(A, B, config)
+        result = simCalculator.calculateSimilarityFromParsedConfig(A, B, parsedConfig)
         resultProcessor.processResult(result, SimilarityCalculationMetaData(config, A, B, 0, i, j))
 
 resultProcessor.save()
