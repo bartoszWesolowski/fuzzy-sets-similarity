@@ -14,7 +14,7 @@ def generalSim(A, B, config={'r': 2}):
     """Computes similarity of two fuzzy sets A, B represented as arrays of floating points numbers
     config - map contating one entry with key equal to 'r' with numeric value - parameter of Minkowski metric"""
     numberOfElements = max(len(A), len(B))
-    return 1 - (metric(A, B, config['r']) / float(numberOfElements))
+    return 1 / (1 + metric(A, B, config['r']))
 
 def metric(A, B, r=2):
     """Calculates Minkowski metric of two fuzzy sets A and B. A and B are lists of floats from 0 to 1
