@@ -21,10 +21,12 @@ resultProcessor = ConnsoleResultProcessor()
 setsFile, configFile = parseParams()
 print "Sets file: {}, config file: {}".format(setsFile, configFile)
 setsList = fileparser.readSets(setsFile)
+if len(setsList) < 2:
+    raise AttributeError("File providing sets does not contain two sets.")
 A, B = setsList[0], setsList[1] #assumes that file with sets definition has at least two sets, and uses only those sets
 print "Parsed sets: \n\tA: {} \n\tB: {}".format(A, B)
-configs = fileparser.readConfigs(configFile)
+configs = fileparser.readAndParseConfigs(configFile)
 for index, config in enumerate(configs):
-    result = simCalculator.calculateSimilarityFromRawConfig(A, B, config)
+    result = simCalculator.calculateSimilarityFromParsedConfig(A, B, config)
     resultProcessor.processResult(result, SimilarityCalculationMetaData(config, A, B, index, 0, 1))
 

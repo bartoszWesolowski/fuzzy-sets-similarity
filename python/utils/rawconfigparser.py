@@ -21,5 +21,5 @@ def validateConfigMethod(config):
                                                                                             constants.IMPLEMENTED_METHODS))
     elif config[methodKey] not in constants.IMPLEMENTED_METHODS:
         raise AttributeError(
-            "Unrecognized method: {} . List of supported methods: {}".format(config[methodKey],
+            "Unrecognized method: {} found while parsing configuration object. List of supported methods: {}".format(config[methodKey],
                                                                              constants.IMPLEMENTED_METHODS))
