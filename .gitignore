@@ -1,3 +1,5 @@
 /python/.idea
 *.pyc
 /python/fssimilarity.egg-info/*
+/python/compareSets.bat
+/python/test-time.bat

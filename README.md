@@ -43,4 +43,11 @@ Przykładowe użycie:
 	- python compareMethods.py -s customSetsFile.txt -c customConfigFile.txt 
 		- parametr -s pozwala na użycie dowolnego pliku zawierającego zbiory rozmyte
 		- parametr -c powzwala na użycie dowolnego pliku z konfigracjami.
-	
+
+		
+Generating random sets.
+
+Skrypt gerateFuzzySet.py pozwala na automatyczne generowanie zbiorów rozmytych. Przykłady użycia:
+	- gerateFuzzySet.py -h -komenda wylistuje wszystkie możliwe parametry wraz z ich znaczeniem oraz wartościami domyślnymi
+	- gerateFuzzySet.py --random -min 0.3 -max 0.6 -n 100 --appendToFile -file myResultFile.txt - wywołanie takiej komenty spowoduje wygenerowanie losowego zbioru rozmytego o 100 elementach. Każdy element będzie należał do przedziału [0.3, 0.6]. Dodatkowo wygenerowany zbiór zostanie dopisany do pliku myResultFile.txt (pozwala na to przełącznik --appendToFile - bez niego wynik zostanie tylko wypisany w konsoli)
+		
