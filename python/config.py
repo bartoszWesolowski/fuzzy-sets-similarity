@@ -1,8 +1,9 @@
 import argparse
-import sys
 import json
+import sys
+
+from parsers.parserFactory import ConfigurationParserFactory
 from utils import parse
-from utils.parsers.parserFactory import ConfigurationParserFactory
 
 METHOD_PARAMETER = "m"
 

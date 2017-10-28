@@ -1,15 +1,13 @@
-import sys
 import argparse
+
+from parsers.raw_configuration_parser import ConfigurationParser
 from utils import fileparser, simCalculator
 from utils.calculationmetadata import SimilarityCalculationMetaData
-from utils.parsers.raw_configuration_parser import ConfigurationParser
 from utils.resultprocessor import ExcelResultProcessor
 
 # Script that calculate similarity of N sets using method defined in confifuration passed as separate file
-SETS_PARAM_NAME = 's'
 DEFAULT_SETS_FILE_NAME = "sets.txt"
 
-CONFIG_FILE_PARAM_NAME = 'c'
 DEFAULT_CONFIG_FILE_NAME = "config.txt"
 
 configurationParser = ConfigurationParser()

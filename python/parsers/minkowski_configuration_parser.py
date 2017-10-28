@@ -1,6 +1,6 @@
 import abstract_configuration_parser
-from utils import paramethers as param
 from utils import constants as const
+from utils import paramethers as param
 
 
 class MinkowskiConfigParser(abstract_configuration_parser.AbstractConfigurationParser):

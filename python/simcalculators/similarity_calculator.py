@@ -1,6 +1,6 @@
+from parsers.raw_configuration_parser import ConfigurationParser
 from similarity_calculator_factory import SimilarityCalculatorFactory
 from utils import constants
-from utils.parsers.raw_configuration_parser import ConfigurationParser
 
 
 class SimilarityCalculator(object):

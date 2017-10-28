@@ -1,5 +1,5 @@
+from parsers.parserFactory import ConfigurationParserFactory
 from utils import constants
-from utils.parsers.parserFactory import ConfigurationParserFactory
 
 
 class ConfigurationParser(object):
