@@ -1,9 +1,9 @@
-import abstractparser
+import abstract_configuration_parser
 from utils import paramethers as param
 from utils import constants as const
 
 
-class MinkowskiConfigParser(abstractparser.AbstractConfigurationParser):
+class MinkowskiConfigParser(abstract_configuration_parser.AbstractConfigurationParser):
     def parse(self, rawConfigMap):
         print "Parsing config for minkowski"
         if param.R not in rawConfigMap.keys():

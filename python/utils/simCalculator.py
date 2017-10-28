@@ -1,5 +1,5 @@
 from utils import constants
-from utils.rawconfigparser import ConfigurationParser
+from utils.parsers.raw_configuration_parser import ConfigurationParser
 
 configurationParser = ConfigurationParser()
 

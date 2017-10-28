@@ -1,7 +1,7 @@
 from utils import constants as const
-from minkowskiparser import MinkowskiConfigParser
-from jaccardconfigparser import JaccardConfigParser
-from angulardistanceparser import AngularDistanceConfigParser
+from minkowski_configuration_parser import MinkowskiConfigParser
+from jaccard_configuration_parser import JaccardConfigParser
+from angular_distance_configuration_parser import AngularDistanceConfigParser
 
 
 class ConfigurationParserFactory(object):

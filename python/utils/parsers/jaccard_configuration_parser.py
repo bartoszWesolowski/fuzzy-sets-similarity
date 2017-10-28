@@ -1,9 +1,9 @@
-import abstractparser
+import abstract_configuration_parser
 from utils import paramethers as param
 from utils import constants as const
 from utils import fuzzysetevaluator
 
-class JaccardConfigParser(abstractparser.AbstractConfigurationParser):
+class JaccardConfigParser(abstract_configuration_parser.AbstractConfigurationParser):
     requiredParameters = [param.ALPHA, param.BETA, param.GAMMA, param.EVALUATOR]
 
     def parse(self, rawConfigMap):

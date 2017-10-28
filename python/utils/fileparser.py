@@ -1,6 +1,7 @@
 import json
 import re
-from rawconfigparser import ConfigurationParser
+
+from utils.parsers.raw_configuration_parser import ConfigurationParser
 
 
 def parseSet(rawSet):
