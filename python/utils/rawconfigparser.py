@@ -11,17 +11,18 @@ class ConfigurationParser(object):
     def validateAndParse(self, rawConfig):
         """Validates and parsers raw config map to map understandable by similarity calculator"""
 
-        method = self.getConfigMethodOrThrowErrorIfNotExisting(rawConfig)
+        method = ConfigurationParser.getConfigMethodOrThrowErrorIfNotExisting(rawConfig)
         configParser = self.configParserFactory.getParser(method)
         parsedConfig = configParser.parse(rawConfig)
 
         return parsedConfig
 
-    def getConfigMethodOrThrowErrorIfNotExisting(self, rawConfig):
+    @staticmethod
+    def getConfigMethodOrThrowErrorIfNotExisting(rawConfig):
         methodKey = constants.METHOD_PARAM_NAME
 
-        self.ensureMethodKeyIsPresent(methodKey, rawConfig)
-        self.ensureConfigMethodIsSupported(methodKey, rawConfig)
+        ConfigurationParser.ensureMethodKeyIsPresent(methodKey, rawConfig)
+        ConfigurationParser.ensureConfigMethodIsSupported(methodKey, rawConfig)
 
         return rawConfig[methodKey]
 
