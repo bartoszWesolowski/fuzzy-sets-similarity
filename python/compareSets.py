@@ -1,8 +1,8 @@
 import sys
 
 from utils import parse, fileparser, simCalculator
-from utils.rawconfigparser import ConfigurationParser
 from utils.calculationmetadata import SimilarityCalculationMetaData
+from utils.parsers.raw_configuration_parser import ConfigurationParser
 from utils.resultprocessor import ExcelResultProcessor
 
 #Script that calculate similarity of N sets using method defined in confifuration passed as separate file

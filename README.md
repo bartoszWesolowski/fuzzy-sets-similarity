@@ -50,4 +50,4 @@ Generating random sets.
 Skrypt gerateFuzzySet.py pozwala na automatyczne generowanie zbiorów rozmytych. Przykłady użycia:
 	- gerateFuzzySet.py -h -komenda wylistuje wszystkie możliwe parametry wraz z ich znaczeniem oraz wartościami domyślnymi
 	- gerateFuzzySet.py --random -min 0.3 -max 0.6 -n 100 --appendToFile -file myResultFile.txt - wywołanie takiej komenty spowoduje wygenerowanie losowego zbioru rozmytego o 100 elementach. Każdy element będzie należał do przedziału [0.3, 0.6]. Dodatkowo wygenerowany zbiór zostanie dopisany do pliku myResultFile.txt (pozwala na to przełącznik --appendToFile - bez niego wynik zostanie tylko wypisany w konsoli)
-		
+	- gerateFuzzySet.py --singleton -value 0.4 -n 30 - spowoduje wygenerowanie 30-to elemntowego zbioru składającego się z jednej wartości równej 0.4. Wynik zostanie wyposany na konsolę.
