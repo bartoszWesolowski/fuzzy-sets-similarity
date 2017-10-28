@@ -1,6 +1,6 @@
 import json
 import re
-import rawconfigparser
+from rawconfigparser import ConfigurationParser
 
 
 def parseSet(rawSet):
@@ -45,6 +45,7 @@ def readConfigs(configFileName):
 
     return configs
 
+configParser = ConfigurationParser()
 
 def readAndParseConfigs(configFileName):
     """Reads config files defined in filename defined by configFileName parameter.
@@ -52,5 +53,5 @@ def readAndParseConfigs(configFileName):
     Each json config representation is parsed to internal format required by similarity calculators.
     In case config is not valid this method will trow Exception"""
     rawConfigs = readConfigs(configFileName)
-    parsedConfigs = [rawconfigparser.validateAndParse(config) for config in rawConfigs]
+    parsedConfigs = [configParser.validateAndParse(config) for config in rawConfigs]
     return parsedConfigs

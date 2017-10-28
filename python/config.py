@@ -2,6 +2,7 @@ import sys
 import json
 from utils import parse
 from utils import constants as const
+from utils.parsers.parserFactory import ConfigurationParserFactory
 
 METHOD_PARAMETER = "m"
 
@@ -11,28 +12,35 @@ SUPPORTED_METHODS = [const.MINKOWSKI, const.ANGULAR_DISTANCE, const.JACCARD_INDE
 
 DEFAULT_FILE_NAME = "config.txt"
 
+configurationParserFactory = ConfigurationParserFactory()
+
+
 def getConfigFilePath(rawConfig):
     return rawConfig.get(FILE_NAME_PARAMETER, DEFAULT_FILE_NAME)
+
 
 def validateConfigMethod(rawConfig):
     print "Validating config method"
     if METHOD_PARAMETER not in rawConfig.keys():
-        raise AttributeError("No method defined! No argument" + METHOD_PARAMETER + " available.")
-    elif rawConfig[METHOD_PARAMETER] not in SUPPORTED_METHODS:
-        raise AttributeError("Unrecognized method: {} . List of supported methods: {}".format(rawConfig[METHOD_PARAMETER], SUPPORTED_METHODS))
+        raise AttributeError(
+            "No method defined! No argument" + METHOD_PARAMETER + " available. Supported methods " + str(
+                configurationParserFactory.getSupportedMethods()))
+
 
 def parseArgumentsToMethodConfig(rawArgumentsMap):
     print "Raw arguments: {}".format(rawArgumentsMap)
     validateConfigMethod(rawArgumentsMap)
     method = rawArguments[METHOD_PARAMETER]
-    configParser = parse.CONFIG_PARSERS[method]
-    parsedConfig = configParser(rawArguments)
+    configParser = configurationParserFactory.getParser(method)
+    parsedConfig = configParser.parse(rawArguments)
     print "Parsed config {}".format(parsedConfig)
     return parsedConfig
+
 
 def saveToFile(config, filePath):
     with open(filePath, "a") as myfile:
         myfile.write(json.dumps(config) + "\n")
+
 
 try:
     print "Creating map of arguments."

@@ -3,6 +3,7 @@ from utils import fuzzysetevaluator
 from utils import mathutils as m
 from utils import paramethers as params
 
+# TODO: fix this formula!
 def sim(A, B, config={
     params.ALPHA: 1,
     params.BETA: 1,
@@ -15,7 +16,7 @@ def sim(A, B, config={
     alpha = config[params.ALPHA]
     beta = config[params.BETA]
     gamma = config[params.GAMMA]
-    evaluator = config[params.EVALUATOR]
+    evaluator = fuzzysetevaluator.getEvaluator([params.EVALUATOR])
 
     nominator = m.sum(evaluator(fuzzyA.intersect(fuzzyB)),
                       gamma * evaluator(fuzzyA.complement().intersect(fuzzyB.complement())))

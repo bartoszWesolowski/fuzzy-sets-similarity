@@ -16,11 +16,11 @@ class JaccardConfigParser(abstractparser.AbstractConfigurationParser):
                                                                                            self.requiredParameters))
 
         alpha = self.parseToIntOrRaiseAttributeError(rawConfigMap[param.ALPHA],
-                                                     "Can parse alpha paramether {}".format(config[param.ALPHA]))
+                                                     "Can parse alpha paramether {}".format(rawConfigMap[param.ALPHA]))
         beta = self.parseToIntOrRaiseAttributeError(rawConfigMap[param.BETA],
-                                                    "Can parse beta paramether {}".format(config[param.BETA]))
+                                                    "Can parse beta paramether {}".format(rawConfigMap[param.BETA]))
         gamma = self.parseToIntOrRaiseAttributeError(rawConfigMap[param.GAMMA],
-                                                     "Can parse alpha paramether {}".format(config[param.GAMMA]))
+                                                     "Can parse alpha paramether {}".format(rawConfigMap[param.GAMMA]))
 
         evaluator = rawConfigMap[param.EVALUATOR]
         if evaluator not in fuzzysetevaluator.SUPPORTED_EVALUATORS:
@@ -33,5 +33,5 @@ class JaccardConfigParser(abstractparser.AbstractConfigurationParser):
             param.ALPHA: alpha,
             param.BETA: beta,
             param.GAMMA: gamma,
-            param.EVALUATOR: fuzzysetevaluator.EVALUATORS[evaluator]
+            param.EVALUATOR: evaluator
         }

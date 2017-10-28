@@ -1,6 +1,6 @@
-from utils import parse, fileparser
 import sys
-import simCalculator
+
+from utils import parse, fileparser, simCalculator
 from utils.calculationmetadata import SimilarityCalculationMetaData
 from utils.resultprocessor import ConnsoleResultProcessor
 
