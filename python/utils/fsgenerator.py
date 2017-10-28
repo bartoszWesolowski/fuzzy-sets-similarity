@@ -17,24 +17,25 @@ def singletonFuzzyList(length=20, value=1, digits=4):
     for i in range(length):
         result.append(round(value, digits))
     return result
-with open("randomsets.txt", "a") as myfile:
-    for i in range(15):
-        size = int(random.uniform(3, 5000))
-        randomSet = randomFuzzyList(length=size)
-        print len(randomSet)
-        myfile.write(' '.join([str(x) for x in randomSet]) + "\n")
-    for i in range(1):
-        size = int(random.uniform(3, 5000))
-        randomSet = singletonFuzzyList(length=size)
-        print len(randomSet)
-        myfile.write(' '.join([str(x) for x in randomSet]) + "\n")
-    for i in range(1):
-        size = int(random.uniform(3, 5000))
-        randomSet = singletonFuzzyList(length=size, value=0.0)
-        print len(randomSet)
-        myfile.write(' '.join([str(x) for x in randomSet]) + "\n")
-    for i in range(1):
-        size = int(random.uniform(3, 5000))
-        randomSet = singletonFuzzyList(length=size, value=0.5)
-        print len(randomSet)
-        myfile.write(' '.join([str(x) for x in randomSet]) + "\n")
+
+
+def triangualrSetFunctionn(x):
+    """Funkcja przynaleznosci elementu x do wzorcowego zbioru trojkatnego
+    Definicja w pracy magisterskiej, strona 40. TODO: English wersion"""
+    value = 0
+    if x <= 0:
+        value = max(0, (1 + x) / 2.0)
+    else:
+        value = max(0, (1 - x) / 2.0)
+    return value
+
+
+def triangularSet(setRange, xTransofrm=1, yTransform=1):
+    """Generates transformation of triangular set defined by triangualrSetFunctionn
+    """
+    result = []
+    for x in range(-setRange, setRange + 1):
+        xArgument = (1 / float(xTransofrm)) * x
+        result.append(yTransform * triangualrSetFunctionn(xArgument))
+
+    return result
