@@ -11,7 +11,7 @@ class ImplicationFactory(object):
     def implicationMap(self):
         implicationMap = {}
         for implication in self.IMPLICATIONS:
-            implicationMap[implicationMap.getName()] = implication
+            implicationMap[implication.getName()] = implication
         return implicationMap
 
     def getSupportedImplications(self):

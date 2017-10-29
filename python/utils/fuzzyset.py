@@ -68,17 +68,15 @@ class FuzzySet:
             result.append(1 - x)
         return FuzzySet(result)
 
-    def accumulate(self, transformer, accumulator, startValue=0.0):
+    def accumulate(self, transformer, accumulator):
         """Accumulates all elements from this set to one value using transformer for transforming each value of set. 
         Transformer has to be a function that takes one floating point argument and return a floating point number.
-        Accumulator function with two floating point parameters - first is result of previous accumulation and second is
-        transformed value of element of this set that is currently being processed.
+        Accumulator function with that takes array of numbers as argument and produces single number out of it.
         """
-        result = startValue
+        transformed = []
         for i in range(len(self.elements)):
-            transformed = transformer(self.val(i))
-            result = accumulator(result, transformed)
-        return result
+            transformed.append(transformer(self.val(i)))
+        return accumulator(transformed)
 
     def transform(self, transformer):
         """
