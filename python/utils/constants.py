@@ -1,7 +1,3 @@
-from minkowski import minkowskisimilarity as minSim
-from angle import angluardistance
-from jaccard import jaccard
-
 METHOD_PARAM_NAME = 'method'
 
 MINKOWSKI = "minkowski"
@@ -13,12 +9,6 @@ JACCARD_INDEX = "jaccard_index"
 """List of implemented similarity calculation methods"""
 IMPLEMENTED_METHODS = [MINKOWSKI, ANGULAR_DISTANCE, JACCARD_INDEX]
 
-"""Methods map"""
-SIMILARITY_METHODS_MAP = {
-    MINKOWSKI: minSim.generalSim,
-    ANGULAR_DISTANCE: angluardistance.sim,
-    JACCARD_INDEX: jaccard.sim
-}
 
 """Request parameters names"""
 SET_A_REQUEST_PARAMETER_NAME = 'setA'
