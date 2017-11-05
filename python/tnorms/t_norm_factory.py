@@ -19,6 +19,9 @@ class TnormFactory(object):
         """Returns array containing names for all supported implications"""
         return [x.getName() for x in self.tNorms]
 
+    def isTnormSupported(self, tNormName):
+        return tNormName in self.getSupportedTNorms()
+
     def getTNorm(self, name):
         """Returns t-norm object for given name"""
         if name not in self.getSupportedTNorms():

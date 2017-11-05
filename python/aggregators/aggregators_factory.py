@@ -27,3 +27,6 @@ class AggregatorFactory(object):
                     name, self.supportedAggregators()))
 
         return self.aggregatorsMap[name]
+
+    def isAggregatorSupported(self, aggregatorName):
+        return aggregatorName in self.supportedAggregators()

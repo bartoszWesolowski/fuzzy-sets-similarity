@@ -25,7 +25,7 @@ class ImplicationSimilarityCalculator(AbstractSimilarityCalculator):
     def __init__(self):
         super(ImplicationSimilarityCalculator, self).__init__()
         self.implicationFactory = ImplicationFactory()
-        self.aggregatorFacory = AggregatorFactory()
+        self.aggregatorFactory = AggregatorFactory()
         self.tNormFactory = TnormFactory()
 
     def calculateSimilarity(self, A, B, configuration):
@@ -54,7 +54,7 @@ class ImplicationSimilarityCalculator(AbstractSimilarityCalculator):
 
     def getAggregator(self, configuration):
         aggregatorName = configuration[paramNames.AGGREGATOR]
-        return self.aggregatorFacory.getAggregator(aggregatorName)
+        return self.aggregatorFactory.getAggregator(aggregatorName)
 
     def getTNorm(self, configuration):
         tNormName = configuration[paramNames.TNORM]
