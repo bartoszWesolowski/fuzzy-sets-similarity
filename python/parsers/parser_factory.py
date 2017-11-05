@@ -19,8 +19,10 @@ class ConfigurationParserFactory(object):
         keys = self.CONFIG_PARSERS.keys()
         if methodName not in keys:
             raise AttributeError(
-                "Trying to get configuration parser for unsupported method {}. Allowed methods {}".format(methodName,
-                                                                                                          keys))
+                "Trying to get configuration parser for unsupported method {}. Allowed methods {}".format(
+                    methodName,keys
+                )
+            )
         return self.CONFIG_PARSERS[methodName]
 
     def getSupportedMethods(self):

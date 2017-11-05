@@ -41,7 +41,8 @@ class ImplicationConfigurationParser(AbstractConfigurationParser):
     def validateThatAggregatorIsSupported(self, aggregatorName):
         if not self.aggregatorFactory.isAggregatorSupported(aggregatorName):
             raise AttributeError(
-                "Not supported aggregator found: {}. List of supported aggregators: {}".format(
+                "Not supported aggregator found: {} while parsing configuration for implication similarity calculator"
+                " List of supported aggregators: {}".format(
                     aggregatorName, self.aggregatorFactory.supportedAggregators()
                 )
             )
@@ -49,7 +50,8 @@ class ImplicationConfigurationParser(AbstractConfigurationParser):
     def validateThatTNormIsSupported(self, tNormName):
         if not self.tNormFactory.isTnormSupported(tNormName):
             raise AttributeError(
-                "T-norm name not supported: {}. List of supported t-norms: {}".format(
+                "Found T-norm name that is not supported: {}  while parsing configuration for implication similarity calculator."
+                "List of supported t-norms: {}".format(
                     tNormName, self.tNormFactory.getSupportedTNorms()
                 )
             )

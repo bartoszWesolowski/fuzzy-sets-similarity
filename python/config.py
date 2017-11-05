@@ -2,7 +2,7 @@ import argparse
 import json
 import sys
 
-from parsers.parserFactory import ConfigurationParserFactory
+from parsers.parser_factory import ConfigurationParserFactory
 from utils import parse
 
 METHOD_PARAMETER = "m"
