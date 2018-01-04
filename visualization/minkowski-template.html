@@ -1,0 +1,33 @@
+<div class="similarity-example-segment">
+    <form name="similarityForm"
+          role="form"
+          ng-submit="minkowskiCtrl.calculateResult()">
+        <div class="form-group">
+            <h3 class="result">
+                <span>Result: </span>
+                <span class="result-value">{{ minkowskiCtrl.similarityOfSets }}</span>
+            </h3>
+            <label>Set A:</label>
+            <input type="text"
+                   required
+                   class="form-control"
+                   ng-model="minkowskiCtrl.rawSetA"
+                   title="Set A"/>
+            <label>Set B:</label>
+            <input type="text"
+                   required
+                   class="form-control"
+                   ng-model="minkowskiCtrl.rawSetB"
+                   title="Set B"/>
+            <div class="config">
+                <label>R:</label>
+                <input type="number"
+                       required
+                       class="form-control"
+                       ng-model="minkowskiCtrl.similarityData.config.r"
+                       title="R"/>
+            </div>
+            <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
+        </div>
+    </form>
+</div>
