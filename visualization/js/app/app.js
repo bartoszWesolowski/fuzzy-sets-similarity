@@ -1,67 +1,51 @@
-(function() {
+(function () {
+
+    const defaultMethodName = 'minkowski';
 
     var app = angular.module("fuzzy-sets", []);
 
-    app.controller("SimilarityController", function($http) {
-        let similarityResult = 0;
-
-        this.similarityEntry = {};
-
-        this.init = function (similarityEntry) {
-            this.similarityEntry = similarityEntry;
-            this.getSimilarity(similarityEntry);
-        }
-
-        this.getSimilarity = (config) => {
-            $http.post("http://localhost:5000/fuzzy/similarity", config)
-                .then(
-                    (response) => {
-                        console.log(response);
-                        similarityResult = response.data.result;
-                    },
-                    (errorResponse) => {
-                        console.log(errorResponse);
-                        alert("Error.!")
-                    }
-                );
-        }
-
-        this.resalculate = () => {
-            this.getSimilarity(similarityEntry);
-        }
-    });
-
-    app.directive("minkowskiSimilarity",['$http',  function($http) {
+    app.directive("similarityCalculator", ['$http', function ($http) {
         return {
             restrict: "E",
-            templateUrl: "minkowski-template.html",
-            scope: {
-                defaultValues: '@',
-                similarityMethod: '@'
+            templateUrl: function (elem, attr) {
+                return (attr.method || defaultMethodName) + '-template.html';
             },
-            controller: function($attrs) {
+            scope: {
+                methodConfig: '<',
+                similarityMethod: '<'
+            },
+            link: function(scope, element, attrs) {
+                attrs.$observe('methodConfig', function(value) {
+                    console.log(value);
+                });
+            },
+            controller: function ($attrs) {
                 this.similarityOfSets = 0;
-                console.log($attrs.similarityMethod);
-                this.rawSetA = "0 0.5 1";
-                this.rawSetB = "0 0.4 0.9";
-                this.similarityData = {
+
+                this.defaultConfig = {
                     setA: [],
                     setB: [],
-                    config: {
-                        r: 2
-                    },
-                    method: 'minkowski'
+                    config: {}
                 };
 
                 var minkowski = this;
 
-                this.calculateResult = function() {
+                $attrs.$observe('methodConfig', function(value) {
+                    console.log(value)
+                });
+
+                this.arrayToString = function (possiblyArray) {
+                    if (angular.isArray(possiblyArray)) {
+                        return possiblyArray.join(", ");
+                    }
+                    return '';
+                }
+
+                this.calculateResult = function () {
                     this.similarityData.setA = this.parseRawSetInputToArray(this.rawSetA);
                     this.similarityData.setB = this.parseRawSetInputToArray(this.rawSetB);
 
-                    console.log("calculating result" + JSON.stringify(this.similarityData));
-
-                    $http.post("http://localhost:5000/fuzzy/similarity", this.similarityData)
+                    $http.post('http://localhost:5000/fuzzy/similarity', this.similarityData)
                         .then(
                             (response) => {
                                 console.log(response);
@@ -69,7 +53,7 @@
                             },
                             (errorResponse) => {
                                 console.log(errorResponse);
-                                alert("Error.!")
+                                alert('Error occurred! Error response: ' + JSON.stringify(errorResponse.data))
                             }
                         );
                 }
@@ -79,7 +63,7 @@
                  * separated by white space, coma or colon to an
                  * array of floats
                  */
-                this.parseRawSetInputToArray = function(rawInput) {
+                this.parseRawSetInputToArray = function (rawInput) {
                     //TODO: test with var b = a.split(',').map(Number);
                     //TODO: also convert this to service
                     const result = [];
@@ -98,8 +82,52 @@
                     return result;
                 }
 
+
+                this.method = $attrs.similarityMethod || defaultMethodName;
+
+                this.methodConfig = angular.fromJson($attrs.methodConfig || {});
+                this.methodConfig.method = this.method
+                this.similarityData = angular.extend(this.defaultConfig, this.methodConfig)
+
+                this.rawSetA = this.arrayToString(this.methodConfig.setA) || '0 0.5 1';
+                this.rawSetB = this.arrayToString(this.methodConfig.setB) || '0 0.4 0.9';
+
+                this.calculateResult();
             },
-            controllerAs: 'minkowskiCtrl'
+            controllerAs: 'similarityCalculatorCtrl'
         }
     }]);
+
+    app.controller("MinkowskiController", function () {
+        console.log('minkowski');
+        this.examples = [
+            {
+                setA: "0, 0.5, 0.7, 0.5, 0",
+                setB: "0, 0.2, 0.5, 0.2, 0",
+                config: {
+                    r: 2
+                }
+            },
+            {
+                setA: "0, 0.1, 0.1, 0.1, 0.1 0.1 0.1 0.1 0.1 ",
+                setB: "1, 0.9, 0.9, 0.9, 1 1 1 1 1 1 1 1 1",
+                config: {r: 2}
+            },
+            {
+                setA: "0 ",
+                setB: "1",
+                config: {r: 2}
+            },
+            {
+                setA: "0, 0.1, 0.1, 0.8, 0.3 0.7 0.1 0.1 0.1",
+                setB: "0, 0.1, 0.1, 0.8, 0.3 0.7 0.1 0.1 0.1",
+                config: {r: 2}
+            },
+            {
+                setA: "0, 0.1, 0.2, 0.3, 0.4 0.5 0.6 1.0 0.6 0.5 0.4 0.3 0.2 0.1 0 ",
+                setB: "1  0.9  0.8  0.7  0.3 0.0 0.3 0.5 0.7 0.9 1 0 0 0 0 0 ",
+                config: {r: 2}
+            },
+        ];
+    });
 })();
