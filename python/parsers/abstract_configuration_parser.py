@@ -10,6 +10,6 @@ class AbstractConfigurationParser(object):
         """Returns value parsed to int or raises an AttributeError with error message."""
         try:
             return int(value)
-        except ValueError:
+        except Exception:
             raise AttributeError(errorMessage)
 

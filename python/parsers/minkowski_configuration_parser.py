@@ -12,6 +12,9 @@ class MinkowskiConfigParser(abstract_configuration_parser.AbstractConfigurationP
         rawR = rawConfigMap[param.R]
         r = self.parseToIntOrRaiseAttributeError(rawConfigMap[param.R],
                                                  "Wrong parameter {} = {} for minkowski method".format(param.R, rawR))
+        if r <= 0:
+            raise AttributeError("Minkowski R parameter must be greater than 0.")
+
         return {
             param.R: r,
             const.METHOD_PARAM_NAME: const.MINKOWSKI
