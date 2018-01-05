@@ -32,6 +32,7 @@ def calculate_zsimilarity():
             'status': "OK"
         })
     except Exception as e:
+        print e
         responseBody = {
             'status': "FAILURE",
             'message': str(e)

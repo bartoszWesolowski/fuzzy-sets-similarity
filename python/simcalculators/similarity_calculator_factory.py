@@ -22,7 +22,7 @@ class SimilarityCalculatorFactory(object):
     def getSimilarityCalculator(self, calculatorName):
         if calculatorName not in self.getSupportedCalulatorsNames():
             raise AttributeError(
-                "Unknown similarity calculator name: {}. Can not provide similarity calculator for that name.".format(
-                    calculatorName))
+                "Unknown similarity calculator name: {}. Can not provide similarity calculator for that name. All supported names: %s".format(
+                    calculatorName, self.getSupportedCalulatorsNames()))
 
         return self.SIMILARITY_METHODS_MAP[calculatorName]

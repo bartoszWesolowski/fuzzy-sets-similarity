@@ -2,7 +2,7 @@ METHOD_PARAM_NAME = 'method'
 
 MINKOWSKI = "minkowski"
 
-ANGULAR_DISTANCE = "angular_distance"
+ANGULAR_DISTANCE = "angular-distance"
 
 JACCARD_INDEX = "jaccard_index"
 

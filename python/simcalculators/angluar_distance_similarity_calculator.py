@@ -16,8 +16,8 @@ class AngularDistanceSimilarityCalculator(AbstractSimilarityCalculator):
         fuzzyA = FuzzySet(A)
         fuzzyB = FuzzySet(B)
         multiplied = AngularDistanceSimilarityCalculator.multipliedElements(fuzzyA, fuzzyB)
-        squereSumA = fuzzyA.accumulate(m.squere, m.sum)
-        squereSumB = fuzzyB.accumulate(m.squere, m.sum)
+        squereSumA = fuzzyA.accumulate(m.squere, sum)
+        squereSumB = fuzzyB.accumulate(m.squere, sum)
         denominator = m.multiply(math.sqrt(squereSumA), math.sqrt(squereSumB))
         #TODO: what if denominator is equal to zero????
         if denominator == 0:
@@ -25,7 +25,7 @@ class AngularDistanceSimilarityCalculator(AbstractSimilarityCalculator):
                 fuzzyA.elements) + ", " + str(fuzzyB.elements)
             return 0
 
-        return m.divide(multiplied, denominator)
+        return m.divide (multiplied, denominator)
 
 
     @staticmethod
