@@ -1,12 +1,9 @@
-(function () {
+(function (_) {
 
     const defaultMethodName = 'minkowski';
 
-    var app = angular.module("fuzzy-sets", ['chart.js']);
-
-    app.directive('fuzzySetsChart', function() {
-
-    });
+    var app = angular.module("fuzzy-sets", ['fuzzyCharts']);
+    
     app.directive("similarityCalculator", ['$http', 'arrayUtils', function ($http, arrayUtils) {
         return {
             restrict: "E",
@@ -20,38 +17,58 @@
             controller: function ($attrs) {
                 this.similarityOfSets = 0;
 
-                this.defaultConfig = {
+                this.defaultSimilarityDataConfig = {
                     setA: [],
                     setB: [],
                     config: {}
                 };
 
+                this.chartConfig = {
+                    data: [
+                        [1, 2],
+                        [5, 3]
+                    ]
+                };
                 var minkowski = this;
+
+                this.updateView = function(config) {
+                    const setA = config.setA || [];
+                    const setB = config.setB || [];
+                    this.chartConfig = {
+                        data: [
+                            setA,
+                            setB
+                        ],
+                        labels: _.range(Math.max(setA.length, setB.length))
+                    };
+                    this.rawSetA = arrayUtils.arrayToString(config.setA) || '0 0.5 1';
+                    this.rawSetB = arrayUtils.arrayToString(config.setB) || '0 0.4 0.9';
+                }
 
                 //TODO:It seems to be a dirty way to pass an object from directive attr to its controller,
                 //TODO:What would be the best way to do it?
                 this.init = function (config) {
                     //config might be a static json (as string) or dynamic object
-                    this.methodConfig = angular.fromJson(config || {});
                     this.method = $attrs.similarityMethod || defaultMethodName;
 
+                    this.methodConfig = angular.fromJson(config || {});
                     this.methodConfig.method = this.method
-                    this.similarityData = angular.extend(this.defaultConfig, this.methodConfig)
+                    this.similarityData = angular.extend(this.defaultSimilarityDataConfig, this.methodConfig)
 
-                    this.rawSetA = arrayUtils.arrayToString(this.methodConfig.setA) || '0 0.5 1';
-                    this.rawSetB = arrayUtils.arrayToString(this.methodConfig.setB) || '0 0.4 0.9';
 
+                    this.updateView(this.methodConfig);
                     this.calculateResult();
                 };
 
                 this.calculateResult = function () {
                     this.similarityData.setA = arrayUtils.stringToArray(this.rawSetA);
                     this.similarityData.setB = arrayUtils.stringToArray(this.rawSetB);
-
+                    console.log('Calculating similiraty for: ' + JSON.stringify(this.similarityData));
                     $http.post('http://localhost:5000/fuzzy/similarity', this.similarityData)
                         .then(
                             (response) => {
                                 console.log(response);
+                                this.updateView(response.data);
                                 minkowski.similarityOfSets = response.data.result;
                             },
                             (errorResponse) => {
@@ -68,6 +85,13 @@
 
     app.controller("MinkowskiController", function () {
         console.log('minkowski');
+        this.mainExample = {
+            setA: [0.7439, 0.6284, 0.9311, 0.2229, 0.5491, 0.079, 0.2591, 0.1581, 0.9452, 0.4276, 0.5349],
+            setB: [0.1691, 0.5882, 0.9585, 0.0202, 0.0754, 0.5257, 0.786, 0.0104, 0.7333, 0.7509, 0.6023],
+            config: {
+                r: 2
+            }
+        }
         this.examples = [
             {
                 setA: [0, 0.5, 0.7, 0.5, 0],
@@ -135,4 +159,4 @@
             arrayToString
         };
     });
-})();
+})(_);
