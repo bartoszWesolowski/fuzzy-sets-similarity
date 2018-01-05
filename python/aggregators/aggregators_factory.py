@@ -16,17 +16,17 @@ class AggregatorFactory(object):
         for aggregator in self.aggregators:
             self.aggregatorsMap[aggregator.getName()] = aggregator
 
-    def supportedAggregators(self):
+    def getSupportedAggregators(self):
         """returns list of all supported aggregators"""
         return [aggregator.getName() for aggregator in self.aggregators]
 
     def getAggregator(self, name):
-        if name not in self.supportedAggregators():
+        if name not in self.getSupportedAggregators():
             raise AttributeError(
                 "Can not create aggregator for name: {}. Supported aggregators: {}".format(
-                    name, self.supportedAggregators()))
+                    name, self.getSupportedAggregators()))
 
         return self.aggregatorsMap[name]
 
     def isAggregatorSupported(self, aggregatorName):
-        return aggregatorName in self.supportedAggregators()
+        return aggregatorName in self.getSupportedAggregators()

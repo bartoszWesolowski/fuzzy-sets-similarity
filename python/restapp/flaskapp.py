@@ -20,16 +20,24 @@ def get_implemented_similarity_calculation_methods():
 def calculate_zsimilarity():
     requestBody = request.get_json(force=True)
     print "Got request with body: " + str(requestBody)
-    parsedRequest = SimilarityRequest(requestBody)
-    result = parsedRequest.calculate()
-    return jsonify({
-        c.METHOD_REQUEST_PARAMETER_NAME: parsedRequest.method,
-        c.CONFIG_REQUEST_PARAMETER_NAME: str(parsedRequest.rawConfig),
-        c.RESULT_REQUEST_PARAMETER_NAME: result,
-        c.SET_A_REQUEST_PARAMETER_NAME: parsedRequest.setA,
-        c.SET_B_REQUEST_PARAMETER_NAME: parsedRequest.setB,
-        'status': "OK"
-    })
+    try:
+        parsedRequest = SimilarityRequest(requestBody)
+        result = parsedRequest.calculate()
+        return jsonify({
+            c.METHOD_REQUEST_PARAMETER_NAME: parsedRequest.method,
+            c.CONFIG_REQUEST_PARAMETER_NAME: str(parsedRequest.rawConfig),
+            c.RESULT_REQUEST_PARAMETER_NAME: result,
+            c.SET_A_REQUEST_PARAMETER_NAME: parsedRequest.setA,
+            c.SET_B_REQUEST_PARAMETER_NAME: parsedRequest.setB,
+            'status': "OK"
+        })
+    except Exception as e:
+        responseBody = {
+            'status': "FAILURE",
+            'message': str(e)
+        }
+        return jsonify(responseBody), 400
+
 
 
 def get_request_map(request):

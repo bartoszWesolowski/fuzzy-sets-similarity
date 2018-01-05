@@ -1,9 +1,11 @@
 import argparse
-from utils import fileparser, simCalculator
+from utils import fileparser
 from utils.calculationmetadata import SimilarityCalculationMetaData
 from utils.resultprocessor import ConnsoleResultProcessor
+from facade.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 
 #Script that calculate similarity of two sets using methods defined in confifurations passed as separate file
+
 DEFAULT_SETS_FILE_NAME = "sets.txt"
 
 DEFAULT_CONFIG_FILE_NAME = "config.txt"
@@ -23,6 +25,7 @@ parser.add_argument('-c',
                     default=DEFAULT_CONFIG_FILE_NAME, metavar='configFile', dest='configFile')
 
 resultProcessor = ConnsoleResultProcessor()
+similarityCalculatorWrapper = SimilarityCalculatorWrapper()
 
 args = parser.parse_args()
 setsFile, configFile = args.setsFile, args.configFile
@@ -37,6 +40,6 @@ print "Parsed sets: \n\tA: {} \n\tB: {}".format(A, B)
 configs = fileparser.readAndParseConfigs(configFile)
 
 for index, config in enumerate(configs):
-    result = simCalculator.calculateSimilarityFromParsedConfig(A, B, config)
+    result = similarityCalculatorWrapper.calculateSimilarityFromParsedConfig(A, B, config)
     resultProcessor.processResult(result, SimilarityCalculationMetaData(config, A, B, index, 0, 1))
 

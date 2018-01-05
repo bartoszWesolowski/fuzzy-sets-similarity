@@ -39,3 +39,28 @@ def triangularSet(setRange, xTransofrm=1, yTransform=1):
         result.append(yTransform * triangualrSetFunctionn(xArgument))
 
     return result
+
+
+def triangular(x, a, b, c):
+    if a < b < c:
+        first = (x - a) / (b - a)
+        second = (c - x) / (c - b)
+        minimum = min(first, second)
+        return max(0, minimum)
+    else:
+        raise AttributeError(
+            "Creating triangular function requires the following arguments: a < b < c but found a = {}, b = {}, c = {}. ".format(
+                a, b, c))
+
+
+def trapeze(x, a, b, c, d):
+    if a < b <= c < d:
+        first = (x - a) / (b - a)
+        second = (d - x) / (d -c)
+        minimum = min(1, first, second)
+        return max(0, minimum)
+        return 0
+    else:
+        raise AttributeError()
+
+print triangularSet(50, 1, 1)

@@ -1,7 +1,7 @@
 import json
 import re
 
-from parsers.raw_configuration_parser import ConfigurationParser
+from facade.raw_configuration_parser import ConfigurationParser
 
 
 def parseSet(rawSet):

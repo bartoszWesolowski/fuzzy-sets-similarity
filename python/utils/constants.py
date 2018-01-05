@@ -6,6 +6,8 @@ ANGULAR_DISTANCE = "angular_distance"
 
 JACCARD_INDEX = "jaccard_index"
 
+IMPLICATION_SIMILARITY = 'implication_similarity'
+
 """List of implemented similarity calculation methods"""
 IMPLEMENTED_METHODS = [MINKOWSKI, ANGULAR_DISTANCE, JACCARD_INDEX]
 

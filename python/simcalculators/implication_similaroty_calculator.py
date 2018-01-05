@@ -4,7 +4,7 @@ from implications.implication_factory import ImplicationFactory
 from aggregators.aggregators_factory import AggregatorFactory
 from tnorms.t_norm_factory import TnormFactory
 from utils import configuration_parameters_names as paramNames
-
+#TODO: Nazwa
 class ElementsSimilarityByImplicationCalculator(object):
     def __init__(self, implication, tNorm):
         self.implication = implication

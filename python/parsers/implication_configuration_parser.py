@@ -18,21 +18,21 @@ class ImplicationConfigurationParser(AbstractConfigurationParser):
         self.validateRequiredParametersExistence(rawConfigMap)
         self.validateThatImplicationIsSupported(rawConfigMap[params.IMPLICATION])
         self.validateThatAggregatorIsSupported(rawConfigMap[params.AGGREGATOR])
-        self.validateThatTNormIsSupported(rawConfigMap[params.AGGREGATOR])
+        self.validateThatTNormIsSupported(rawConfigMap[params.TNORM])
         return rawConfigMap
 
     def validateRequiredParametersExistence(self, rawConfigMap):
         for param in self.requiredParameters:
             if param not in rawConfigMap.keys():
                 raise AttributeError(
-                    "Missing {} parameter in implication configuration. All required parameters: ".format(
+                    "Missing {} parameter in implication configuration. All required parameters: {}".format(
                         param, self.requiredParameters
                     ))
 
     def validateThatImplicationIsSupported(self, implicationName):
         if not self.implicationFactory.isSupported(implicationName):
             raise AttributeError(
-                "Not supported implication: {} found while parsing configuration for implication similarity calculator."
+                "Not supported implication: '{}' found while parsing configuration for implication similarity calculator."
                 " List of supported implications: {}.".format(
                     implicationName, self.implicationFactory.getSupportedImplications()
                 )
@@ -43,7 +43,7 @@ class ImplicationConfigurationParser(AbstractConfigurationParser):
             raise AttributeError(
                 "Not supported aggregator found: {} while parsing configuration for implication similarity calculator"
                 " List of supported aggregators: {}".format(
-                    aggregatorName, self.aggregatorFactory.supportedAggregators()
+                    aggregatorName, self.aggregatorFactory.getSupportedAggregators()
                 )
             )
 

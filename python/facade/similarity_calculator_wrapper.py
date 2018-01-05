@@ -1,13 +1,14 @@
-from parsers.raw_configuration_parser import ConfigurationParser
-from similarity_calculator_factory import SimilarityCalculatorFactory
+from facade.raw_configuration_parser import ConfigurationParser
+from similarity_calculator_facade import SimilarityFacade
+
 from utils import constants
 
 
-class SimilarityCalculator(object):
+class SimilarityCalculatorWrapper(object):
 
     configurationParser = ConfigurationParser()
 
-    similarityCalculatorFactory = SimilarityCalculatorFactory()
+    similarityFacade = SimilarityFacade()
 
     def calculateSimilarityFromRawConfig(self, A, B, rawConfig):
         """Calculates similarity of two sets A and B using method declared in config map.
@@ -28,5 +29,5 @@ class SimilarityCalculator(object):
 
     def getSimilarityCalculator(self, parsedConfig):
         method = parsedConfig[constants.METHOD_PARAM_NAME]
-        calculator = self.similarityCalculatorFactory.getSimilarityCalculator(method)
+        calculator = self.similarityFacade.getSimilarityCalculator(method)
         return calculator

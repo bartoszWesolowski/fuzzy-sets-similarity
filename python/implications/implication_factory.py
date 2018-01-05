@@ -27,4 +27,4 @@ class ImplicationFactory(object):
         return self.implicationMap()[name]
 
     def isSupported(self, implicationName):
-        return implicationName in self.IMPLICATIONS
+        return implicationName in self.getSupportedImplications()

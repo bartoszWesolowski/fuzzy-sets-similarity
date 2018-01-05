@@ -1,13 +1,18 @@
 from utils import constants as c
 from utils import mathutils
-from utils import simCalculator
+from utils.mapvalidator import MapValidator
 
+from facade.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 
 class SimilarityRequest:
     setA = []
     setB = []
     method = ""
     rawConfig = {}
+
+    similarityCalculatorWrapper = SimilarityCalculatorWrapper()
+
+    requiredParameters = [c.SET_A_REQUEST_PARAMETER_NAME, c.SET_B_REQUEST_PARAMETER_NAME, c.METHOD_REQUEST_PARAMETER_NAME, c.CONFIG_REQUEST_PARAMETER_NAME]
 
     def __init__(self, requestParametersDict):
         """Constructor: get dictionary as a input parameter
@@ -17,6 +22,10 @@ class SimilarityRequest:
             'setB' - same as setA
             'rawConfig' - String:String map representing config parsed form json
         """
+
+        #TODO: could also introduce some type validation in the future
+        MapValidator.validateRequiredParametersExistence(requestParametersDict, self.requiredParameters)
+
         self.setA = mathutils.clamp(requestParametersDict[c.SET_A_REQUEST_PARAMETER_NAME])
         self.setB = mathutils.clamp(requestParametersDict[c.SET_B_REQUEST_PARAMETER_NAME])
         self.method = requestParametersDict[c.METHOD_REQUEST_PARAMETER_NAME]
@@ -24,4 +33,4 @@ class SimilarityRequest:
         self.rawConfig[c.METHOD_PARAM_NAME] = self.method
 
     def calculate(self):
-        return simCalculator.calculateSimilarityFromRawConfig(self.setA, self.setB, self.rawConfig)
+        return self.similarityCalculatorWrapper.calculateSimilarityFromRawConfig(self.setA, self.setB, self.rawConfig)
