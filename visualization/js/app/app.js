@@ -11,8 +11,8 @@
                 return (attr.method || defaultMethodName) + '-template.html';
             },
             scope: {
-                methodConfig: '<',
-                similarityMethod: '<'
+                methodConfig: '=',
+                similarityMethod: '='
             },
             link: function(scope, element, attrs) {
                 attrs.$observe('methodConfig', function(value) {
@@ -30,9 +30,21 @@
 
                 var minkowski = this;
 
-                $attrs.$observe('methodConfig', function(value) {
-                    console.log(value)
-                });
+                //TODO:It seems to be a dirty way to pass an object from directive attr to its controller,
+                //TODO:What would be the best way to do it?
+                this.init = function(config) {
+                    //config might be a static json (as string) or dynamic object
+                    this.methodConfig = angular.fromJson(config|| {});
+                    this.method = $attrs.similarityMethod || defaultMethodName;
+
+                    this.methodConfig.method = this.method
+                    this.similarityData = angular.extend(this.defaultConfig, this.methodConfig)
+
+                    this.rawSetA = this.arrayToString(this.methodConfig.setA) || '0 0.5 1';
+                    this.rawSetB = this.arrayToString(this.methodConfig.setB) || '0 0.4 0.9';
+
+                    this.calculateResult();
+                };
 
                 this.arrayToString = function (possiblyArray) {
                     if (angular.isArray(possiblyArray)) {
@@ -82,17 +94,6 @@
                     return result;
                 }
 
-
-                this.method = $attrs.similarityMethod || defaultMethodName;
-
-                this.methodConfig = angular.fromJson($attrs.methodConfig || {});
-                this.methodConfig.method = this.method
-                this.similarityData = angular.extend(this.defaultConfig, this.methodConfig)
-
-                this.rawSetA = this.arrayToString(this.methodConfig.setA) || '0 0.5 1';
-                this.rawSetB = this.arrayToString(this.methodConfig.setB) || '0 0.4 0.9';
-
-                this.calculateResult();
             },
             controllerAs: 'similarityCalculatorCtrl'
         }
@@ -111,7 +112,7 @@
             {
                 setA: "0, 0.1, 0.1, 0.1, 0.1 0.1 0.1 0.1 0.1 ",
                 setB: "1, 0.9, 0.9, 0.9, 1 1 1 1 1 1 1 1 1",
-                config: {r: 2}
+                config: {r: 3}
             },
             {
                 setA: "0 ",
@@ -130,4 +131,5 @@
             },
         ];
     });
+
 })();
