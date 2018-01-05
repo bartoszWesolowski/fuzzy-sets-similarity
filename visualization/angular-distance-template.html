@@ -4,7 +4,10 @@
           role="form"
           ng-submit="similarityCalculatorCtrl.calculateResult()">
         <div class="form-group">
-            <info-bar></info-bar>
+            <h3 class="result">
+                <span>Result: </span>
+                <span class="result-value">{{ similarityCalculatorCtrl.similarityOfSets }}</span>
+            </h3>
             <label>Set A:</label>
             <input type="text"
                    required
@@ -17,13 +20,6 @@
                    class="form-control"
                    ng-model="similarityCalculatorCtrl.rawSetB"
                    title="Set B"/>
-            <div class="config">
-                <label>R:</label>
-                <input type="number"
-                       class="form-control"
-                       ng-model="similarityCalculatorCtrl.similarityData.config.r"
-                       title="R"/>
-            </div>
             <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
             <fuzzy-set-chart config="similarityCalculatorCtrl.chartConfig"></fuzzy-set-chart>
         </div>

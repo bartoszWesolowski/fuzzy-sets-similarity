@@ -15,7 +15,31 @@
                 similarityMethod: '='
             },
             controller: function ($attrs) {
+                var minkowski = this;
+
                 this.similarityOfSets = 0;
+
+                this.calculationStatus = {
+                    inProgress: true,
+                    finished: false,
+                    failed: false,
+                    failureData: {},
+                    start: function () {
+                        this.inProgress = true;
+                        this.finished = false;
+                        this.failed = false;
+                    },
+                    finish: function () {
+                        this.inProgress = false;
+                        this.finished = true;
+                        this.failed = false;
+                    },
+                    fail: function (errorResponse) {
+                        this.finish();
+                        this.failed = true;
+                        this.failureData.message = errorResponse.data.message;
+                    }
+                };
 
                 this.defaultSimilarityDataConfig = {
                     setA: [],
@@ -29,9 +53,8 @@
                         [5, 3]
                     ]
                 };
-                var minkowski = this;
 
-                this.updateView = function(config) {
+                this.updateView = function (config) {
                     const setA = config.setA || [];
                     const setB = config.setB || [];
                     this.chartConfig = {
@@ -60,18 +83,24 @@
                     this.calculateResult();
                 };
 
+                this.hasCalculationFailed = function () {
+
+                }
                 this.calculateResult = function () {
                     this.similarityData.setA = arrayUtils.stringToArray(this.rawSetA);
                     this.similarityData.setB = arrayUtils.stringToArray(this.rawSetB);
                     console.log('Calculating similiraty for: ' + JSON.stringify(this.similarityData));
+                    this.calculationStatus.start();
                     $http.post('http://localhost:5000/fuzzy/similarity', this.similarityData)
                         .then(
                             (response) => {
                                 console.log(response);
                                 this.updateView(response.data);
                                 minkowski.similarityOfSets = response.data.result;
+                                this.calculationStatus.finish();
                             },
                             (errorResponse) => {
+                                this.calculationStatus.fail(errorResponse);
                                 console.log(errorResponse);
                                 alert('Error occurred! Error response: ' + JSON.stringify(errorResponse.data))
                             }
@@ -82,6 +111,13 @@
             controllerAs: 'similarityCalculatorCtrl'
         }
     }]);
+
+    app.directive('infoBar', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'info-bar.html'
+        };
+    });
 
     app.factory('arrayUtils', function () {
 
@@ -114,7 +150,7 @@
         };
     });
 
-    app.directive('fuzzyNavigation', function() {
+    app.directive('fuzzyNavigation', function () {
         return {
             restrict: 'E',
             templateUrl: 'navigation-template.html'
