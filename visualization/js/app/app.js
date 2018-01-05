@@ -2,8 +2,11 @@
 
     const defaultMethodName = 'minkowski';
 
-    var app = angular.module("fuzzy-sets", []);
+    var app = angular.module("fuzzy-sets", ['chart.js']);
 
+    app.directive('fuzzySetsChart', function() {
+
+    });
     app.directive("similarityCalculator", ['$http', 'arrayUtils', function ($http, arrayUtils) {
         return {
             restrict: "E",
@@ -27,9 +30,9 @@
 
                 //TODO:It seems to be a dirty way to pass an object from directive attr to its controller,
                 //TODO:What would be the best way to do it?
-                this.init = function(config) {
+                this.init = function (config) {
                     //config might be a static json (as string) or dynamic object
-                    this.methodConfig = angular.fromJson(config|| {});
+                    this.methodConfig = angular.fromJson(config || {});
                     this.method = $attrs.similarityMethod || defaultMethodName;
 
                     this.methodConfig.method = this.method
@@ -67,60 +70,58 @@
         console.log('minkowski');
         this.examples = [
             {
-                setA: "0, 0.5, 0.7, 0.5, 0",
-                setB: "0, 0.2, 0.5, 0.2, 0",
+                setA: [0, 0.5, 0.7, 0.5, 0],
+                setB: [0, 0.2, 0.5, 0.2, 0],
                 config: {
                     r: 2
                 }
             },
             {
-                setA: "0, 0.1, 0.1, 0.1, 0.1 0.1 0.1 0.1 0.1 ",
-                setB: "1, 0.9, 0.9, 0.9, 1 1 1 1 1 1 1 1 1",
-                config: {r: 3}
+                setA: [0, 0.1, 0.1, 0.1, 0.1],
+                setB: [1, 0.9, 0.9, 0.9, 1],
+                config: {
+                    r: 3
+                }
             },
             {
-                setA: "0 ",
-                setB: "1",
-                config: {r: 2}
+                setA: [0],
+                setB: [1],
+                config: {
+                    r: 2
+                }
             },
             {
-                setA: "0, 0.1, 0.1, 0.8, 0.3 0.7 0.1 0.1 0.1",
-                setB: "0, 0.1, 0.1, 0.8, 0.3 0.7 0.1 0.1 0.1",
-                config: {r: 2}
+                setA: [0, 0.1, 0.1, 0.8, 0.3, 0.7, 0.1, 0.1, 0.1],
+                setB: [0, 0.1, 0.1, 0.8, 0.3, 0.7, 0.1, 0.1, 0.1],
+                config: {
+                    r: 2
+                }
             },
             {
-                setA: "0, 0.1, 0.2, 0.3, 0.4 0.5 0.6 1.0 0.6 0.5 0.4 0.3 0.2 0.1 0 ",
-                setB: "1  0.9  0.8  0.7  0.3 0.0 0.3 0.5 0.7 0.9 1 0 0 0 0 0 ",
+                setA: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.0, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0],
+                setB: [1, 0.9, , 0.8, , 0.7, , 0.3, 0.0, 0.3, 0.5, 0.7, 0.9, 1, 0, 0, 0, 0, 0, ],
                 config: {r: 2}
             },
         ];
     });
 
-    app.factory('arrayUtils', function() {
+    app.factory('arrayUtils', function () {
 
+        const stringArraySplitter = /\s+|,|;/;
         /**
          * Converts a string with floating point numbers
          * separated by white space, coma or colon to an
          * array of floats
          */
-       const stringToArray = function (rawInput) {
-           //TODO: test with var b = a.split(',').map(Number);
-           //TODO: also convert this to service
-           const result = [];
-           var splittedArray = rawInput.split(/\s+|,|;/);
-           console.log(JSON.stringify(splittedArray));
-           for (x of splittedArray) {
-               if (x) { //if not empty string
-                   let parsed = parseFloat(x);
-                   if (isNaN(parsed)) {
-                       console.log('Can not parse ' + x + " to float value. Ignoring this input.");
-                   } else {
-                       result.push(parsed);
-                   }
-               }
-           }
-           return result;
-       }
+        const stringToArray = function (rawInput) {
+            //TODO: test with var b = a.split(',').map(Number);
+            //TODO: also convert this to service
+            const input = rawInput || '';
+            return input.split(stringArraySplitter)
+                .map(parseFloat)
+                .filter((value) => !isNaN(value));
+
+        }
 
         const arrayToString = function (possiblyArray) {
             if (angular.isArray(possiblyArray)) {

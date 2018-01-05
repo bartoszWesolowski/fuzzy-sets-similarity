@@ -6,22 +6,28 @@
 </head>
 <body ng-app="fuzzy-sets">
 
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-        <similarity-calculator
-                similarity-method="minkowski"
-                method-config='{"config":{"r": 2}}'>
-        </similarity-calculator>
-    </div>
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1"
+         ng-controller="MinkowskiController as minkowskiCtrl">
 
-    <div ng-controller="MinkowskiController as minkowskiCtrl">
-        <div ng-repeat="example in minkowskiCtrl.examples">
+        <div class="col-xs-12 col-sm-12">
             <similarity-calculator
                     similarity-method="minkowski"
-                    method-config="example">
+                    method-config='{"config":{"r": 2}}'>
             </similarity-calculator>
         </div>
+
+        <div>
+            <div ng-repeat="example in minkowskiCtrl.examples">
+                <similarity-calculator
+                        similarity-method="minkowski"
+                        method-config="example">
+                </similarity-calculator>
+            </div>
+        </div>
     </div>
-    <script src="js/angular.js"></script>
+    <script src="js/libs/angular.js"></script>
+    <script src="js/libs/chart/Chart-2.6.0.min.js"></script>
+    <script src="js/libs/chart/angular-chart.min.js"></script>
     <script type="text/javascript" src="js/app/app.js"></script>
 </body>
 </html>
