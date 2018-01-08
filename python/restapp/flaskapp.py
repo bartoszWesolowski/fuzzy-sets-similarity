@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from utils import constants as c
 from similartyrequest import SimilarityRequest
+from aggregators.aggregators_factory import AggregatorFactory
 import json
 from flask_cors import CORS
 
@@ -12,6 +13,14 @@ CORS(app)
 def get_implemented_similarity_calculation_methods():
     return jsonify({
         'methods': c.IMPLEMENTED_METHODS,
+        'status': "OK"
+    })
+
+aggregatorFactory = AggregatorFactory()
+@app.route('/fuzzy/aggregators', methods=['GET'])
+def get_implemented_aggregators():
+    return jsonify({
+        'values': aggregatorFactory.getSupportedAggregators(),
         'status': "OK"
     })
 
