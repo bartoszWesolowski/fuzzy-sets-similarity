@@ -1,7 +1,7 @@
 import json
 import re
 
-from facade2.raw_configuration_parser import ConfigurationParser
+from fuzzyfacades.raw_configuration_parser import ConfigurationParser
 
 
 def parseSet(rawSet):

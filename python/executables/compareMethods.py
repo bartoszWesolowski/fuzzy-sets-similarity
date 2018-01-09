@@ -2,7 +2,7 @@ import argparse
 from utils import fileparser
 from utils.calculationmetadata import SimilarityCalculationMetaData
 from utils.resultprocessor import ConnsoleResultProcessor
-from facade2.similarity_calculator_wrapper import SimilarityCalculatorWrapper
+from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 
 #Script that calculate similarity of two sets using methods defined in confifurations passed as separate file
 

@@ -1,12 +1,17 @@
 from flask import Flask, jsonify, request
 from utils import constants as c
-from similartyrequest import SimilarityRequest
+from restapp.similartyrequest import SimilarityRequest
 from aggregators.aggregators_factory import AggregatorFactory
 import json
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+
+
+@app.route('/', methods=['GET'])
+def get_implemented_similarity_calculation_methods():
+    return "<h1>Fuzzy sets similarity app<h1>"
 
 
 @app.route('/fuzzy/similarity/methods', methods=['GET'])

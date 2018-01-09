@@ -1,0 +1,1 @@
+python compareMethods.py -c inputfiles\config.txt -s inputfiles/sets.txt

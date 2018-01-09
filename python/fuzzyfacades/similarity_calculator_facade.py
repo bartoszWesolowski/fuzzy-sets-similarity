@@ -1,4 +1,4 @@
-from facade2.similarity_method import SimilarityMethod
+from fuzzyfacades.similarity_method import SimilarityMethod
 from utils import constants
 
 from simcalculators.angluar_distance_similarity_calculator import AngularDistanceSimilarityCalculator
