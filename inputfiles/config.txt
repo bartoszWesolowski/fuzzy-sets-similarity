@@ -1,0 +1,4 @@
+{"r": 2, "method": "minkowski"}
+{"r": 3, "method": "minkowski"}
+{"evaluator": "sup", "alpha": 1, "beta": 1, "method": "jaccard_index", "gamma": 1}
+{"evaluator": "sup", "alpha": 1, "beta": 1, "method": "jaccard_index", "gamma": 1}

@@ -1,0 +1,7 @@
+setup.py
+fssimilarity.egg-info/PKG-INFO
+fssimilarity.egg-info/SOURCES.txt
+fssimilarity.egg-info/dependency_links.txt
+fssimilarity.egg-info/not-zip-safe
+fssimilarity.egg-info/requires.txt
+fssimilarity.egg-info/top_level.txt
