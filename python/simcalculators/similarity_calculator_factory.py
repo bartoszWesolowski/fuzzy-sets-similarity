@@ -1,11 +1,9 @@
-from minkowski import minkowskisimilarity as minSim
-from angle import angluardistance
-from jaccard import jaccard
 from utils import constants
 
 from angluar_distance_similarity_calculator import AngularDistanceSimilarityCalculator
 from jaccard_similarity_calculator import JaccardSimilarityCalculator
 from minkowski_similarity_calculator import MinkowskiSimilarityCalculator
+from implication_similaroty_calculator import ImplicationSimilarityCalculator
 
 class SimilarityCalculatorFactory(object):
     """Object providing interface for retrieving similarity calculator object
@@ -13,7 +11,8 @@ class SimilarityCalculatorFactory(object):
     SIMILARITY_METHODS_MAP = {
         constants.MINKOWSKI: MinkowskiSimilarityCalculator(),
         constants.ANGULAR_DISTANCE: AngularDistanceSimilarityCalculator(),
-        constants.JACCARD_INDEX: JaccardSimilarityCalculator()
+        constants.JACCARD_INDEX: JaccardSimilarityCalculator(),
+        constants.IMPLICATION_SIMILARITY: ImplicationSimilarityCalculator()
     }
 
     def getSupportedCalulatorsNames(self):

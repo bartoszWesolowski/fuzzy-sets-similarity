@@ -1,7 +1,7 @@
 import argparse
 
-from facade.raw_configuration_parser import ConfigurationParser
-from facade.similarity_calculator_wrapper import SimilarityCalculatorWrapper
+from facade2.raw_configuration_parser import ConfigurationParser
+from facade2.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 from utils import fileparser
 from utils.calculationmetadata import SimilarityCalculationMetaData
 from utils.resultprocessor import ExcelResultProcessor

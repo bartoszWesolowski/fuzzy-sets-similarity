@@ -6,10 +6,10 @@ ANGULAR_DISTANCE = "angular-distance"
 
 JACCARD_INDEX = "jaccard_index"
 
-IMPLICATION_SIMILARITY = 'implication_similarity'
+IMPLICATION_SIMILARITY = 'implication-similarity'
 
 """List of implemented similarity calculation methods"""
-IMPLEMENTED_METHODS = [MINKOWSKI, ANGULAR_DISTANCE, JACCARD_INDEX]
+IMPLEMENTED_METHODS = [MINKOWSKI, ANGULAR_DISTANCE, JACCARD_INDEX, IMPLICATION_SIMILARITY]
 
 
 """Request parameters names"""

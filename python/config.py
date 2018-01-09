@@ -6,7 +6,7 @@ from aggregators.aggregators_factory import AggregatorFactory
 from tnorms.t_norm_factory import TnormFactory
 from implications.implication_factory import ImplicationFactory
 
-from facade.similarity_calculator_facade import SimilarityFacade
+from facade2.similarity_calculator_facade import SimilarityFacade
 from utils import configuration_parameters_names as params
 from utils import parse
 

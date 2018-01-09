@@ -2,7 +2,7 @@ from utils import constants as c
 from utils import mathutils
 from utils.mapvalidator import MapValidator
 
-from facade.similarity_calculator_wrapper import SimilarityCalculatorWrapper
+from facade2.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 
 class SimilarityRequest:
     setA = []

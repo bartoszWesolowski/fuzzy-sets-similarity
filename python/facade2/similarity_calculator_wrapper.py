@@ -1,4 +1,4 @@
-from facade.raw_configuration_parser import ConfigurationParser
+from facade2.raw_configuration_parser import ConfigurationParser
 from similarity_calculator_facade import SimilarityFacade
 
 from utils import constants
