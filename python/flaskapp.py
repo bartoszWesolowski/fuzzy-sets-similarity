@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from utils import constants as c
-from restapp.similartyrequest import SimilarityRequest
+from restapphelpers.similartyrequest import SimilarityRequest
 from aggregators.aggregators_factory import AggregatorFactory
 import json
 from flask_cors import CORS
