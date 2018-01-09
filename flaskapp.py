@@ -1,25 +1,22 @@
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory, redirect, url_for
 from utils import constants as c
 from restapphelpers.similartyrequest import SimilarityRequest
 from aggregators.aggregators_factory import AggregatorFactory
 import json
 from flask_cors import CORS
 
-app = Flask(__name__, static_url_path='../..')
+app = Flask(__name__, static_url_path='')
 CORS(app)
-
-HTML_FILES_FOLDER_PATH = '../visualisation'
 
 
 @app.route('/visualisation/<path:filename>')
 def get_visualisation(filename):
-    print "Visualisation file"
     return send_from_directory(HTML_FILES_FOLDER_PATH, filename)
 
 
 @app.route('/', methods=['GET'])
 def get_home_page():
-    return "<h1>Fuzzy sets similarity app<h1>" + "<p>Go to /visialisation</p>"
+    return redirect('/visualization/minkowski.html')
 
 
 @app.route('/fuzzy/similarity/methods', methods=['GET'])
