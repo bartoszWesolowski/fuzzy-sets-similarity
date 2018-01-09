@@ -10,7 +10,7 @@ CORS(app)
 
 
 @app.route('/', methods=['GET'])
-def get_implemented_similarity_calculation_methods():
+def get_home_page():
     return "<h1>Fuzzy sets similarity app<h1>"
 
 

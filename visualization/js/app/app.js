@@ -4,11 +4,11 @@
 
     var app = angular.module("fuzzy-sets", ['fuzzyCharts', 'dataProviders']);
 
-    app.directive("similarityCalculator", ['$http', 'arrayUtils', function ($http, arrayUtils) {
+    app.directive("similarityCalculator", ['$http', 'arrayUtils', 'fuzzyApi', function ($http, arrayUtils, fuzzyApi) {
         return {
             restrict: "E",
             templateUrl: function (elem, attr) {
-                return (attr.method || defaultMethodName) + '-template.html';
+                return (attr.similarityMethod || defaultMethodName) + '-template.html';
             },
             scope: {
                 methodConfig: '=',
@@ -49,14 +49,20 @@
 
                 this.chartConfig = {
                     data: [
-                        [1, 2],
-                        [5, 3]
+                        [],
+                        []
                     ]
                 };
 
                 this.updateView = function (config) {
                     const setA = config.setA || [];
                     const setB = config.setB || [];
+                    const diff = setA.length - setB.length;
+                    const setToAddZeros = setA.length >= setB.length ? setB : setA;
+                    for(let i = 0; i < Math.abs(diff); i++) {
+                        setToAddZeros.push(0);
+                    }
+
                     this.chartConfig = {
                         data: [
                             setA,
@@ -64,8 +70,8 @@
                         ],
                         labels: _.range(Math.max(setA.length, setB.length))
                     };
-                    this.rawSetA = arrayUtils.arrayToString(config.setA) || '0 0.5 1';
-                    this.rawSetB = arrayUtils.arrayToString(config.setB) || '0 0.4 0.9';
+                    this.rawSetA = arrayUtils.arrayToString(config.setA);
+                    this.rawSetB = arrayUtils.arrayToString(config.setB);
                 }
 
                 //TODO:It seems to be a dirty way to pass an object from directive attr to its controller,
@@ -83,15 +89,12 @@
                     this.calculateResult();
                 };
 
-                this.hasCalculationFailed = function () {
-
-                }
                 this.calculateResult = function () {
                     this.similarityData.setA = arrayUtils.stringToArray(this.rawSetA);
                     this.similarityData.setB = arrayUtils.stringToArray(this.rawSetB);
                     console.log('Calculating similiraty for: ' + JSON.stringify(this.similarityData));
                     this.calculationStatus.start();
-                    $http.post('http://localhost:5000/fuzzy/similarity', this.similarityData)
+                    fuzzyApi.calculateSimilarity(this.similarityData)
                         .then(
                             (response) => {
                                 console.log(response);
@@ -101,8 +104,7 @@
                             },
                             (errorResponse) => {
                                 this.calculationStatus.fail(errorResponse);
-                                console.log(errorResponse);
-                                alert('Error occurred! Error response: ' + JSON.stringify(errorResponse.data))
+                                console.log('error response: ' + JSON.stringify(errorResponse));
                             }
                         );
                 }
@@ -156,5 +158,53 @@
             templateUrl: 'navigation-template.html'
         };
     });
+
+    app.controller("FormController", ['fuzzyApi', function(fuzzyApi) {
+
+        var formController = this;
+
+        this.tNorms = [
+            {
+                label: 'Minimum',
+                value: 'minimum'
+            },
+            {
+                label: 'Lukasiewicz',
+                value: 'lukasiewicz'
+            },
+            {
+                label: 'Algebraqic',
+                value: 'algebraic'
+            }
+        ];
+
+        this.aggregators = [
+            {
+                label: 'Average',
+                value: 'average'
+            },
+            {
+                label: 'Minimum',
+                value: 'minimum'
+            },
+            {
+                label: 'Maximum',
+                value: 'maximum'
+            },
+
+        ];
+
+        this.implications = [
+            {
+                label: 'Maximum',
+                value: 'maximum'
+            },
+            {
+                label: 'Lukasiewicz',
+                value: 'lukasiewicz'
+            },
+        ];
+
+    }]);
 
 })(_);
