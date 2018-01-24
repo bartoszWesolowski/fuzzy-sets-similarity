@@ -1,20 +1,15 @@
-<div class="similarity-example-segment"
-     ng-init="similarityCalculatorCtrl.init(methodConfig)">
+<div class="similarity-example-segment">
     <form name="similarityForm"
           role="form"
           ng-submit="similarityCalculatorCtrl.calculateResult()">
         <div class="form-group">
             <info-bar></info-bar>
-            <label>Set A:</label>
-            <input type="text"
-                   class="form-control"
-                   ng-model="similarityCalculatorCtrl.rawSetA"
-                   title="Set A"/>
-            <label>Set B:</label>
-            <input type="text"
-                   class="form-control"
-                   ng-model="similarityCalculatorCtrl.rawSetB"
-                   title="Set B"/>
+
+            <raw-sets-input
+                raw-set-a="similarityCalculatorCtrl.rawSetA"
+                raw-set-b="similarityCalculatorCtrl.rawSetB">
+            </raw-sets-input>
+
             <div class="config">
                 <label>R:</label>
                 <input type="number"

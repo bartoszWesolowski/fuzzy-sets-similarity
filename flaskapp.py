@@ -11,7 +11,7 @@ CORS(app)
 
 @app.route('/visualisation/<path:filename>')
 def get_visualisation(filename):
-    return send_from_directory(HTML_FILES_FOLDER_PATH, filename)
+    return send_from_directory(filename)
 
 
 @app.route('/', methods=['GET'])

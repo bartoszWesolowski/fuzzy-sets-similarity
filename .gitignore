@@ -5,3 +5,7 @@
 /python/test-time.bat
 /visualization/.idea
 /.idea
+
+static/visualization/\.idea/
+
+test/

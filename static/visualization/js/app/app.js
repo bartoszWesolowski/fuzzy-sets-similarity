@@ -2,19 +2,19 @@
 
     const defaultMethodName = 'minkowski';
 
-    var app = angular.module("fuzzy-sets", ['fuzzyCharts', 'dataProviders']);
+    var app = angular.module("fuzzy-sets", ['fuzzyCharts', 'dataProviders', 'array-utils-module']);
 
     app.directive("similarityCalculator", ['$http', 'arrayUtils', 'fuzzyApi', function ($http, arrayUtils, fuzzyApi) {
         return {
             restrict: "E",
-            templateUrl: function (elem, attr) {
-                return (attr.similarityMethod || defaultMethodName) + '-template.html';
+            templateUrl: function () {
+                return 'similarity-calculator-main.html';
             },
             scope: {
                 methodConfig: '=',
-                similarityMethod: '='
             },
-            controller: function ($attrs) {
+            controller: function ($scope, $attrs) {
+                console.log('similarityCalculator controller init')
                 var minkowski = this;
 
                 this.similarityOfSets = 0;
@@ -74,21 +74,6 @@
                     this.rawSetB = arrayUtils.arrayToString(config.setB);
                 }
 
-                //TODO:It seems to be a dirty way to pass an object from directive attr to its controller,
-                //TODO:What would be the best way to do it?
-                this.init = function (config) {
-                    //config might be a static json (as string) or dynamic object
-                    this.method = $attrs.similarityMethod || defaultMethodName;
-
-                    this.methodConfig = angular.fromJson(config || {});
-                    this.methodConfig.method = this.method
-                    this.similarityData = angular.extend(this.defaultSimilarityDataConfig, this.methodConfig)
-
-
-                    this.updateView(this.methodConfig);
-                    this.calculateResult();
-                };
-
                 this.calculateResult = function () {
                     this.similarityData.setA = arrayUtils.stringToArray(this.rawSetA);
                     this.similarityData.setB = arrayUtils.stringToArray(this.rawSetB);
@@ -109,6 +94,20 @@
                         );
                 }
 
+                this.init = function (config) {
+
+                    this.methodConfig = angular.fromJson(config || {});
+                    this.similarityData = angular.extend(this.defaultSimilarityDataConfig, this.methodConfig)
+
+
+                    this.updateView(this.methodConfig);
+                    this.calculateResult();
+                };
+
+                $scope.$watch('methodConfig', function(newValue) {
+                    minkowski.init(newValue);
+                }, true);
+
             },
             controllerAs: 'similarityCalculatorCtrl'
         }
@@ -121,41 +120,21 @@
         };
     });
 
-    app.factory('arrayUtils', function () {
-
-        const stringArraySplitter = /\s+|,|;/;
-        /**
-         * Converts a string with floating point numbers
-         * separated by white space, coma or colon to an
-         * array of floats
-         */
-        const stringToArray = function (rawInput) {
-            //TODO: test with var b = a.split(',').map(Number);
-            //TODO: also convert this to service
-            const input = rawInput || '';
-            return input.split(stringArraySplitter)
-                .map(parseFloat)
-                .filter((value) => !isNaN(value));
-
-        }
-
-        const arrayToString = function (possiblyArray) {
-            if (angular.isArray(possiblyArray)) {
-                return possiblyArray.join(", ");
-            }
-            return '';
-        }
-
-        return {
-            stringToArray,
-            arrayToString
-        };
-    });
-
     app.directive('fuzzyNavigation', function () {
         return {
             restrict: 'E',
             templateUrl: 'navigation-template.html'
+        };
+    });
+
+    app.directive('rawSetsInput', function () {
+        return {
+            restrict: 'E',
+            scope: {
+                rawSetA: '=',
+                rawSetB: '='
+            },
+            templateUrl: 'raw-sets-input.html'
         };
     });
 
@@ -206,5 +185,6 @@
         ];
 
     }]);
+
 
 })(_);
