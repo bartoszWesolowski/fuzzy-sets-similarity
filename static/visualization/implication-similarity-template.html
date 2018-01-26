@@ -6,6 +6,7 @@
             <info-bar></info-bar>
 
             <raw-sets-input
+                    ng-hide="hideSets"
                     raw-set-a="similarityCalculatorCtrl.rawSetA"
                     raw-set-b="similarityCalculatorCtrl.rawSetB">
             </raw-sets-input>
@@ -38,7 +39,9 @@
                 </fieldset>
             </div>
             <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
-            <fuzzy-set-chart config="similarityCalculatorCtrl.chartConfig"></fuzzy-set-chart>
+            <fuzzy-set-chart
+                    ng-hide="hideChart"
+                    config="similarityCalculatorCtrl.chartConfig"></fuzzy-set-chart>
         </div>
     </form>
 </div>
