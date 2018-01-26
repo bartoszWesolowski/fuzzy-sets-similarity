@@ -15,22 +15,46 @@
 
     <fuzzy-navigation></fuzzy-navigation>
 
-    <form name="similarityForm"
-          role="form"
-          ng-submit="comparisonCtrl.calculateResult()">
+    <div class="comparison-main-form">
+        <form name="similarityForm"
+              role="form"
+              ng-submit="comparisonCtrl.calculateResult()">
+            <div class="col-xs-12 col-sm-10">
+                <raw-sets-input
+                        raw-set-a="comparisonCtrl.rawFuzzySets.setA"
+                        raw-set-b="comparisonCtrl.rawFuzzySets.setB">
+                </raw-sets-input>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
+            </div>
+        </form>
 
-        <raw-sets-input
-                raw-set-a="comparisonCtrl.rawFuzzySets.setA"
-                raw-set-b="comparisonCtrl.rawFuzzySets.setB">
-        </raw-sets-input>
-        <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
-    </form>
+        <div class="col-xs-12 col-sm-6">
+            <fuzzy-set-chart
+                    ng-hide="hideChart"
+                    config="comparisonCtrl.chartConfig"></fuzzy-set-chart>
+        </div>
 
-    <div>
+        <div class="col-xs-12 col-sm-6">
+            <canvas id="bar"
+                    class="chart chart-bar"
+                    chart-series="comparisonCtrl.summaryChartConfig.series"
+                    chart-labels="comparisonCtrl.summaryChartConfig.labels"
+                    chart-data="comparisonCtrl.summaryChartConfig.data">
+
+            </canvas>
+        </div>
+    </div>
+
+
+    <div class="col-xs-12 col-sm-12">
         <div ng-repeat="example in comparisonCtrl.configurations"
              class="col-xs-12 col-sm-6">
             <similarity-calculator
-                    similarity-method="example.method"
+                    name="example.method"
+                    hide-chart="true"
+                    hide-sets="true"
                     method-config="example">
             </similarity-calculator>
         </div>

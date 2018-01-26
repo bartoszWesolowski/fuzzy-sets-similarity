@@ -153,6 +153,27 @@
 
         const comparisonCtrl = this;
 
+        this.chartConfig = {
+            data: [
+                [],
+                []
+            ]
+        };
+
+
+        this.summaryChartConfig = {
+            series: ['Sumary'],
+            data: [],
+            labels:[]
+        }
+
+        $scope.$on('FUZZY_SIMILARITY_CALCULATED', function(event, data) {
+           console.log('event: ' + data);
+
+            comparisonCtrl.summaryChartConfig.data.push(data.result)
+            comparisonCtrl.summaryChartConfig.labels.push(data.method)
+        });
+
         this.configurations = [];
 
         this.rawFuzzySets = {
@@ -214,6 +235,19 @@
         this.createValidConfigurations = function() {
             const setA = arrayUtils.stringToArray(this.rawFuzzySets.setA);
             const setB = arrayUtils.stringToArray(this.rawFuzzySets.setB);
+
+            comparisonCtrl.summaryChartConfig.data = [];
+            comparisonCtrl.summaryChartConfig.labels = [];
+
+            this.chartConfig = {
+                data: [
+                    setA,
+                    setB
+                ],
+                labels: _.range(Math.max(setA.length, setB.length))
+            };
+
+
             const configurations = [];
             _.each(this.configurationsWithoutSets, (value) => {
                 const copied = _.extend({}, value);

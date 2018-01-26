@@ -11,11 +11,16 @@
                 return 'similarity-calculator-main.html';
             },
             scope: {
+                name: '=',
                 methodConfig: '=',
+                hideSets: '=',
+                hideChart: '='
             },
             controller: function ($scope, $attrs) {
                 console.log('similarityCalculator controller init')
                 var minkowski = this;
+
+                this.name = $scope.name || '';
 
                 this.similarityOfSets = 0;
 
@@ -45,13 +50,6 @@
                     setA: [],
                     setB: [],
                     config: {}
-                };
-
-                this.chartConfig = {
-                    data: [
-                        [],
-                        []
-                    ]
                 };
 
                 this.updateView = function (config) {
@@ -85,6 +83,7 @@
                                 console.log(response);
                                 this.updateView(response.data);
                                 minkowski.similarityOfSets = response.data.result;
+                                $scope.$emit('FUZZY_SIMILARITY_CALCULATED', response.data)
                                 this.calculationStatus.finish();
                             },
                             (errorResponse) => {
