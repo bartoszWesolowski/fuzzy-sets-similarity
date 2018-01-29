@@ -1,5 +1,9 @@
 import argparse
 
+#really ugly but any other way did not work
+import sys, os
+sys.path.insert(0, os.path.abspath('..'))
+
 from fuzzyfacades.raw_configuration_parser import ConfigurationParser
 from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 from utils import fileparser

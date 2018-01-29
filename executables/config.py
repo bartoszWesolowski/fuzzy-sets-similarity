@@ -1,6 +1,9 @@
 import argparse
 import json
-import sys
+
+#really ugly but any other way did not work
+import sys, os
+sys.path.insert(0, os.path.abspath('..'))
 
 from aggregators.aggregators_factory import AggregatorFactory
 from tnorms.t_norm_factory import TnormFactory

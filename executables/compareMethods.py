@@ -1,4 +1,9 @@
 import argparse
+
+#really ugly but any other way did not work
+import sys, os
+sys.path.insert(0, os.path.abspath('..'))
+
 from utils import fileparser
 from utils.calculationmetadata import SimilarityCalculationMetaData
 from utils.resultprocessor import ConnsoleResultProcessor

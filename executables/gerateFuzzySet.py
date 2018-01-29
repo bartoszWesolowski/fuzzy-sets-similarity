@@ -1,4 +1,8 @@
 import argparse
+
+#really ugly but any other way did not work
+import sys, os
+sys.path.insert(0, os.path.abspath('..'))
 import utils.fsgenerator as generator
 import utils.fileutils as fileutils
 
