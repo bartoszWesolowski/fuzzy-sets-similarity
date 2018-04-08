@@ -1,1 +1,1 @@
-python compareSets.py
+python compareSets.py -s input/sets.txt -c input/config.txt

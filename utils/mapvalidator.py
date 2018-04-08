@@ -8,6 +8,6 @@ class MapValidator(object):
         for param in requiredParameters:
             if param not in mapToCheck.keys():
                 raise AttributeError(
-                    "Missing {} parameter in implication configuration. All required parameters: {}".format(
+                    "Missing '{}' parameter in implication configuration. All required parameters: {}".format(
                         param, requiredParameters
                     ))

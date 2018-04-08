@@ -7,19 +7,24 @@ sys.path.insert(0, os.path.abspath('..'))
 from fuzzyfacades.raw_configuration_parser import ConfigurationParser
 from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 from utils import fileparser
-from utils.calculationmetadata import SimilarityCalculationMetaData
-from utils.resultprocessor import ExcelResultProcessor
+from comparators.resultprocessors.console_comparison_result_processor import ConsoleComparisonResultProcessor
+from comparators.resultprocessors.result_processor_factory import  ResultProcessorFactory
+from comparators.sets_comparator import SetsComparator
 
 # Script that calculate similarity of N sets using method defined in confifuration passed as separate file
 DEFAULT_SETS_FILE_NAME = "sets.txt"
 
 DEFAULT_CONFIG_FILE_NAME = "config.txt"
 
-DEFAULT_RESULT_FILE_NAME = 'sample.xlsx'
+DEFAULT_RESULT_FILE_NAME = 'comparison-result.xlsx'
 
 configurationParser = ConfigurationParser()
 
 similarityCalculatorWrapper = SimilarityCalculatorWrapper()
+
+resultProcessorFactory = ResultProcessorFactory()
+
+setsComparator = SetsComparator()
 
 parser = argparse.ArgumentParser(
     description='Tool for calculating similarity between number of sets using one similarity method' +
@@ -37,6 +42,10 @@ parser.add_argument('-resultFile',
                     help="Path to the file that will store the result of comparision. Default value: " +
                          DEFAULT_RESULT_FILE_NAME,
                     default=DEFAULT_RESULT_FILE_NAME, metavar='resultFile', dest='resultFile')
+parser.add_argument('-resultParser',
+                    help="Name of the result processor. If no specified result of comparison will be printed on the console. All supported values:  " +
+                         str(resultProcessorFactory.supportedProcessorsNames()),
+                    default=ConsoleComparisonResultProcessor.NAME, metavar='resultParser', dest='resultParser')
 
 
 args = parser.parse_args()
@@ -51,14 +60,9 @@ configs = fileparser.readConfigs(configFile)
 config = configs[0]
 print "Parsed {} configs. Remember that only first config is used by this script, in that case: {}".format(len(configs),
                                                                                                            config)
-resultProcessor = ExcelResultProcessor(numberOfSets, args.resultFile)
+resultProcessor = resultProcessorFactory.createResultProcessor(args.resultParser)
 parsedConfig = configurationParser.validateAndParse(config)
-for i in range(numberOfSets):
-    for j in range(i, numberOfSets):
-        A = setsList[i]
-        B = setsList[j]
-        result = similarityCalculatorWrapper.calculateSimilarityFromParsedConfig(A, B, parsedConfig)
-        resultProcessor.processResult(result, SimilarityCalculationMetaData(config, A, B, 0, i, j))
 
-resultProcessor.appendSummary()
-resultProcessor.save()
+comparisonResult = setsComparator.compareSets(setsList, config)
+
+resultProcessor.processComparisonResult(comparisonResult, args.resultFile)

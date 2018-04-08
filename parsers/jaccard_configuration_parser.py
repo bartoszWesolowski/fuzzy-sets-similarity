@@ -13,7 +13,7 @@ class JaccardConfigParser(abstract_configuration_parser.AbstractConfigurationPar
         for parameter in self.requiredParameters:
             if parameter not in rawConfigMap.keys():
                 raise AttributeError(
-                    "Missing {} parameter for jaccards method. Required params: {}".format(parameter,
+                    "Missing '{}' parameter for jaccards method. Required params: {}".format(parameter,
                                                                                            self.requiredParameters))
 
         alpha = self.parseToIntOrRaiseAttributeError(rawConfigMap[param.ALPHA],
@@ -26,7 +26,7 @@ class JaccardConfigParser(abstract_configuration_parser.AbstractConfigurationPar
         evaluator = rawConfigMap[param.EVALUATOR]
         if evaluator not in fuzzysetevaluator.SUPPORTED_EVALUATORS:
             raise AttributeError(
-                "Not supported evaluator found: {}. Supported evaluators: {}".format(evaluator,
+                "Not supported evaluator found: '{}'. Supported evaluators: {}".format(evaluator,
                                                                                      fuzzysetevaluator.SUPPORTED_EVALUATORS))
 
         return {

@@ -25,7 +25,7 @@ class ImplicationConfigurationParser(AbstractConfigurationParser):
         for param in self.requiredParameters:
             if param not in rawConfigMap.keys():
                 raise AttributeError(
-                    "Missing {} parameter in implication configuration. All required parameters: {}".format(
+                    "Missing '{}' parameter in implication configuration. All required parameters: {}".format(
                         param, self.requiredParameters
                     ))
 

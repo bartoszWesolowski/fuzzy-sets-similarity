@@ -1,12 +1,13 @@
 import argparse
+# really ugly but any other way did not work
+import os
+import sys
 
-#really ugly but any other way did not work
-import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 
 from utils import fileparser
 from utils.calculationmetadata import SimilarityCalculationMetaData
-from utils.resultprocessor import ConnsoleResultProcessor
+from comparators.resultprocessors.excel_comparison_result_processor import ConnsoleResultProcessor
 from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 
 #Script that calculate similarity of two sets using methods defined in confifurations passed as separate file
