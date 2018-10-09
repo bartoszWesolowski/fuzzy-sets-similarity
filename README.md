@@ -2,23 +2,23 @@
 Simple tool for calculating fuzzy sets similarity using different similarity measures.
 ## Supported Similarity Measures
 
-####Minkowski
+#### Minkowski
 TODO
-####Angular Distance
+#### Angular Distance
 TODO
-####Implication
-TODO
-
-####Jaccard Index
+#### Implication
 TODO
 
-##Main Scripts
+#### Jaccard Index
+TODO
+
+## Main Scripts
 All executable scripts are placed under `executables` package. Each script contains simple manual which can be displayed by running it with `-h` parameter, for example:
  * `python compare_sets.py - h`
 
 Below you can find list of all available executables with a brief description.
 
-###Similarity measure configuration generator
+### Similarity measure configuration generator
 Script name: `config.py`
 
 Each similarity measure requires some parameters. To make it unified along all measures arguments are represented as a key-value map.
@@ -30,7 +30,7 @@ Example usages (for more information use `-h` parameter):
 * `python config.py -r 2` will throw an exception because no similarity measure method is defined, this will also happen if method name is not valid.
 * `python config.py -r not-valid-type -m minkowski` will throw an exception as r parameter in minkowski similarity measure must be a number
 
-###Fuzzy Sets Comparator
+### Fuzzy Sets Comparator
 Script name: `compare_sets.py`
 Script that allows to compare list of `N` fuzzy sets using one similarity method. It generates a `NxN` matrix R which cell R[i, j] represents a similarity of sets with indexes `i` and `j` calculated with given similarity measure.
 It takes two files as an input:
@@ -46,11 +46,11 @@ Exaples:
 * `python compare_sets.py -s input/sets.txt -c input/config.txt` - this will compare all sets with each other and print the result to the console
 * `python compare_sets.py -s input/sets.txt -c input/config.txt -resultParser excel-result-processor` - using `-resultParser` parameter will allow you to save result in excel file, to specify result file location use `-resultFile`
 
-###Fuzzy similarity measures comparator
+### Fuzzy similarity measures comparator
 Script name: `compare_methods.py`
 Script that compares 2 fuzzy sets with list N similarity measures. 
 
-##Requirements to run
+## Requirements to run
 Python 2.7	
 	
 Skrypt compareMethods.py
