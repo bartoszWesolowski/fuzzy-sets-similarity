@@ -1,8 +1,9 @@
 import argparse
 import json
 
-#really ugly but any other way did not work
+# TODO: really ugly but any other way did not work
 import sys, os
+
 sys.path.insert(0, os.path.abspath('..'))
 
 from aggregators.aggregators_factory import AggregatorFactory
@@ -33,20 +34,25 @@ parser.add_argument('-' + METHOD_PARAMETER, help="Method config name. Must be on
 parser.add_argument('-file', help="Name of the file that will be used to save generated configuration object. " +
                                   "Default value: {}".format(DEFAULT_FILE_NAME), default=DEFAULT_FILE_NAME)
 
-parser.add_argument('-' + params.R, help="Parameter used by minkowski similarity. Its value should be a float or an int.")
+parser.add_argument('-' + params.R,
+                    help="Parameter used by minkowski similarity. Its value should be a float or an int.")
 
-parser.add_argument('-' + params.AGGREGATOR, help="Parameter pointing to aggregator function. List of supported aggregator values: {}".format(
-    aggregatorFactory.getSupportedAggregators())
-)
+parser.add_argument('-' + params.AGGREGATOR,
+                    help="Parameter pointing to aggregator function. List of supported aggregator values: {}".format(
+                        aggregatorFactory.getSupportedAggregators())
+                    )
 
-parser.add_argument('-' + params.TNORM, help="Parameter pointing to t-norm function. List of supported t-norms values: {}".format(
-    tNormFactory.getSupportedTNorms())
-)
+parser.add_argument('-' + params.TNORM,
+                    help="Parameter pointing to t-norm function. List of supported t-norms values: {}".format(
+                        tNormFactory.getSupportedTNorms())
+                    )
 
-parser.add_argument('-' + params.IMPLICATION, help="Parameter pointing to implication function. List of supported implications: {}".format(
-    implicationFactory.getSupportedImplications())
-)
+parser.add_argument('-' + params.IMPLICATION,
+                    help="Parameter pointing to implication function. List of supported implications: {}".format(
+                        implicationFactory.getSupportedImplications())
+                    )
 
+parser.add_argument('args', nargs=argparse.REMAINDER)
 
 def getConfigFilePath(rawConfig):
     return rawConfig.get(FILE_NAME_PARAMETER, DEFAULT_FILE_NAME)
@@ -76,9 +82,9 @@ def saveToFile(config, filePath):
 
 
 try:
-    # Used only for displaying simple manual
-    args = parser.parse_args()
-    rawArguments = parse.parseArguments(sys.argv);
+    # Used only for displaying simple manual, parser is not used as this script needs to allow all argument names
+    args = parser.parse_known_args()
+    rawArguments = parse.parseArguments(sys.argv)
     configFile = getConfigFilePath(rawArguments)
     config = parseArgumentsToMethodConfig(rawArguments)
     saveToFile(config, configFile)

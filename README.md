@@ -1,23 +1,57 @@
-Fuzzy sets similarity calculator
+#Fuzzy sets similarity calculator
+Simple tool for calculating fuzzy sets similarity using different similarity measures.
+## Supported Similarity Measures
 
-Project created for calculating fuzzy sets similarity using following methods:
-	- Minkowski
-	- Jaccard
-	- Angular Distance
-	
+####Minkowski
+TODO
+####Angular Distance
+TODO
+####Implication
+TODO
 
+####Jaccard Index
+TODO
 
-Config file creation using config.py script.
+##Main Scripts
+All executable scripts are placed under `executables` package. Each script contains simple manual which can be displayed by running it with `-h` parameter, for example:
+ * `python compare_sets.py - h`
 
-Parameters:
-	- fn (file name) - path or name of file that config will be appended to
-	- m (method) - name of a method that config will be created for
-	
-Example usage:
-	- python config.py -r 2 -m minkowski -fn C:/Users/Lenovo/config.txt
-	- python config.py -r 2 -m minkowski -fn config.txt
-	- python config.py -r 3 -alpha 1 -beta 1 -gamma 1 -m jaccard_index -evaluator sup (if no fn argument is present the default value equal to config.txt is used)
-	
+Below you can find list of all available executables with a brief description.
+
+###Similarity measure configuration generator
+Script name: `config.py`
+
+Each similarity measure requires some parameters. To make it unified along all measures arguments are represented as a key-value map.
+This script was created to allow automatic generation of wide ranges of configurations. Running this script will generate a json that represents similarity measure configuration and save it in result file. 
+This script takes all parameters like: `-parameterName parameterValue` and pare them as an entry in generated configuration map.
+Example usages (for more information use `-h` parameter):
+* `python config.py -r 2 -m minkowski -fn config.txt` - this will generate the following json `{"r": 4, "method": "minkowski"}` and save it in `config.txt` file (passing `config.txt` is not required as this is a default value)
+* `python config.py -method implication-similarity -aggregator maximum -implication lukasiewicz -tnorm lukasiewicz` will generate the following configuration: `{"aggregator": "maximum", "implication": "lukasiewicz", "tnorm": "lukasiewicz", "method": "implication-similarity"}`
+* `python config.py -r 2` will throw an exception because no similarity measure method is defined, this will also happen if method name is not valid.
+* `python config.py -r not-valid-type -m minkowski` will throw an exception as r parameter in minkowski similarity measure must be a number
+
+###Fuzzy Sets Comparator
+Script name: `compare_sets.py`
+Script that allows to compare list of `N` fuzzy sets using one similarity method. It generates a `NxN` matrix R which cell R[i, j] represents a similarity of sets with indexes `i` and `j` calculated with given similarity measure.
+It takes two files as an input:
+ * file containing list of sets, configurable by `-s` param, each set represented by list of numbers separated by any white character or `,` sign, each set in new line, for example: 
+    ```
+     1.0 1.0 1.0 0.4 0.2 0.1 0 0 1
+     0.5 0.5 0.5 0.0 0.4 0.5 1 1 0
+     0 0 0
+    ```
+ * file containing JSON with similarity measure configuration, use `config.py` to generate sample config. Only configuration from first line of the file is used. 
+
+Exaples: 
+* `python compare_sets.py -s input/sets.txt -c input/config.txt` - this will compare all sets with each other and print the result to the console
+* `python compare_sets.py -s input/sets.txt -c input/config.txt -resultParser excel-result-processor` - using `-resultParser` parameter will allow you to save result in excel file, to specify result file location use `-resultFile`
+
+###Fuzzy similarity measures comparator
+Script name: `compare_methods.py`
+Script that compares 2 fuzzy sets with list N similarity measures. 
+
+##Requirements to run
+Python 2.7	
 	
 Skrypt compareMethods.py
 	- oblicza podobienstwo między dwoma zbioramy zdefiniowanymi w pliku txt, każdy zbiór zdefiniowany jest w osobnej linii pliku, elementy zbioru odzielone powinny być białimy znakami
