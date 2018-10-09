@@ -28,14 +28,14 @@ class ConfigurationParser(object):
     def ensureConfigMethodIsSupported(self, rawConfig):
         if rawConfig[self.methodKey] not in self.similarityFacade.getSupportedMethods():
             raise AttributeError(
-                "Unrecognized method: {} found while parsing configuration object. List of supported methods: {}".format(
+                "Unrecognized method: '{}' found while parsing configuration object. List of supported methods: {}".format(
                     rawConfig[self.methodKey],
                     self.similarityFacade.getSupportedMethods()))
 
     def ensureMethodKeyIsPresent(self, rawConfig):
         if self.methodKey not in rawConfig.keys():
             raise AttributeError(
-                "Config {} is missing '{}' key with value equal to one of the following: {}".format(
+                "Config '{}' is missing '{}' key with value equal to one of the following: {}".format(
                     rawConfig, self.methodKey, self.similarityFacade.getSupportedMethods()
                 )
             )

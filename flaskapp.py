@@ -2,8 +2,11 @@ from flask import Flask, jsonify, request, send_from_directory, redirect, url_fo
 from utils import constants as c
 from restapphelpers.similartyrequest import SimilarityRequest
 from aggregators.aggregators_factory import AggregatorFactory
+from fuzzyfacades.similarity_calculator_facade import SimilarityFacade
 import json
 from flask_cors import CORS
+
+similarityFacade = SimilarityFacade()
 
 app = Flask(__name__, static_url_path='')
 CORS(app)
@@ -22,7 +25,7 @@ def get_home_page():
 @app.route('/fuzzy/similarity/methods', methods=['GET'])
 def get_implemented_similarity_calculation_methods():
     return jsonify({
-        'methods': c.IMPLEMENTED_METHODS,
+        'methods': similarityFacade.getSupportedMethods(),
         'status': "OK"
     })
 
