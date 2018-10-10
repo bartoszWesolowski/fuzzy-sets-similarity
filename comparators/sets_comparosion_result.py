@@ -6,7 +6,8 @@ def createMatrix(numberOfSets):
 
 
 class SetsComparisonResult(object):
-    """Object representing result of comparison of list of sets everyone with everyone"""
+    """Object representing result of comparison of list of sets everyone with everyone. 
+    Wraps matrix NxN with similarities between tests"""
     def __init__(self, listOfSets, config, resultsMatrix):
         self.listOfSets = listOfSets
         self.numberOfSets = len(listOfSets)

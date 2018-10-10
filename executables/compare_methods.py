@@ -5,12 +5,16 @@ import sys
 
 sys.path.insert(0, os.path.abspath('..'))
 
+from comparators.methods_comparator import MethodsComparator
+from comparators.resultprocessors.methodscomparison.console_result_processor import \
+    MethodsComparisonConsoleResultProcessor
 from utils import fileparser
-from utils.calculationmetadata import SimilarityCalculationMetaData
-from comparators.resultprocessors.excel_comparison_result_processor import ConnsoleResultProcessor
+from comparators.resultprocessors.setscomparison.console_comparison_result_processor import \
+    ConsoleComparisonResultProcessor
 from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 
-#Script that calculate similarity of two sets using methods defined in confifurations passed as separate file
+# TODO: add result configurable result processor
+# Script that calculate similarity of two sets using methods defined in confifurations passed as separate file
 
 DEFAULT_SETS_FILE_NAME = "sets.txt"
 
@@ -30,7 +34,6 @@ parser.add_argument('-c',
                          DEFAULT_CONFIG_FILE_NAME,
                     default=DEFAULT_CONFIG_FILE_NAME, metavar='configFile', dest='configFile')
 
-resultProcessor = ConnsoleResultProcessor()
 similarityCalculatorWrapper = SimilarityCalculatorWrapper()
 
 args = parser.parse_args()
@@ -40,12 +43,15 @@ print "Sets file: {}, config file: {}".format(setsFile, configFile)
 setsList = fileparser.readSets(setsFile)
 if len(setsList) < 2:
     raise AttributeError("File providing sets does not contain two sets.")
-A, B = setsList[0], setsList[1] #assumes that file with sets definition has at least two sets, and uses only those sets
+A, B = setsList[0], setsList[1]  # assumes that file with sets definition has at least two sets, and uses only those sets
 print "Parsed sets: \n\tA: {} \n\tB: {}".format(A, B)
 
 configs = fileparser.readAndParseConfigs(configFile)
 
-for index, config in enumerate(configs):
-    result = similarityCalculatorWrapper.calculateSimilarityFromParsedConfig(A, B, config)
-    resultProcessor.processResult(result, SimilarityCalculationMetaData(config, A, B, index, 0, 1))
+# TODO: Implement result processors for this case, extract result processors for comparing sets to different namespace
+methodsComparator = MethodsComparator()
+resultProcessor = MethodsComparisonConsoleResultProcessor()
 
+comparisonResult = methodsComparator.compareTwoSetsUsingMultipleMethods(A, B, configs)
+# TODO: Pass all arguments passed from console, manually parsed map of arguments or args from parser.parse_args()
+resultProcessor.processComparisonResult(comparisonResult, {})

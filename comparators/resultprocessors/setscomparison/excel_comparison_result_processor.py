@@ -17,9 +17,9 @@ class ExcelResultProcessor(AbstractResultProcessor):
         return ExcelResultProcessor.NAME
 
     def processComparisonResult(self, resultComparatorResult, processingResultFile):
-        print "Processing comparison result - saving result in " + processingResultFile;
+        print "Processing comparison result - saving result in " + processingResultFile
         numberOfSets = len(resultComparatorResult.listOfSets)
-        lastRow = numberOfSets + 2;
+        lastRow = numberOfSets + 2
         resultMatrix = resultComparatorResult.resultMatrix
         resultsSum = 0
         for i in range(numberOfSets):

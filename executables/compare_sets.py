@@ -1,14 +1,15 @@
 import argparse
+# really ugly but any other way did not work
+import os
+import sys
 
-#really ugly but any other way did not work
-import sys, os
 sys.path.insert(0, os.path.abspath('..'))
 
 from fuzzyfacades.raw_configuration_parser import ConfigurationParser
 from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
 from utils import fileparser
-from comparators.resultprocessors.console_comparison_result_processor import ConsoleComparisonResultProcessor
-from comparators.resultprocessors.result_processor_factory import  ResultProcessorFactory
+from comparators.resultprocessors.setscomparison.console_comparison_result_processor import ConsoleComparisonResultProcessor
+from comparators.resultprocessors.setscomparison.result_processor_factory import  ResultProcessorFactory
 from comparators.sets_comparator import SetsComparator
 
 # Script that calculate similarity of N sets using method defined in confifuration passed as separate file
