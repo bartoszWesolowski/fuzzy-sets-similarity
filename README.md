@@ -30,6 +30,17 @@ Example usages (for more information use `-h` parameter):
 * `python config.py -r 2` will throw an exception because no similarity measure method is defined, this will also happen if method name is not valid.
 * `python config.py -r not-valid-type -m minkowski` will throw an exception as r parameter in minkowski similarity measure must be a number
 
+### Fuzzy Sets Generator
+Script name: `generateFuzzySet.py`
+
+This script is a tool for automatic generating fuzzy sets. Run it wiht `-h` parameter to show current manual.
+Examples:
+* `python gerateFuzzySet.py -h` - Help
+* `python gerateFuzzySet.py --random -min 0.3 -max 0.6 -n 100 --appendToFile -file myResultFile.txt` 
+ This will create fuzzy set containing 100 elements, each element will be a randomly generated value between 0.3 and 0.6. Because of `--apendToFile` generated fuzzy set will be appended to end of the file provided by `-file` parameter. Without the `--appendToFile` result would be printed to console.
+* `python gerateFuzzySet.py --singleton -value 0.4 -n 30`
+ Running this command will generate a fuzzy set with 30 elements, each with value equal to 0.4 
+
 ### Fuzzy Sets Comparator
 Script name: `compare_sets.py`
 Script that allows to compare list of `N` fuzzy sets using one similarity method. It generates a `NxN` matrix R which cell R[i, j] represents a similarity of sets with indexes `i` and `j` calculated with given similarity measure.
@@ -42,46 +53,34 @@ It takes two files as an input:
     ```
  * file containing JSON with similarity measure configuration, use `config.py` to generate sample config. Only configuration from first line of the file is used. 
 
-Exaples: 
+Examples: 
 * `python compare_sets.py -s input/sets.txt -c input/config.txt` - this will compare all sets with each other and print the result to the console
 * `python compare_sets.py -s input/sets.txt -c input/config.txt -resultParser excel-result-processor` - using `-resultParser` parameter will allow you to save result in excel file, to specify result file location use `-resultFile`
 
 ### Fuzzy similarity measures comparator
 Script name: `compare_methods.py`
-Script that compares 2 fuzzy sets with list N similarity measures. 
+
+Script that compares 2 fuzzy sets with list N similarity measures. Running this script will generate a list of N numbers where number `i` is a similarity between defined sets calculated with similarity measure with index `i`.
+It takes two files as an input:
+* file containing two sets, each in separate line (same format as for Fuzzy Sets Comparator), only first two sets are used.
+* file containing list of similarity measures configurations, each configuration represented by JSON placed in separate line of file. Sample configurations can be generated using `config.py` script.
+
+In case of invalid configuration or sets definition program will be terminated with exception describing what happened.
+Examples: 
+* `python compare_methods.py -s fileContainingSets.txt -c fileContainingConfgs.txt`
+* TODO: add different result processors that will be configurable - currently result will be printed to console
+ToDO
+
+### Compare N fuzzy sets using M similarity measures
+Script `multi-compare.py`
+
+This script will compare N fuzzy sets same as for `Fuzzy Sets Comparator` using each of M provided similarity measures configurations.
+Running this script will result with M matrices, each matrix representing result of comparing N sets with one of similarity measures.
+
+## Flask api endpoint
+TODO
+
+##Implementing next similarity measure
 
 ## Requirements to run
 Python 2.7	
-	
-Skrypt compareMethods.py
-	- oblicza podobienstwo między dwoma zbioramy zdefiniowanymi w pliku txt, każdy zbiór zdefiniowany jest w osobnej linii pliku, elementy zbioru odzielone powinny być białimy znakami
-	- do oblicznia podobieństwa wykorzystuje konfiguracje zdefiniowane w osobnym pliku
-	- przykłady plików ze zbiorami oraz konfiguracjami: python\sets.txt oraz python\config.txt
-Przykładowe użycie:
-	- python compareMethods.py - skrypt wywolany bez parametrow użyje domyślnych nazw dla plików z konfiguracjami sets.txt oraz config.txt
-		Wynik z konsoli (testowo)
-			Sets file: sets.txt, config file: config.txt
-			Parsed sets:
-					A: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.0, 1.0]
-					B: [1.0, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.0]
-			Parsing config for minkowski
-			Result: 0.823486474191, config: {u'r': 2, u'method': u'minkowski'}
-			Parsing config for minkowski
-			Result: 0.86760244929, config: {u'r': 3, u'method': u'minkowski'}
-			Parsing config for jaccard_index
-			Result: 0.56, config: {u'alpha': 1, u'evaluator': u'sup', u'beta': 1, u'gamma': 1, u'method': u'jaccard_index'}
-			Parsing config for jaccard_index
-			Result: 0.56, config: {u'alpha': 1, u'evaluator': u'sup', u'beta': 1, u'gamma': 1, u'method': u'jaccard_index'}
-		
-		
-	- python compareMethods.py -s customSetsFile.txt -c customConfigFile.txt 
-		- parametr -s pozwala na użycie dowolnego pliku zawierającego zbiory rozmyte
-		- parametr -c powzwala na użycie dowolnego pliku z konfigracjami.
-
-		
-Generating random sets.
-
-Skrypt gerateFuzzySet.py pozwala na automatyczne generowanie zbiorów rozmytych. Przykłady użycia:
-	- gerateFuzzySet.py -h -komenda wylistuje wszystkie możliwe parametry wraz z ich znaczeniem oraz wartościami domyślnymi
-	- gerateFuzzySet.py --random -min 0.3 -max 0.6 -n 100 --appendToFile -file myResultFile.txt - wywołanie takiej komenty spowoduje wygenerowanie losowego zbioru rozmytego o 100 elementach. Każdy element będzie należał do przedziału [0.3, 0.6]. Dodatkowo wygenerowany zbiór zostanie dopisany do pliku myResultFile.txt (pozwala na to przełącznik --appendToFile - bez niego wynik zostanie tylko wypisany w konsoli)
-	- gerateFuzzySet.py --singleton -value 0.4 -n 30 - spowoduje wygenerowanie 30-to elemntowego zbioru składającego się z jednej wartości równej 0.4. Wynik zostanie wyposany na konsolę.
