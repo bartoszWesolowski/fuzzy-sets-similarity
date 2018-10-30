@@ -18,7 +18,10 @@
             },
             controller: function ($scope, $attrs) {
                 console.log('similarityCalculator controller init')
-                var minkowski = this;
+                var _self = this;
+
+                //todo:move thic out of method config
+                this.id = $scope.methodConfig.id === undefined ? new Date().getTime() : $scope.methodConfig.id;
 
                 this.name = $scope.name || '';
 
@@ -82,8 +85,11 @@
                             (response) => {
                                 console.log(response);
                                 this.updateView(response.data);
-                                minkowski.similarityOfSets = response.data.result;
-                                $scope.$emit('FUZZY_SIMILARITY_CALCULATED', response.data)
+                                _self.similarityOfSets = response.data.result;
+                                //id added to avoid result duplication
+                                var eventData = _.extend({}, response.data, {id: _self.id});
+
+                                $scope.$emit('FUZZY_SIMILARITY_CALCULATED', eventData)
                                 this.calculationStatus.finish();
                             },
                             (errorResponse) => {
@@ -91,7 +97,7 @@
                                 console.log('error response: ' + JSON.stringify(errorResponse));
                             }
                         );
-                }
+                };
 
                 this.init = function (config) {
 
@@ -104,7 +110,7 @@
                 };
 
                 $scope.$watch('methodConfig', function(newValue) {
-                    minkowski.init(newValue);
+                    _self.init(newValue);
                 }, true);
 
             },

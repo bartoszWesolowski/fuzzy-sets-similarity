@@ -161,18 +161,13 @@
         };
 
 
+        this.similarityCalculationResults = {};
+
         this.summaryChartConfig = {
             series: ['Sumary'],
             data: [],
             labels:[]
-        }
-
-        $scope.$on('FUZZY_SIMILARITY_CALCULATED', function(event, data) {
-           console.log('event: ' + data);
-
-            comparisonCtrl.summaryChartConfig.data.push(data.result)
-            comparisonCtrl.summaryChartConfig.labels.push(data.method)
-        });
+        };
 
         this.configurations = [];
 
@@ -249,25 +244,32 @@
 
 
             const configurations = [];
-            _.each(this.configurationsWithoutSets, (value) => {
+            _.each(this.configurationsWithoutSets, (value, index) => {
                 const copied = _.extend({}, value);
                 copied.setA = setA;
                 copied.setB = setB;
+                copied.id = index;
                 configurations.push(copied);
             })
             return configurations;
         };
-
-
-        //$scope.$watch("rawFuzzySets", (fuzzySetsInput) => {
-        //    comparisonCtrl.configurations = comparisonCtrl.createValidConfigurations(angular.extend({}, fuzzySetsInput));
-        //}, true);
 
         this.configurations = this.createValidConfigurations();
 
         this.calculateResult = function() {
             this.configurations = this.createValidConfigurations();
         };
+
+        $scope.$on('FUZZY_SIMILARITY_CALCULATED', function(event, data) {
+            console.log('event: ' + data);
+            comparisonCtrl.similarityCalculationResults[data.id] = data;
+            const storedResults = Object.values(comparisonCtrl.similarityCalculationResults);
+            const sortedResults = _.sortBy(storedResults, ['id']);
+            const results = _.map(sortedResults, o => o.result);
+            const labels = _.map(sortedResults, o => o.method);
+            comparisonCtrl.summaryChartConfig.data = results;
+            comparisonCtrl.summaryChartConfig.labels = labels;
+        });
     }]);
 
     app.factory('fuzzyApi', ['$http', function($http) {
