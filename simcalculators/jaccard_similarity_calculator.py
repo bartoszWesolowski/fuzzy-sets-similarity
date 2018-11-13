@@ -15,18 +15,24 @@ class JaccardSimilarityCalculator(AbstractSimilarityCalculator):
         params.EVALUATOR: fuzzysetevaluator.sup
     }):
         """Jaccard similarity index"""
+
         fuzzyA = FuzzySet(A)
         fuzzyB = FuzzySet(B)
+        universe = fuzzyA.getUniverse(fuzzyB)
+
         alpha = config[params.ALPHA]
         beta = config[params.BETA]
         gamma = config[params.GAMMA]
-        evaluator = fuzzysetevaluator.getEvaluator([params.EVALUATOR])
+        evaluatorName = config[params.EVALUATOR]
+        evaluator = fuzzysetevaluator.getEvaluator(evaluatorName, universe)
+        nominator = m.sum(evaluator.evaluate(fuzzyA.intersect(fuzzyB)),
+                          gamma * evaluator.evaluate(fuzzyA.complement().intersect(fuzzyB.complement())))
+        denominator1 = evaluator.evaluate(fuzzyA.intersect(fuzzyB))
+        denominator2 = m.multiply(alpha, evaluator.evaluate(fuzzyA.intersect(fuzzyB.complement())))
+        denominator3 = m.multiply(beta, evaluator.evaluate(fuzzyA.complement().intersect(fuzzyB)))
 
-        nominator = m.sum(evaluator(fuzzyA.intersect(fuzzyB)),
-                          gamma * evaluator(fuzzyA.complement().intersect(fuzzyB.complement())))
-        denominator1 = evaluator(fuzzyA.intersect(fuzzyB))
-        denominator2 = m.multiply(alpha, evaluator(fuzzyA.intersect(fuzzyB.complement())))
-        denominator3 = m.multiply(beta, evaluator(fuzzyA.complement().intersect(fuzzyB)))
+        mainDenominator = denominator1 + denominator2 + denominator3
+        if mainDenominator == 0:
+            raise AttributeError("Can not calculate Jaccard similarity. Denominator can not be zero.")
 
-        mainDenominator = m.sum(m.sum(denominator1, denominator2), denominator3)
         return m.divide(nominator, mainDenominator)

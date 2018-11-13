@@ -61,6 +61,10 @@ class FuzzySet:
         """Returns max(number of elements of this set, number of elements of other set)"""
         return max(len(self.elements), len(otherFuzzySet.elements))
 
+    def getUniverse(self, other):
+        length = self.getLenght(other)
+        return [1 for x in range(length)]
+
     def complement(self):
         """Compute complement (pol. doplnienie) of fuzzy set. Returns a fuzzy set object."""
         result = []

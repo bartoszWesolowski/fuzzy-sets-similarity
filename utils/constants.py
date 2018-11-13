@@ -4,7 +4,7 @@ MINKOWSKI = "minkowski"
 
 ANGULAR_DISTANCE = "angular-distance"
 
-JACCARD_INDEX = "jaccard_index"
+JACCARD_INDEX = "jaccard-index"
 
 IMPLICATION_SIMILARITY = 'implication-similarity'
 

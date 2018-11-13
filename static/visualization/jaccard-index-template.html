@@ -1,0 +1,48 @@
+<div class="similarity-example-segment">
+    <form name="similarityForm"
+          role="form"
+          ng-submit="similarityCalculatorCtrl.calculateResult()">
+        <div class="form-group">
+            <info-bar></info-bar>
+
+            <raw-sets-input
+                ng-hide="hideSets"
+                raw-set-a="similarityCalculatorCtrl.rawSetA"
+                raw-set-b="similarityCalculatorCtrl.rawSetB">
+            </raw-sets-input>
+
+            <div class="config">
+                <label>Alpha:</label>
+                <input type="number"
+                       step="0.01"
+                       required
+                       class="form-control"
+                       ng-model="similarityCalculatorCtrl.similarityData.alpha"
+                       title="Alpha"/>
+                <label>Beta:</label>
+                <input type="number"
+                       step="0.01"
+                       required
+                       class="form-control"
+                       ng-model="similarityCalculatorCtrl.similarityData.beta"
+                       title="Beta"/>
+                <label>Gamma:</label>
+                <input type="number"
+                       required
+                       class="form-control"
+                       ng-model="similarityCalculatorCtrl.similarityData.gamma"
+                       title="Gamma"/>
+                <label>Evaluator:</label>
+                <input type="text"
+                       required
+                       class="form-control"
+                       ng-model="similarityCalculatorCtrl.similarityData.evaluator"
+                       title="Evaluator"/>
+            </div>
+            <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
+            <fuzzy-set-chart
+                    ng-hide="hideChart"
+                    config="similarityCalculatorCtrl.chartConfig"></fuzzy-set-chart>
+        </div>
+    </form>
+</div>

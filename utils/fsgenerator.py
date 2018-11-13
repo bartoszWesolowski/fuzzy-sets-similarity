@@ -86,8 +86,8 @@ def symetricTriangular(numberOfElements):
     """
     result = []
     n = numberOfElements if numberOfElements % 2 == 0 else numberOfElements + 1
-    for x in range(n):
-        middle = n / float(2)
+    middle = (n - 1) / float(2)
+    for x in range(n + 1):
         if x <= middle:
             value = x * 2 * (1 / float(n))
         else:
@@ -106,12 +106,13 @@ def rescaleSymetricTriangularSets(originalSet, xScale=1.0, yScale=1.0):
     :param yScale: 
     :return: pair of original and rescaled sets
     """
-    originalSetSize = len(originalSet)
+    originalSetSize = len(originalSet) - 1
     numberOfElementsInNewSet = int(originalSetSize * xScale)
     print "Number of elements in original and rescaled: {} -> {}".format(originalSet, numberOfElementsInNewSet)
     rescaled = symetricTriangular(numberOfElementsInNewSet).wrappedSet
     rescaled = map(lambda x: x * yScale, rescaled)
-    numberOfZerosToAddToSmallerSet = int((originalSetSize / 2.0) * abs(1 - xScale))
+    sizeDifference = abs(originalSetSize - (len(rescaled) - 1))
+    numberOfZerosToAddToSmallerSet = int(sizeDifference / float(2))#int((originalSetSize / 2.0) * abs(1 - xScale))
     setWithLeadingZeros = [0 for x in range(numberOfZerosToAddToSmallerSet)]
     if xScale >= 1:
         setWithLeadingZeros.extend(originalSet)
