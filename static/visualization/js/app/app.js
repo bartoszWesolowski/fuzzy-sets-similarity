@@ -52,7 +52,6 @@
                 this.defaultSimilarityDataConfig = {
                     setA: [],
                     setB: [],
-                    config: {}
                 };
 
                 this.updateView = function (config) {
@@ -71,9 +70,9 @@
                         ],
                         labels: _.range(Math.max(setA.length, setB.length))
                     };
-                    this.rawSetA = arrayUtils.arrayToString(config.setA);
-                    this.rawSetB = arrayUtils.arrayToString(config.setB);
-                }
+                    this.rawSetA = arrayUtils.arrayToString(setA);
+                    this.rawSetB = arrayUtils.arrayToString(setB);
+                };
 
                 this.calculateResult = function () {
                     this.similarityData.setA = arrayUtils.stringToArray(this.rawSetA);
@@ -102,13 +101,14 @@
                 this.init = function (config) {
 
                     this.methodConfig = angular.fromJson(config || {});
-                    this.similarityData = angular.extend(this.defaultSimilarityDataConfig, this.methodConfig)
+                    this.similarityData = angular.extend(this.defaultSimilarityDataConfig, this.methodConfig);
 
 
                     this.updateView(this.methodConfig);
                     this.calculateResult();
                 };
 
+                //fixme: broken
                 $scope.$watch('methodConfig', function(newValue) {
                     _self.init(newValue);
                 }, true);
@@ -189,6 +189,26 @@
             },
         ];
 
+        this.dataSets = [];
+
+        var downloadDataSets = () => {
+            if (this.dataSets.length) {
+                return;
+            }
+            fuzzyApi.getAvailableDataSets()
+                .then(
+                    (response) => {
+                        console.log(response);
+                        formController.dataSets = response.data.dataSets;
+                    },
+                    (errorResponse) => {
+                        console.log('error response: ' + JSON.stringify(errorResponse));
+                    }
+                );
+
+        };
+
+        downloadDataSets();
     }]);
 
 

@@ -20,6 +20,14 @@
               role="form"
               ng-submit="comparisonCtrl.calculateResult()">
             <div class="col-xs-12 col-sm-10">
+                <label>Predefined data sets</label>
+                <select ng-controller="FormController as formCtrl"
+                        ng-model="comparisonCtrl.selectedDataSetKey"
+                        class="form-control"
+                        required
+                        title="Data Set">
+                    <option ng-repeat="option in formCtrl.dataSets" value="{{option.key}}">{{option.label}}</option>
+                </select>
                 <raw-sets-input
                         raw-set-a="comparisonCtrl.rawFuzzySets.setA"
                         raw-set-b="comparisonCtrl.rawFuzzySets.setB">

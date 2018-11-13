@@ -5,6 +5,7 @@ from aggregators.aggregators_factory import AggregatorFactory
 from tnorms.t_norm_factory import TnormFactory
 from utils import configuration_parameters_names as paramNames
 #TODO: Nazwa
+
 class ElementsSimilarityByImplicationCalculator(object):
     def __init__(self, implication, tNorm):
         self.implication = implication
@@ -17,6 +18,7 @@ class ElementsSimilarityByImplicationCalculator(object):
 
     def generalSimilarity(self, a, b):
         aSimilarToB = self.similarityOfTwoElements(a, b)
+        #TODO: negacja
         aPrimSimilarToBPrim = self.similarityOfTwoElements(1 - a, 1 - b)
         return 0.5 * (aSimilarToB + aPrimSimilarToBPrim)
 

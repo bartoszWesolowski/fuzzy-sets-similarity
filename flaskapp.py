@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request, send_from_directory, redirect, url_for
+
+from datasets import DataSetProvider
 from utils import constants as c
 from restapphelpers.similartyrequest import SimilarityRequest
 from aggregators.aggregators_factory import AggregatorFactory
@@ -39,6 +41,18 @@ def get_implemented_aggregators():
         'values': aggregatorFactory.getSupportedAggregators(),
         'status': "OK"
     })
+
+dataSets = DataSetProvider()
+@app.route('/fuzzy/data-sets', methods=['GET'])
+def get_available_datasets():
+    return jsonify(dataSets.getAvailableDataSets())
+
+@app.route('/fuzzy/data-sets/<path:key>', methods=['GET'])
+def get_fataset_by_key(key):
+    dataset = dataSets.getDataset(key)
+    if dataset:
+        return jsonify(dataset)
+    return jsonify(message='No dataset for key: ' + key), 404
 
 
 @app.route('/fuzzy/similarity', methods=['POST'])

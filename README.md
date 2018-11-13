@@ -81,6 +81,24 @@ Running this script will result with M matrices, each matrix representing result
 TODO
 
 ##Implementing next similarity measure
+Implementing new similarity measure is fairly simple - it require creating two classes:
+1. Custom similarity calculator. This class have to extend AbstractSimilarityCalculator available in
+abstract_similarity_calculator.py. Extending class must override the `calculateSimilarity` method which will
+calculate the similarity between 2 fuzzy sets. For more info look on the provided documentation.
+
+2. Custom similarity configuration parser. This class should extend `AbstractConfigurationParser` and implement 
+`parse` method. This method should parse raw configuration map that contains string -> string value pairs to format 
+supported by custom similarity calculator implemented in step 1. Map returned by this method should be a valid 
+configuration for similarity calculator. For more info have a look on this method documentation.
+
+The last step to perform is to register calculator and config parser in `SimilarityFacade` by adding entry to 
+`similarityMethods` list. Each entry is a `SimilarityMethod` object that is basically a triple connecting similarity 
+calculator, config parser with unique name. This name is used as identifier of previous objects - this name is 
+basically the same name present as value of `method` attribute in JSON configuration (see Similarity measure 
+configuration generator section) 
+
+By doing those three steps 
+  
 
 ## Requirements to run
 Python 2.7	

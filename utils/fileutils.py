@@ -4,3 +4,9 @@ def appendLine(fileName, text):
     """
     with open(fileName, "a") as myfile:
         myfile.write(text + "\n")
+
+
+def appendComment(filename, comment):
+    commentPrefix = "# "
+    commentWithPrefix = commentPrefix + comment
+    appendLine(filename, commentWithPrefix)

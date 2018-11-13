@@ -12,7 +12,7 @@ class SimilarityRequest:
 
     similarityCalculatorWrapper = SimilarityCalculatorWrapper()
 
-    requiredParameters = [c.SET_A_REQUEST_PARAMETER_NAME, c.SET_B_REQUEST_PARAMETER_NAME, c.METHOD_REQUEST_PARAMETER_NAME, c.CONFIG_REQUEST_PARAMETER_NAME]
+    requiredParameters = [c.SET_A_REQUEST_PARAMETER_NAME, c.SET_B_REQUEST_PARAMETER_NAME, c.METHOD_REQUEST_PARAMETER_NAME]
 
     def __init__(self, requestParametersDict):
         """Constructor: get dictionary as a input parameter
@@ -28,9 +28,8 @@ class SimilarityRequest:
 
         self.setA = mathutils.clamp(requestParametersDict[c.SET_A_REQUEST_PARAMETER_NAME])
         self.setB = mathutils.clamp(requestParametersDict[c.SET_B_REQUEST_PARAMETER_NAME])
-        self.method = requestParametersDict[c.METHOD_REQUEST_PARAMETER_NAME]
-        self.rawConfig = requestParametersDict[c.CONFIG_REQUEST_PARAMETER_NAME]
-        self.rawConfig[c.METHOD_PARAM_NAME] = self.method
+        self.rawConfig = requestParametersDict
+        self.method = requestParametersDict[c.METHOD_PARAM_NAME]
 
     def calculate(self):
         return self.similarityCalculatorWrapper.calculateSimilarityFromRawConfig(self.setA, self.setB, self.rawConfig)
