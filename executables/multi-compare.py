@@ -60,6 +60,7 @@ print "Parsed {} sets".format(numberOfSets)
 configs = fileparser.readConfigs(configFile)
 print "Parsed {} configs.".format(len(configs))
 
+print "Result processor name: " + args.resultParser
 resultProcessor = resultProcessorFactory.createResultProcessor(args.resultParser)
 for index, rawConfig in enumerate(configs):
     resultFileNameForCurrentConfig = "{}_{}".format(index, args.resultFile)

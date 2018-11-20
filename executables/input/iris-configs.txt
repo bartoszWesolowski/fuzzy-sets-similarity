@@ -1,0 +1,2 @@
+{"r": 1, "method": "minkowski"}
+{"r": 2, "method": "minkowski"}

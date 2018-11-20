@@ -13,7 +13,8 @@ class ResultProcessorFactory(object):
             if processor.getName() == name:
                 return processor
 
-        raise AttributeError("Can not create result processor for name: {}".format(name))
+        message = "Can not create result processor for name: {}".format(name)
+        raise AttributeError(message)
 
     def supportedProcessorsNames(self):
         return [x.getName() for x in ResultProcessorFactory.PROCESSORS]

@@ -9,7 +9,6 @@ class MinkowskiSimilarityCalculator(AbstractSimilarityCalculator):
     def calculateSimilarity(self, A, B, configuration={'r': 2}):
         """Computes similarity of two fuzzy sets A, B represented as arrays of floating points numbers
         r - parameter of Minkowski metric"""
-        numberOfElements = max(len(A), len(B))
         return 1 / (1 + self.metric(A, B, configuration[params.R]))
 
 
