@@ -43,7 +43,7 @@ class AngularDistanceMethod(object):
 
 
 class JaccardIndexMethod(object):
-    def __init__(self, alpha=1, beta=1, gamma=1, evaluator='average'):
+    def __init__(self, alpha=1, beta=1, gamma=0, evaluator='average'):
         self.alpha = alpha
         self.beta = beta
         self.gamma = gamma
