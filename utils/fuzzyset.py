@@ -41,21 +41,21 @@ class FuzzySet:
 
         return FuzzySet(result)
 
-    def sum(self, otherFuzzySet, tNorm=max):
+    def sum(self, otherFuzzySet, tkonorm=max):
         """Returns sum of this set and the OtherFuzyzSet, using tNorm (max as the default value).
         tNorm has to be a function that takes two floating point arguments and returns one floating point number.
         Return new fuzzy set as a result.
         """
-        return self.binaryOperation(otherFuzzySet, tNorm)
+        return self.binaryOperation(otherFuzzySet, tkonorm)
 
     # TODO: jak to sie powinno nazywac?
     def intersect(self, otherFuzzySet,
-                  tKonorm=min):
+                  tnorm=min):
         """Returns intersection of this set and the OtherFuzyzSet, using sNorm (min as the default value).
         tNorm has to be a function that takes two floating point arguments and returns one floating point number.
         Return new fuzzy set as a result.
         """
-        return self.binaryOperation(otherFuzzySet, tKonorm)
+        return self.binaryOperation(otherFuzzySet, tnorm)
 
     def getLenght(self, otherFuzzySet):
         """Returns max(number of elements of this set, number of elements of other set)"""

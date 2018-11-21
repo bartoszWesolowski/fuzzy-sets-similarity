@@ -40,16 +40,16 @@ class SimplifiedJaccardConfigurationParser(AbstractConfigurationParser):
     def validateThatTNormIsSupported(self, tNormName):
         if not self.tNormFactory.isTnormSupported(tNormName):
             raise AttributeError(
-                "Found T-norm name that is not supported: {}  while parsing configuration for implication similarity calculator."
+                "Found T-norm name that is not supported: '{}'  while parsing configuration for simplified jaccard similarity calculator."
                 "List of supported t-norms: {}".format(
                     tNormName, self.tNormFactory.getSupportedTNorms()
                 )
             )
 
     def validateThatTkoNormIsSupported(self, tkoNormName):
-        if not self.tNormFactory.isTnormSupported(tkoNormName):
+        if not self.tkoNormFactory.isTkonormSupported(tkoNormName):
             raise AttributeError(
-                "Found T-norm name that is not supported: {}  while parsing configuration for implication similarity calculator."
+                "Found T-konorm name that is not supported: '{}'  while parsing configuration for simplified jaccard similarity calculator."
                 "List of supported t-norms: {}".format(
                     tkoNormName, self.tkoNormFactory.getSupportedTkonorms()
                 )

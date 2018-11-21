@@ -23,7 +23,7 @@ class SimilarityFacade(object):
         SimilarityMethod(constants.IMPLICATION_SIMILARITY, ImplicationSimilarityCalculator(),
                          ImplicationConfigurationParser()),
         SimilarityMethod(constants.SIMPLIFIED_JACCARD_INDEX, SimplifiedJaccardSimilarityCalculator(),
-                         SimplifiedJaccardConfigurationParser)
+                         SimplifiedJaccardConfigurationParser())
     ]
 
     def getSupportedMethods(self):

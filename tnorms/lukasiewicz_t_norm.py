@@ -1,11 +1,10 @@
 from abstract_t_norm import AbstractTnorm
+from utils import constants as c
 
 
 class LukasiewiczTnorm(AbstractTnorm):
-    NAME = "lukasiewicz"
-
     def tnormValue(self, a, b):
         return max(0, a + b - 1)
 
     def getName(self):
-        return LukasiewiczTnorm.NAME
+        return c.TNORM_LUKASIEWICZ

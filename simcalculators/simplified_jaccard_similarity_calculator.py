@@ -26,10 +26,10 @@ class SimplifiedJaccardSimilarityCalculator(AbstractSimilarityCalculator):
         tnorm = self.getTNorm(config)
         tkonorm = self.getTkonorm(config)
 
-        intersect = fuzzyA.intersect(fuzzyB, tKonorm=tkonorm.tkonormValue)
-        sum = fuzzyB.sum(fuzzyB, tNorm=tnorm.tnormValue)
+        intersect = fuzzyA.intersect(fuzzyB, tnorm=tnorm.tnormValue)
+        sumOfSets = fuzzyB.sum(fuzzyB, tkonorm=tkonorm.tkonormValue)
 
-        aggregatedSum = aggregator.aggregate(sum().elements)
+        aggregatedSum = aggregator.aggregate(sumOfSets.elements)
         aggregatedIntersection = aggregator.aggregate(intersect.elements)
         if aggregatedSum == 0:
             return 0

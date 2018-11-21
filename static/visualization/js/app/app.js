@@ -162,6 +162,21 @@
             }
         ];
 
+        this.tkonorms = [
+            {
+                label: 'Maxiumum',
+                value: 'maxiumum'
+            },
+            {
+                label: 'Lukasiewicz',
+                value: 'lukasiewicz'
+            },
+            {
+                label: 'Probabilistic (pairs with algebraic)',
+                value: 'probabilistic'
+            }
+        ];
+
         this.aggregators = [
             {
                 label: 'Average',

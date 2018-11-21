@@ -1,12 +1,10 @@
 from abstract_aggregator import AbstractAggregator
-
+from utils import constants as c
 
 class AverageAggregator(AbstractAggregator):
 
-    NAME = "average"
-
     def getName(self):
-        return AverageAggregator.NAME
+        return c.AGGREGATOR_AVERAGE
 
     def aggregate(self, values):
         numberOfElements = float(len(values))

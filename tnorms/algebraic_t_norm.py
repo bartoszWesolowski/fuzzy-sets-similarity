@@ -1,11 +1,11 @@
 from abstract_t_norm import AbstractTnorm
+from utils import constants as c
 
 
 class AlgebraicTnorm(AbstractTnorm):
-    NAME = "algebraic"
 
     def tnormValue(self, a, b):
         return a * b
 
     def getName(self):
-        return AlgebraicTnorm.NAME
+        return c.TNORM_ALGEBRAIC

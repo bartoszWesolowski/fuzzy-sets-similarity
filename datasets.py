@@ -1,5 +1,6 @@
 import uuid
-
+from utils import constants
+from utils import configuration_parameters_names as params
 
 class MinkowskiMethod(object):
     r = 2
@@ -32,6 +33,25 @@ class ImplicationMethod(object):
             'aggregator': self.aggregator,
             'implication': self.implication,
             'tnorm': self.tnorm
+        }
+
+class SimplifiedJaccardIndex(object):
+    method = constants.SIMPLIFIED_JACCARD_INDEX
+    aggregator = 'average'
+    implication = 'lukasiewicz'
+    tnorm = 'lukasiewicz'
+
+    def __init__(self, aggregator='average', tkonorm=constants.TKONORM_MAXIMUM, tnorm=constants.TNORM_MINIMUM):
+        self.aggregator = aggregator
+        self.tkonorm = tkonorm
+        self.tnorm = tnorm
+
+    def serialize(self):
+        return {
+            'method': constants.SIMPLIFIED_JACCARD_INDEX,
+            params.AGGREGATOR: self.aggregator,
+            params.TKNORM: self.tkonorm,
+            params.TNORM: self.tnorm
         }
 
 
@@ -118,6 +138,9 @@ DEFAULT_METHODS = [
     ImplicationMethod(aggregator='minimum'),
     ImplicationMethod(aggregator='maximum'),
     ImplicationMethod(aggregator='maximum'),
+    SimplifiedJaccardIndex(),
+    SimplifiedJaccardIndex(tkonorm=constants.TKONORM_LUKASIEWICZ, tnorm=constants.TNORM_LUKASIEWICZ),
+    SimplifiedJaccardIndex(tkonorm=constants.TKONORM_PROBABILISTIC, tnorm=constants.TNORM_ALGEBRAIC),
     JaccardIndexMethod(),
     JaccardIndexMethod(alpha=0.5, beta=0.5),
     JaccardIndexMethod(alpha=1, beta=0)

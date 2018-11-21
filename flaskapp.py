@@ -6,6 +6,7 @@ from restapphelpers.similartyrequest import SimilarityRequest
 from aggregators.aggregators_factory import AggregatorFactory
 from fuzzyfacades.similarity_calculator_facade import SimilarityFacade
 import json
+import traceback
 from flask_cors import CORS
 
 similarityFacade = SimilarityFacade()
@@ -72,6 +73,7 @@ def calculate_zsimilarity():
         })
     except Exception as e:
         print e
+        traceback.print_exc()
         responseBody = {
             'status': "FAILURE",
             'message': str(e)

@@ -1,11 +1,11 @@
 from abstract_aggregator import AbstractAggregator
+from utils import constants as c
 
 
 class MinimumAggregator(AbstractAggregator):
-    NAME = "minimum"
 
     def getName(self):
-        return MinimumAggregator.NAME
+        return c.AGGREGATOR_MINIMUM
 
     def aggregate(self, values):
         return min(values)

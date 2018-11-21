@@ -1,11 +1,11 @@
 from abstract_aggregator import AbstractAggregator
+from utils import constants as c
 
 
 class MaximumAggregator(AbstractAggregator):
-    NAME = "maximum"
 
     def getName(self):
-        return MaximumAggregator.NAME
+        return c.AGGREGATOR_MAXIMUM
 
     def aggregate(self, values):
         return max(values)

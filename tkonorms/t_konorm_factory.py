@@ -1,5 +1,5 @@
 from lukasiewicz_t_konorm import LukasiewiczTkonorm
-from maximum_t_konorm import MinimumTkonorm
+from maximum_t_konorm import MaxiumumTkonorm
 from probabilistic_t_konorm import AlgebraicTkonorm
 
 
@@ -7,7 +7,7 @@ class TkonormFactory(object):
     def __init__(self):
         self.tNorms = [
             LukasiewiczTkonorm(),
-            MinimumTkonorm(),
+            MaxiumumTkonorm(),
             AlgebraicTkonorm()
         ]
 
@@ -24,7 +24,7 @@ class TkonormFactory(object):
 
     def getTkonorm(self, name):
         """Returns t-norm object for given name"""
-        if self.isTkonormSupported(name):
+        if not self.isTkonormSupported(name):
             raise AttributeError("Can not create tNorm for name: {}. Supported t-norms names: {}".format(
                 name, self.getSupportedTkonorms()))
 
