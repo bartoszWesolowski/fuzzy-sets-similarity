@@ -5,19 +5,25 @@ from simcalculators.angluar_distance_similarity_calculator import AngularDistanc
 from simcalculators.minkowski_similarity_calculator import MinkowskiSimilarityCalculator
 from simcalculators.jaccard_similarity_calculator import JaccardSimilarityCalculator
 from simcalculators.implication_similaroty_calculator import ImplicationSimilarityCalculator
+from simcalculators.simplified_jaccard_similarity_calculator import SimplifiedJaccardSimilarityCalculator
 
 from parsers.angular_distance_configuration_parser import AngularDistanceConfigParser
 from parsers.minkowski_configuration_parser import MinkowskiConfigParser
 from parsers.jaccard_configuration_parser import JaccardConfigParser
 from parsers.implication_configuration_parser import ImplicationConfigurationParser
+from parsers.simplified_jaccard_measure_passer import SimplifiedJaccardConfigurationParser
+
 
 class SimilarityFacade(object):
-
     similarityMethods = [
-        SimilarityMethod(constants.ANGULAR_DISTANCE, AngularDistanceSimilarityCalculator(), AngularDistanceConfigParser()),
+        SimilarityMethod(constants.ANGULAR_DISTANCE, AngularDistanceSimilarityCalculator(),
+                         AngularDistanceConfigParser()),
         SimilarityMethod(constants.MINKOWSKI, MinkowskiSimilarityCalculator(), MinkowskiConfigParser()),
         SimilarityMethod(constants.JACCARD_INDEX, JaccardSimilarityCalculator(), JaccardConfigParser()),
-        SimilarityMethod(constants.IMPLICATION_SIMILARITY, ImplicationSimilarityCalculator(), ImplicationConfigurationParser()),
+        SimilarityMethod(constants.IMPLICATION_SIMILARITY, ImplicationSimilarityCalculator(),
+                         ImplicationConfigurationParser()),
+        SimilarityMethod(constants.SIMPLIFIED_JACCARD_INDEX, SimplifiedJaccardSimilarityCalculator(),
+                         SimplifiedJaccardConfigurationParser)
     ]
 
     def getSupportedMethods(self):

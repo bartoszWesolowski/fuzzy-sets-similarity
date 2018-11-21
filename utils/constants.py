@@ -6,6 +6,8 @@ ANGULAR_DISTANCE = "angular-distance"
 
 JACCARD_INDEX = "jaccard-index"
 
+SIMPLIFIED_JACCARD_INDEX = "simplified-jaccard-index"
+
 IMPLICATION_SIMILARITY = 'implication-similarity'
 
 """List of implemented similarity calculation methods"""
