@@ -160,18 +160,48 @@ print fuzzyficatedIrisDataSet.toFuzzySetFileFormat()
 minkowskiCalculator = MinkowskiSimilarityCalculator()
 setsComparator = SetsComparator()
 
-# comparing same types:
-for firstIrisType in [0, 1, 2]:
-    for secondIrisType in [0, 1, 2]:
-        print "\n\n Compare irises with types: {} x {}".format(firstIrisType, secondIrisType)
-        fuzzyIrisesWithFirstType = map(lambda fuzzyIris: fuzzyIris.fuzzySetArray(), fuzzyficatedIrisDataSet.getIrisesWithType(firstIrisType))
-        fuzzyIrisesWithSecondType = map(lambda fuzzyIris: fuzzyIris.fuzzySetArray(), fuzzyficatedIrisDataSet.getIrisesWithType(secondIrisType))
-        comparisonResult = setsComparator.compareTwoSets(fuzzyIrisesWithFirstType, fuzzyIrisesWithSecondType, {"r": 1, "method": "minkowski"})
-        resultArray = comparisonResult.resultArray
-        print "Max similarity: {}".format(max(resultArray))
-        print "Average similarity: {}".format(sum(resultArray) / float(len(resultArray)))
-        print "Min similarity: {}".format(min(resultArray))
 
+# comparing same types:
+def compareIrisesWithComparionMethod(methodConfig):
+    comparisonOfIrisesWithSameType = []
+    comparisonOfIrisesWithDifferent = []
+    for firstIrisType in [0, 1, 2]:
+        for secondIrisType in [0, 1, 2]:
+            print "\n\n Compare irises with types: {} x {}".format(firstIrisType, secondIrisType)
+            fuzzyIrisesWithFirstType = map(lambda fuzzyIris: fuzzyIris.fuzzySetArray(),
+                                           fuzzyficatedIrisDataSet.getIrisesWithType(firstIrisType))
+            fuzzyIrisesWithSecondType = map(lambda fuzzyIris: fuzzyIris.fuzzySetArray(),
+                                            fuzzyficatedIrisDataSet.getIrisesWithType(secondIrisType))
+            comparisonResult = setsComparator.compareTwoSets(fuzzyIrisesWithFirstType, fuzzyIrisesWithSecondType, methodConfig)
+            resultArray = comparisonResult.resultArray
+            if firstIrisType == secondIrisType:
+                comparisonOfIrisesWithSameType.extend(resultArray)
+            else:
+                comparisonOfIrisesWithDifferent.extend(resultArray)
+            print "Max similarity: {}".format(max(resultArray))
+            print "Average similarity: {}".format(sum(resultArray) / float(len(resultArray)))
+            print "Min similarity: {}".format(min(resultArray))
+
+    print "\n\nGeneral summary for comparising sets of same types:"
+    print "Max similarity: {}".format(max(comparisonOfIrisesWithSameType))
+    print "Average similarity: {}".format(
+        sum(comparisonOfIrisesWithSameType) / float(len(comparisonOfIrisesWithSameType)))
+    print "Min similarity: {}".format(min(comparisonOfIrisesWithSameType))
+
+    print "\n\nGeneral summary for comparising sets of different types:"
+    print "Max similarity: {}".format(max(comparisonOfIrisesWithDifferent))
+    print "Average similarity: {}".format(
+        sum(comparisonOfIrisesWithDifferent) / float(len(comparisonOfIrisesWithDifferent)))
+    print "Min similarity: {}".format(min(comparisonOfIrisesWithDifferent))
+
+methods = [
+    {"r": 1, "method": "minkowski"},
+    {"r": 2, "method": "minkowski"},
+    {"method": "angular-distance"}
+]
+
+for configMap in methods:
+    compareIrisesWithComparionMethod(configMap)
 
 
 
