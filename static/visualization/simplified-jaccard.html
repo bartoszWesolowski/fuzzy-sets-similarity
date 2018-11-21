@@ -2,6 +2,7 @@
 <head>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
     <title>Simplified Jaccard Similarity</title>
 </head>
 <body ng-app="fuzzy-sets">
@@ -12,6 +13,13 @@
     <fuzzy-navigation></fuzzy-navigation>
 
     <h1 class="text-center">Simplified Jaccard Similarity</h1>
+
+    <div class="similarity-method-description col-xs-12 col-sm-12">
+        <p>Formula used to calculate similarity using this method:</p>
+        <p>$$SIM(a, b) = \frac{f(A \cap B)}{f(A \cup B)} $$</p>
+        <p>Function f represents aggregator option, sum and intersection of fuzzy sets A and B are calculated based
+            on t-norm and t-konorm selected.</p>
+    </div>
 
     <div class="col-xs-12 col-sm-12">
         <similarity-calculator

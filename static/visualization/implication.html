@@ -2,6 +2,7 @@
 <head>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
     <title>Implication Similarity</title>
 </head>
 <body ng-app="fuzzy-sets">
@@ -12,6 +13,22 @@
     <fuzzy-navigation></fuzzy-navigation>
 
     <h1 class="text-center">Implication Similarity</h1>
+
+    <div class="similarity-method-description col-xs-12 col-sm-12">
+        <p>Formula used to calculate similarity using this method:</p>
+        <p>$$ SIM(A, B) = f(A \equiv_= B) $$</p>
+        <p>where f represents aggregator function and \(A \equiv_= B\) represents the formula:</p>
+        <p>$$ A \equiv_= B = [\mu_A(a_1) \equiv_= \mu_B(b_1), ..., \mu_A(a_n) \equiv_= \mu_B(b_n)] $$</p>
+        <p>and</p>
+        <p>$$ a \equiv_= b = t(a \Rightarrow b, b \Rightarrow a) $$</p>
+        <p> where <b>t</b> is a t-norm and \(\Rightarrow\) represents fuzzy implication. Fuzzy Implication \(\Rightarrow\) is defined as </p>
+        <p>$$ a \Rightarrow b = s(v(a), b)$$</p>
+        <p>
+            <b>s</b> represent a t-konorm, and \(v\) a fuzzy negation.
+            All implications implemented here use the following negation: \(v(a) = 1 - a\).
+            Łukasiewicz implication use Łukasiewicz t-konorm. Implication named <i>maximum</i> use max t-konorm.
+        </p>
+    </div>
 
     <div class="col-xs-12 col-sm-12">
         <similarity-calculator

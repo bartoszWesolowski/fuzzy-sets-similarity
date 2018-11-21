@@ -2,6 +2,7 @@
 <head>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
     <title>Minkowski Similarity</title>
 </head>
 <body ng-app="fuzzy-sets">
@@ -12,6 +13,14 @@
     <fuzzy-navigation></fuzzy-navigation>
 
     <h1 class="text-center">Minkowski</h1>
+
+    <div class="similarity-method-description col-xs-12 col-sm-12">
+        <p>Formula used to calculate similarity using this method:</p>
+        <p>$$ SIM_{d_r}(A, B) = \frac{1}{1 + d_r(A, B)} $$</p>
+
+        <p>Gdzie funkcja \(d_r(A, B)\) jest postaci: </p>
+        <p>$$ d_r(A, B) = \sqrt[r] {\sum\limits_{i=1}^n |\mu_A(u_i) - \mu_B(u_i)| ^ r} , r \ge 1 $$</p>
+    </div>
 
     <div class="col-xs-12 col-sm-12">
         <similarity-calculator

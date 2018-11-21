@@ -2,6 +2,7 @@
 <head>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
     <title>Angular Distance Similarity</title>
 </head>
 <body ng-app="fuzzy-sets">
@@ -12,6 +13,12 @@
     <fuzzy-navigation></fuzzy-navigation>
 
     <h1 class="text-center">Angular distance</h1>
+
+    <div class="similarity-method-description col-xs-12 col-sm-12">
+        <p>Formula used to calculate similarity using this method:</p>
+        <p>$$ SIM_{cos\alpha}(A, B) = \frac{\sum\limits_{u \in U} \mu_A(u) \mu_B(u)}{\sqrt{\sum\limits_{u \in U} \mu_A(u)^2} \sqrt{ \sum\limits_{u \in U} \mu_B(u)^2}} $$</p>
+        <p>Note that if the denominator of given fraction is equals to zero this method implementation will return 0 as result.</p>
+    </div>
 
     <div class="col-xs-12 col-sm-12">
         <similarity-calculator
