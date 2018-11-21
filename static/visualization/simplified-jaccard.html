@@ -1,0 +1,40 @@
+<html>
+<head>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <title>Simplified Jaccard Similarity</title>
+</head>
+<body ng-app="fuzzy-sets">
+
+<div class="col-xs-12 col-sm-10 col-sm-offset-1"
+     ng-controller="SimplifiedJaccardController as dataProvider">
+
+    <fuzzy-navigation></fuzzy-navigation>
+
+    <h1 class="text-center">Simplified Jaccard Similarity</h1>
+
+    <div class="col-xs-12 col-sm-12">
+        <similarity-calculator
+                method-config='dataProvider.mainExample'>
+        </similarity-calculator>
+    </div>
+
+    <div>
+        <div ng-repeat="example in dataProvider.examples"
+             class="col-xs-12 col-sm-6">
+            <similarity-calculator
+                    method-config="example">
+            </similarity-calculator>
+        </div>
+    </div>
+</div>
+<script src="js/libs/angular.js"></script>
+<script src="js/lodash/lodash.min.js"></script>
+<script src="js/libs/chart/Chart-2.6.0.min.js"></script>
+<script src="js/libs/chart/angular-chart.min.js"></script>
+<script type="text/javascript" src="js/app/array-utils.js"></script>
+<script type="text/javascript" src="js/app/app.js"></script>
+<script type="text/javascript" src="js/app/charts.js"></script>
+<script type="text/javascript" src="js/app/data-providers.js"></script>
+</body>
+</html>

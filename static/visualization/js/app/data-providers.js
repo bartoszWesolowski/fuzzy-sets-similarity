@@ -30,49 +30,143 @@
         }
     }]);
 
-    app.controller("MinkowskiController", function () {
-        const minkowskiController = this;
+    const MAIN_EXAMPLE_SETS = {
+        setA: [0, 0, 0.7, 0, 0, 0.4, 0, 0, 0.6, 0, 0.3, 0],
+        setB: [0, 0, 0.9585, 0, 0.0754, 0.5257, 0, 0.0104, 0.7333, 0, 0.6023, 0],
+    };
 
-        this.mainExample = {
-            method: 'minkowski',
-            setA: [0, 0, 0.7, 0, 0, 0.4, 0, 0, 0.6, 0, 0.3, 0],
-            setB: [0, 0, 0.9585, 0, 0.0754, 0.5257, 0, 0.0104, 0.7333, 0, 0.6023, 0],
-            r: 2
+    const EXAMPLES = [
+        {
+            setA: [0, 0.5, 0.7, 0.5, 0],
+            setB: [0, 0.2, 0.5, 0.2, 0],
+
+        },
+        {
+            setA: [0, 0.1, 0.1, 0.1, 0],
+            setB: [1, 0.9, 0.9, 0.9, 1],
+        },
+        {
+            setA: [0, 0, 0],
+            setB: [1, 1, 1],
+        },
+        {
+            setA: [0, 0.1, 0.1, 0.8, 0.3, 0.7, 0.1, 0.1, 0.1],
+            setB: [0, 0.1, 0.1, 0.8, 0.3, 0.7, 0.1, 0.1, 0.1],
+        },
+        {
+            setA: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.0, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0],
+            setB: [1, 0.9, 0.8, 0.7, 0.3, 0.0, 0.3, 0.5, 0.7, 0.9, 1, 0, 0, 0, 0, 0,],
+        },
+    ];
+
+    const configureExamples = (method, configurations) =>
+        EXAMPLES.map((example, index) =>_.extend(example, method, configurations[index]));
+
+    app.controller("SimplifiedJaccardController", function () {
+
+        const METHOD = {
+            'method': 'simplified-jaccard-index'
         };
 
-        this.examples = [
+        const CONFIGS = [
             {
-                method: 'minkowski',
-                setA: [0, 0.5, 0.7, 0.5, 0],
-                setB: [0, 0.2, 0.5, 0.2, 0],
+                aggregator: "average",
+                tknorm: "maxiumum",
+                tnorm: "minimum"
+
+            },
+            {
+                aggregator: "average",
+                tknorm: "lukasiewicz",
+                tnorm: "lukasiewicz"
+            },
+            {
+                aggregator: "average",
+                tknorm: "probabilistic",
+                tnorm: "algebraic"
+            },
+            {
+                aggregator: "maximum",
+                tknorm: "maxiumum",
+                tnorm: "minimum"
+
+            },
+            {
+                aggregator: "maximum",
+                tknorm: "lukasiewicz",
+                tnorm: "lukasiewicz"
+            },
+            {
+                aggregator: "maximum",
+                tknorm: "probabilistic",
+                tnorm: "algebraic"
+            },
+            {
+                aggregator: "minimum",
+                tknorm: "maxiumum",
+                tnorm: "minimum"
+
+            },
+            {
+                aggregator: "minimum",
+                tknorm: "lukasiewicz",
+                tnorm: "lukasiewicz"
+            },
+            {
+                aggregator: "minimum",
+                tknorm: "probabilistic",
+                tnorm: "algebraic"
+            }
+        ];
+
+        this.mainExample = _.extend(MAIN_EXAMPLE_SETS, METHOD, {
+            aggregator: 'average',
+            tknorm: 'maxiumum',
+            tnorm: 'minimum'
+        });
+
+        this.examples = configureExamples(METHOD, CONFIGS);
+    });
+
+    app.controller("MinkowskiController", function () {
+
+        const METHOD = {
+            method: 'minkowski'
+        };
+
+        const MAIN_EXAMPLE_SETS = {
+            setA: [0, 0, 0.7, 0, 0, 0.4, 0, 0, 0.6, 0, 0.3, 0],
+            setB: [0, 0, 0.9585, 0, 0.0754, 0.5257, 0, 0.0104, 0.7333, 0, 0.6023, 0],
+        };
+
+        const CONFIGS = [
+            {
                 r: 2
 
             },
             {
-                method: 'minkowski',
-                setA: [0, 0.1, 0.1, 0.1, 0.1],
-                setB: [1, 0.9, 0.9, 0.9, 1],
+                r: 1
+
+            },
+            {
                 r: 3
             },
             {
-                method: 'minkowski',
-                setA: [0],
-                setB: [1],
                 r: 2
             },
             {
-                setA: [0, 0.1, 0.1, 0.8, 0.3, 0.7, 0.1, 0.1, 0.1],
-                setB: [0, 0.1, 0.1, 0.8, 0.3, 0.7, 0.1, 0.1, 0.1],
-                method: 'minkowski',
                 r: 2
             },
             {
-                method: 'minkowski',
-                setA: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.0, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0],
-                setB: [1, 0.9, 0.8, 0.7, 0.3, 0.0, 0.3, 0.5, 0.7, 0.9, 1, 0, 0, 0, 0, 0,],
                 r: 2
             },
         ];
+
+        this.mainExample = _.extend(MAIN_EXAMPLE_SETS, METHOD, {
+            r: 2
+        });
+
+        this.examples = configureExamples(METHOD, CONFIGS);
     });
 
     app.controller("AngularDistanceController", function () {

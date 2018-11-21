@@ -1,0 +1,47 @@
+<div class="similarity-example-segment">
+    <form name="similarityForm"
+          role="form"
+          ng-submit="similarityCalculatorCtrl.calculateResult()">
+        <div class="form-group">
+            <info-bar></info-bar>
+
+            <raw-sets-input
+                    ng-hide="hideSets"
+                    raw-set-a="similarityCalculatorCtrl.rawSetA"
+                    raw-set-b="similarityCalculatorCtrl.rawSetB">
+            </raw-sets-input>
+
+            <div class="config" ng-controller="FormController as formCtrl">
+                <fieldset class="form-group">
+                    <label>Aggregator:</label>
+                    <select ng-model="similarityCalculatorCtrl.similarityData.aggregator"
+                            class="form-control"
+                            required
+                            title="Aggregator">
+                        <option ng-repeat="option in formCtrl.aggregators" value="{{option.value}}">{{option.label}}</option>
+                    </select>
+
+                    <label>T-norm:</label>
+                    <select ng-model="similarityCalculatorCtrl.similarityData.tnorm"
+                            class="form-control"
+                            required
+                            title="T-norm">
+                        <option ng-repeat="option in formCtrl.tNorms" value="{{option.value}}">{{option.label}}</option>
+                    </select>
+
+                    <label>T-konorm:</label>
+                    <select ng-model="similarityCalculatorCtrl.similarityData.tknorm"
+                            class="form-control"
+                            required
+                            title="T-konorm">
+                        <option ng-repeat="option in formCtrl.tkonorms" value="{{option.value}}">{{option.label}}</option>
+                    </select>
+                </fieldset>
+            </div>
+            <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
+            <fuzzy-set-chart
+                    ng-hide="hideChart"
+                    config="similarityCalculatorCtrl.chartConfig"></fuzzy-set-chart>
+        </div>
+    </form>
+</div>
