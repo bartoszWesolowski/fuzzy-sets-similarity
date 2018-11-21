@@ -134,11 +134,6 @@
             method: 'minkowski'
         };
 
-        const MAIN_EXAMPLE_SETS = {
-            setA: [0, 0, 0.7, 0, 0, 0.4, 0, 0, 0.6, 0, 0.3, 0],
-            setB: [0, 0, 0.9585, 0, 0.0754, 0.5257, 0, 0.0104, 0.7333, 0, 0.6023, 0],
-        };
-
         const CONFIGS = [
             {
                 r: 2
@@ -171,89 +166,57 @@
 
     app.controller("AngularDistanceController", function () {
 
-        this.mainExample = {
-            method: 'angular-distance',
-            setA: [0, 0, 0.7, 0, 0, 0.4, 0, 0, 0.6, 0, 0.3, 0],
-            setB: [0, 0, 0.9585, 0, 0.0754, 0.5257, 0, 0.0104, 0.7333, 0, 0.6023, 0],
-        }
+        const METHOD = {
+            method: 'angular-distance'
+        };
 
-        this.examples = [
-            {
-                method: 'angular-distance',
-                setA: [0, 0.5, 0.7, 0.5, 0],
-                setB: [0, 0.2, 0.5, 0.2, 0],
-            },
-            {
-                method: 'angular-distance',
-                setA: [0, 0.1, 0.1, 0.1, 0.1],
-                setB: [1, 0.9, 0.9, 0.9, 1],
-            },
-            {
-                method: 'angular-distance',
-                setA: [0],
-                setB: [1],
-            },
-            {
-                setA: [0, 0.1, 0.1, 0.8, 0.3, 0.7, 0.1, 0.1, 0.1],
-                setB: [0, 0.1, 0.1, 0.8, 0.3, 0.7, 0.1, 0.1, 0.1],
-                method: 'angular-distance',
-            },
-            {
-                method: 'angular-distance',
-                setA: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 1.0, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0],
-                setB: [1, 0.9, 0.8, 0.7, 0.3, 0.0, 0.3, 0.5, 0.7, 0.9, 1, 0, 0, 0, 0, 0,],
-            },
-        ];
+        this.mainExample = _.extend(MAIN_EXAMPLE_SETS, METHOD);
+
+        //no configs needed here, no configurable parameters required for this method
+        this.examples = configureExamples(METHOD, [])
     });
 
     app.controller("ImplicationSimilarityController", function () {
-        this.mainExample = {
-            setA: [0, 0, 0.7, 0, 0, 0.4, 0, 0, 0.6, 0, 0.3, 0],
-            setB: [0, 0, 0.9585, 0, 0.0754, 0.5257, 0, 0.0104, 0.7333, 0, 0.6023, 0],
-            method: 'implication-similarity',
+
+        const METHOD = {
+            method: 'implication-similarity'
+        };
+
+        this.mainExample = _.extend(MAIN_EXAMPLE_SETS, METHOD, {
             aggregator: 'average',
             tnorm: 'minimum',
             implication: 'maximum'
-        }
+        });
 
-        this.examples = [
+
+        const CONFIGS = [
             {
-                setA: [0, 0.5, 0.7, 0.5, 0],
-                setB: [0, 0.2, 0.5, 0.2, 0],
-                method: 'implication-similarity',
                 aggregator: 'minimum',
                 tnorm: 'minimum',
                 implication: 'maximum'
 
             },
             {
-                setA: [0, 0.5, 0.7, 0.5, 0],
-                setB: [0, 0.2, 0.5, 0.2, 0],
-                method: 'implication-similarity',
                 aggregator: 'average',
                 tnorm: 'minimum',
                 implication: 'maximum'
 
             },
             {
-                setA: [0, 0.1, 0.1, 0.1, 0.1, 0.9452, 0.4276, 0.5349],
-                setB: [1, 0.9, 0.9, 0.9, 1, 0.5257, 0.786],
-                method: 'implication-similarity',
                 aggregator: 'average',
                 tnorm: 'lukasiewicz',
                 implication: 'maximum'
 
             },
             {
-                setA: [0, 0.1, 0.1, 0.1, 0.1, 0.9452, 0.4276, 0.5349],
-                setB: [1, 0.9, 0.9, 0.9, 1, 0.5257, 0.786],
-                method: 'implication-similarity',
                 aggregator: 'average',
                 tnorm: 'lukasiewicz',
                 implication: 'lukasiewicz'
 
             }
         ];
+
+        this.examples = configureExamples(METHOD, CONFIGS);;
     });
 
     app.controller("ComparisonDataProvider", ['$scope', 'arrayUtils', 'fuzzyApi', function ($scope, arrayUtils, fuzzyApi) {
