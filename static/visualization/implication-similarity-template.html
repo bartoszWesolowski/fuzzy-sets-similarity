@@ -12,36 +12,53 @@
             </raw-sets-input>
 
             <div class="config" ng-controller="FormController as formCtrl">
-                <fieldset class="form-group">
-                    <label>Aggregator:</label>
-                    <select ng-model="similarityCalculatorCtrl.similarityData.aggregator"
-                            class="form-control"
-                            required
-                            title="Aggregator">
-                        <option ng-repeat="option in formCtrl.aggregators" value="{{option.value}}">{{option.label}}</option>
-                    </select>
+                <fieldset class="form-group row">
 
-                    <label>T-norm:</label>
-                    <select ng-model="similarityCalculatorCtrl.similarityData.tnorm"
-                            class="form-control"
-                            required
-                            title="T-norm">
-                        <option ng-repeat="option in formCtrl.tNorms" value="{{option.value}}">{{option.label}}</option>
-                    </select>
+                    <div class="col-md-4">
+                        <label>Aggregator:</label>
+                        <select ng-model="similarityCalculatorCtrl.similarityData.aggregator"
+                                class="form-control"
+                                required
+                                title="Aggregator">
+                            <option ng-repeat="option in formCtrl.aggregators" value="{{option.value}}">
+                                {{option.label}}
+                            </option>
+                        </select>
+                    </div>
 
-                    <label>Implication:</label>
-                    <select ng-model="similarityCalculatorCtrl.similarityData.implication"
-                            class="form-control"
-                            required
-                            title="Implication">
-                        <option ng-repeat="option in formCtrl.implications" value="{{option.value}}">{{option.label}}</option>
-                    </select>
+
+                    <div class="col-md-4">
+                        <label>T-norm:</label>
+                        <select ng-model="similarityCalculatorCtrl.similarityData.tnorm"
+                                class="form-control"
+                                required
+                                title="T-norm">
+                            <option ng-repeat="option in formCtrl.tNorms" value="{{option.value}}">{{option.label}}
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <label>Implication:</label>
+                        <select ng-model="similarityCalculatorCtrl.similarityData.implication"
+                                class="form-control"
+                                required
+                                title="Implication">
+                            <option ng-repeat="option in formCtrl.implications" value="{{option.value}}">
+                                {{option.label}}
+                            </option>
+                        </select>
+                    </div>
                 </fieldset>
             </div>
-            <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
+            <div class="row">
+                <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
+            </div>
             <fuzzy-set-chart
                     ng-hide="hideChart"
                     config="similarityCalculatorCtrl.chartConfig"></fuzzy-set-chart>
         </div>
     </form>
 </div>
+<hr>

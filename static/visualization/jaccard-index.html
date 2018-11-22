@@ -1,0 +1,47 @@
+<html>
+<head>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+    <title>Simplified Jaccard Similarity</title>
+</head>
+<body ng-app="fuzzy-sets">
+
+<div class="col-xs-12 col-sm-10 col-sm-offset-1"
+     ng-controller="JaccardController as dataProvider">
+
+    <fuzzy-navigation></fuzzy-navigation>
+
+    <h1 class="text-center">Jaccard Similarity</h1>
+
+    <div class="similarity-method-description col-xs-12 col-sm-12">
+        <p>Formula used to calculate similarity using this method:</p>
+        <p>$$  SIM(A, B) = \frac{g(A \cap B) + \gamma g(\bar{A} \cap \bar{B})}{g(A  \cap B) + \alpha g(A \cap \bar{B})  - \beta g(\bar{A} \cap B)}  $$</p>
+        <p>For \(\alpha, \beta, \gamma \geq 0\). Function g represents scalar evaluator of fuzzy set.</p>
+    </div>
+
+    <div class="col-xs-12 col-sm-12">
+        <similarity-calculator
+                method-config='dataProvider.mainExample'>
+        </similarity-calculator>
+    </div>
+
+    <div>
+        <div ng-repeat="example in dataProvider.examples"
+             class="col-xs-12 col-sm-6">
+            <similarity-calculator
+                    method-config="example">
+            </similarity-calculator>
+        </div>
+    </div>
+</div>
+<script src="js/libs/angular.js"></script>
+<script src="js/lodash/lodash.min.js"></script>
+<script src="js/libs/chart/Chart-2.6.0.min.js"></script>
+<script src="js/libs/chart/angular-chart.min.js"></script>
+<script type="text/javascript" src="js/app/array-utils.js"></script>
+<script type="text/javascript" src="js/app/app.js"></script>
+<script type="text/javascript" src="js/app/charts.js"></script>
+<script type="text/javascript" src="js/app/data-providers.js"></script>
+</body>
+</html>

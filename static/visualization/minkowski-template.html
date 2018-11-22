@@ -6,23 +6,33 @@
             <info-bar></info-bar>
 
             <raw-sets-input
-                ng-hide="hideSets"
-                raw-set-a="similarityCalculatorCtrl.rawSetA"
-                raw-set-b="similarityCalculatorCtrl.rawSetB">
+                    ng-hide="hideSets"
+                    raw-set-a="similarityCalculatorCtrl.rawSetA"
+                    raw-set-b="similarityCalculatorCtrl.rawSetB">
             </raw-sets-input>
 
             <div class="config">
-                <label>R:</label>
-                <input type="number"
-                       required
-                       class="form-control"
-                       ng-model="similarityCalculatorCtrl.similarityData.r"
-                       title="R"/>
+                <fieldset class="form-group row">
+                    <div class="col-md-1">
+                        <label>R:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number"
+                               required
+                               class="form-control"
+                               ng-model="similarityCalculatorCtrl.similarityData.r"
+                               title="R"/>
+                    </div>
+                    <div class="col-md-8">
+                        <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
+                    </div>
+                </fieldset>
             </div>
-            <input type="submit" class="btn btn-primary pull-right" value="Calculate"/>
+
             <fuzzy-set-chart
                     ng-hide="hideChart"
                     config="similarityCalculatorCtrl.chartConfig"></fuzzy-set-chart>
         </div>
     </form>
 </div>
+<hr>
