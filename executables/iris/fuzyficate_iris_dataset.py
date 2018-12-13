@@ -1,5 +1,10 @@
 from sklearn import datasets
 
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath('..\..'))
+
 from comparators.sets_comparator import SetsComparator
 from simcalculators.minkowski_similarity_calculator import MinkowskiSimilarityCalculator
 
@@ -23,12 +28,11 @@ class IrisDataSet(object):
         return map(lambda i: i.petalWidth, self.irises)
 
 
-
 class Iris(object):
     def __init__(self, data, irisType):
         self.data = data
         self.type = irisType
-        self.sepalLen = data[0] #4.3 - 7.9
+        self.sepalLen = data[0]  # 4.3 - 7.9
         self.sepalWidth = data[1]
         self.petalLen = data[2]
         self.petalWidth = data[3]
@@ -72,8 +76,9 @@ class PossibleAttributeValuesCalculator(object):
 
         return possibleValues
 
+
 class FuzzyIris(object):
-    def __init__(self, sepalLen, sepalWidth, petalLen = [], petalWidth = [], irisType = []):
+    def __init__(self, sepalLen, sepalWidth, petalLen=[], petalWidth=[], irisType=0):
         """
         
         :param sepalLen: 
@@ -83,7 +88,7 @@ class FuzzyIris(object):
         :param irisType: 
         """
         self.type = irisType
-        self.sepalLen = sepalLen #4.3 - 7.9
+        self.sepalLen = sepalLen  # 4.3 - 7.9
         self.sepalWidth = sepalWidth
         self.petalLen = petalLen
         self.petalWidth = petalWidth
@@ -96,7 +101,6 @@ class FuzzyIris(object):
         allAttributes.extend(self.petalWidth)
         return allAttributes
 
-
     def toFuzzySetRow(self):
         allAttributes = self.fuzzySetArray()
         return map(lambda x: "{0:.4f}".format(x), allAttributes)
@@ -104,32 +108,39 @@ class FuzzyIris(object):
 
 class IrisDataSetFuzyficator(object):
     def __init__(self, wrappedIrisDataSet):
-        self.sepalLenghtPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getSepalLenghts(), 2, 2)
+        self.sepalLenghtPossibleValueCalculator = PossibleAttributeValuesCalculator(
+            wrappedIrisDataSet.getSepalLenghts(), 2, 2)
         self.aroundSepalLengthFuzzySet = AroundValueFuzzySet(self.sepalLenghtPossibleValueCalculator.attibuteRange)
 
-        self.sepalWidthPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getSepalWidths(), 3, 3)
+        self.sepalWidthPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getSepalWidths(),
+                                                                                   3, 3)
         self.aroundSepalWidthFuzzySet = AroundValueFuzzySet(self.sepalWidthPossibleValueCalculator.attibuteRange)
 
-        self.petalLenPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getPetalLengths(), 3, 3)
+        self.petalLenPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getPetalLengths(),
+                                                                                 3, 3)
         self.aroundPetalLenFuzzySet = AroundValueFuzzySet(self.petalLenPossibleValueCalculator.attibuteRange)
 
         self.fuzzyfiedDataset = []
         self.numberOfPossibleValuesSamples = 20
         for iris in wrappedIrisDataSet.irises:
             fuzzyficateSepalLength = self.fuzzyficateAttributeValue(iris.sepalLen,
-                                                                    self.sepalLenghtPossibleValueCalculator.getPossibleValues(self.numberOfPossibleValuesSamples ),
+                                                                    self.sepalLenghtPossibleValueCalculator.getPossibleValues(
+                                                                        self.numberOfPossibleValuesSamples),
                                                                     self.aroundSepalLengthFuzzySet)
 
             fuzzyficateSepalWidth = self.fuzzyficateAttributeValue(iris.sepalWidth,
-                                                                    self.sepalWidthPossibleValueCalculator.getPossibleValues(self.numberOfPossibleValuesSamples ),
-                                                                    self.aroundSepalWidthFuzzySet)
+                                                                   self.sepalWidthPossibleValueCalculator.getPossibleValues(
+                                                                       self.numberOfPossibleValuesSamples),
+                                                                   self.aroundSepalWidthFuzzySet)
 
             fuzzyficatePetalLen = self.fuzzyficateAttributeValue(iris.petalLen,
-                                                                    self.petalLenPossibleValueCalculator.getPossibleValues(self.numberOfPossibleValuesSamples ),
-                                                                    self.aroundPetalLenFuzzySet)
+                                                                 self.petalLenPossibleValueCalculator.getPossibleValues(
+                                                                     self.numberOfPossibleValuesSamples),
+                                                                 self.aroundPetalLenFuzzySet)
 
-            self.fuzzyfiedDataset.append(FuzzyIris(fuzzyficateSepalLength, fuzzyficateSepalWidth, petalLen=fuzzyficatePetalLen, irisType=iris.type))
-
+            self.fuzzyfiedDataset.append(
+                FuzzyIris(fuzzyficateSepalLength, fuzzyficateSepalWidth, petalLen=fuzzyficatePetalLen,
+                          irisType=iris.type))
 
     def fuzzyficateAttributeValue(self, attributeActualValue, attributePossibleValues, aroundValueFuzzySet):
         fuzzyficate = []
@@ -148,12 +159,17 @@ class IrisDataSetFuzyficator(object):
         return filter(lambda iris: iris.type == irisType, self.fuzzyfiedDataset)
 
 
+def getFuzzyficatedIrisDataSet():
+    """
+    
+    :return: IrisDataSetFuzyficator
+    """
+    rawIrisDataset = datasets.load_iris()
+    irisDataset = IrisDataSet(rawIrisDataset)
+    return IrisDataSetFuzyficator(irisDataset)
 
-rawIrisDataset = datasets.load_iris()
 
-irisDataset = IrisDataSet(rawIrisDataset)
-
-fuzzyficatedIrisDataSet = IrisDataSetFuzyficator(irisDataset)
+fuzzyficatedIrisDataSet = getFuzzyficatedIrisDataSet()
 
 print fuzzyficatedIrisDataSet.toFuzzySetFileFormat()
 
@@ -165,6 +181,8 @@ setsComparator = SetsComparator()
 def compareIrisesWithComparionMethod(methodConfig):
     comparisonOfIrisesWithSameType = []
     comparisonOfIrisesWithDifferent = []
+    print "###########################"
+    print "Comparing irises for similarity method: {}".format(methodConfig)
     for firstIrisType in [0, 1, 2]:
         for secondIrisType in [0, 1, 2]:
             print "\n\n Compare irises with types: {} x {}".format(firstIrisType, secondIrisType)
@@ -172,7 +190,8 @@ def compareIrisesWithComparionMethod(methodConfig):
                                            fuzzyficatedIrisDataSet.getIrisesWithType(firstIrisType))
             fuzzyIrisesWithSecondType = map(lambda fuzzyIris: fuzzyIris.fuzzySetArray(),
                                             fuzzyficatedIrisDataSet.getIrisesWithType(secondIrisType))
-            comparisonResult = setsComparator.compareTwoSets(fuzzyIrisesWithFirstType, fuzzyIrisesWithSecondType, methodConfig)
+            comparisonResult = setsComparator.compareTwoSets(fuzzyIrisesWithFirstType, fuzzyIrisesWithSecondType,
+                                                             methodConfig)
             resultArray = comparisonResult.resultArray
             if firstIrisType == secondIrisType:
                 comparisonOfIrisesWithSameType.extend(resultArray)
@@ -182,6 +201,8 @@ def compareIrisesWithComparionMethod(methodConfig):
             print "Average similarity: {}".format(sum(resultArray) / float(len(resultArray)))
             print "Min similarity: {}".format(min(resultArray))
 
+    print "###########################"
+    print "Summary:"
     print "\n\nGeneral summary for comparising sets of same types:"
     print "Max similarity: {}".format(max(comparisonOfIrisesWithSameType))
     print "Average similarity: {}".format(
@@ -194,14 +215,26 @@ def compareIrisesWithComparionMethod(methodConfig):
         sum(comparisonOfIrisesWithDifferent) / float(len(comparisonOfIrisesWithDifferent)))
     print "Min similarity: {}".format(min(comparisonOfIrisesWithDifferent))
 
+
 methods = [
     {"r": 1, "method": "minkowski"},
     {"r": 2, "method": "minkowski"},
-    {"method": "angular-distance"}
+    {"method": "angular-distance"},
+    {
+        "alpha": 1,
+        "beta": 1,
+        "evaluator": "average",
+        "gamma": 0,
+        "method": "jaccard-index"
+    },
+    {
+        "aggregator": "average",
+        "method": "simplified-jaccard-index",
+        "tknorm": "maxiumum",
+        "tnorm": "minimum"
+    },
 ]
 
+methods = []
 for configMap in methods:
     compareIrisesWithComparionMethod(configMap)
-
-
-
