@@ -1,0 +1,413 @@
+###########################
+Comparing irises for similarity method: {'r': 1, 'method': 'minkowski'}
+
+
+Compare irises with types: 0 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.267681038335
+Min similarity: 0.0801181641672
+
+
+ Compare irises with types: 0 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.132103821112
+Average similarity: 0.0740662947902
+Min similarity: 0.050326230097
+
+
+ Compare irises with types: 0 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.0964114472468
+Average similarity: 0.058888828573
+Min similarity: 0.0441728428305
+
+
+ Compare irises with types: 1 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.118830773036
+Average similarity: 0.0706699301912
+Min similarity: 0.0495538970464
+
+
+ Compare irises with types: 1 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.217338100409
+Min similarity: 0.0639234110227
+
+
+ Compare irises with types: 1 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.766233766234
+Average similarity: 0.137139235813
+Min similarity: 0.0455719873885
+
+
+ Compare irises with types: 2 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.095980136136
+Average similarity: 0.0581201645253
+Min similarity: 0.0417117141327
+
+
+ Compare irises with types: 2 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.529411764706
+Average similarity: 0.119894866454
+Min similarity: 0.0457624178015
+
+
+ Compare irises with types: 2 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.206953289068
+Min similarity: 0.0511180327993
+###########################
+Summary:
+
+
+General summary for comparising sets of same types:
+Max similarity: 1.0
+Average similarity: 0.230657475937
+Min similarity: 0.0511180327993
+
+
+General summary for comparising sets of different types:
+Max similarity: 0.766233766234
+Average similarity: 0.0864632200576
+Min similarity: 0.0417117141327
+
+
+
+###########################
+Comparing irises for similarity method: {'r': 2, 'method': 'minkowski'}
+
+
+ Compare irises with types: 0 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.545430918729
+Min similarity: 0.278711959539
+
+
+ Compare irises with types: 0 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.390185873367
+Average similarity: 0.272383365595
+Min similarity: 0.22014998842
+
+
+ Compare irises with types: 0 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.29606559418
+Average similarity: 0.239126251366
+Min similarity: 0.206716751095
+
+
+ Compare irises with types: 1 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.35766850652
+Average similarity: 0.26508023639
+Min similarity: 0.218429012405
+
+
+ Compare irises with types: 1 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.489681057561
+Min similarity: 0.25241388364
+
+
+ Compare irises with types: 1 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.907692307692
+Average similarity: 0.396664526665
+Min similarity: 0.208485939582
+
+
+ Compare irises with types: 2 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.301436206303
+Average similarity: 0.237630958293
+Min similarity: 0.202707798254
+
+
+ Compare irises with types: 2 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.790210151796
+Average similarity: 0.367798724787
+Min similarity: 0.207765830627
+
+
+ Compare irises with types: 2 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.471483556381
+Min similarity: 0.222859624955
+
+###########################
+Summary:
+
+
+General summary for comparising sets of same types:
+Max similarity: 1.0
+Average similarity: 0.50219851089
+Min similarity: 0.222859624955
+
+
+General summary for comparising sets of different types:
+Max similarity: 0.907692307692
+Average similarity: 0.296447343849
+Min similarity: 0.202707798254
+
+###########################
+Comparing irises for similarity method: {'method': 'angular-distance'}
+
+
+ Compare irises with types: 0 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.921447351396
+Min similarity: 0.582754395504
+
+
+ Compare irises with types: 0 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.84909438749
+Average similarity: 0.534581183061
+Min similarity: 0.208155807559
+
+
+ Compare irises with types: 0 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.64498735506
+Average similarity: 0.354087445394
+Min similarity: 0.0706002880031
+
+
+ Compare irises with types: 1 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.796756720104
+Average similarity: 0.497768361034
+Min similarity: 0.184012939184
+
+
+ Compare irises with types: 1 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.882143046909
+Min similarity: 0.444620334221
+
+
+ Compare irises with types: 1 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.999369831837
+Average similarity: 0.779722118286
+Min similarity: 0.0944956408256
+
+
+ Compare irises with types: 2 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.663858369746
+Average similarity: 0.339934309734
+Min similarity: 0.0230361215854
+
+
+ Compare irises with types: 2 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.995614655806
+Average similarity: 0.733862324459
+Min similarity: 0.0938832238802
+
+
+ Compare irises with types: 2 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.852465942629
+Min similarity: 0.236699130922
+###########################
+Summary:
+
+
+General summary for comparising sets of same types:
+Max similarity: 1.0
+Average similarity: 0.885352113645
+Min similarity: 0.236699130922
+
+
+General summary for comparising sets of different types:
+Max similarity: 0.999369831837
+Average similarity: 0.539992623661
+Min similarity: 0.0230361215854
+###########################
+
+Comparing irises for similarity method: {'alpha': 1, 'beta': 1, 'evaluator': 'average', 'gamma': 0, 'method': 'jaccard-index'}
+
+
+ Compare irises with types: 0 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.509288301173
+Average similarity: 0.43741536012
+Min similarity: 0.262093758747
+
+
+ Compare irises with types: 0 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.394465255634
+Average similarity: 0.233131969173
+Min similarity: 0.0988789505069
+
+
+ Compare irises with types: 0 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.297659556852
+Average similarity: 0.158951777642
+Min similarity: 0.0442409760128
+
+
+ Compare irises with types: 1 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.364928857442
+Average similarity: 0.216998840417
+Min similarity: 0.0905703230315
+
+
+ Compare irises with types: 1 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.508904950795
+Average similarity: 0.411059608542
+Min similarity: 0.187020905923
+
+
+ Compare irises with types: 1 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.50464182128
+Average similarity: 0.355090141487
+Min similarity: 0.0571064397208
+
+
+ Compare irises with types: 2 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.29763887246
+Average similarity: 0.152628652214
+Min similarity: 0.0158207983036
+
+
+ Compare irises with types: 2 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.493928007174
+Average similarity: 0.331912091862
+Min similarity: 0.0595029679477
+
+
+ Compare irises with types: 2 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.508153014233
+Average similarity: 0.395910479986
+Min similarity: 0.107911475657
+
+###########################
+Summary:
+
+
+General summary for comparising sets of same types:
+Max similarity: 0.509288301173
+Average similarity: 0.414795149549
+Min similarity: 0.107911475657
+
+
+General summary for comparising sets of different types:
+Max similarity: 0.50464182128
+Average similarity: 0.241452245466
+Min similarity: 0.0158207983036
+
+###########################
+Comparing irises for similarity method: {'aggregator': 'average', 'tknorm': 'maxiumum', 'method': 'simplified-jaccard-index', 'tnorm': 'minimum'}
+
+
+ Compare irises with types: 0 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.835488666159
+Min similarity: 0.524858504181
+
+
+ Compare irises with types: 0 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.723895357554
+Average similarity: 0.461493792061
+Min similarity: 0.207039492577
+
+
+ Compare irises with types: 0 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.606612186571
+Average similarity: 0.320511297268
+Min similarity: 0.0928307061344
+
+
+ Compare irises with types: 1 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.68627742702
+Average similarity: 0.433016398607
+Min similarity: 0.1911890433
+
+
+ Compare irises with types: 1 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.774017307839
+Min similarity: 0.383903027279
+
+
+ Compare irises with types: 1 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.988729354142
+Average similarity: 0.66353622141
+Min similarity: 0.121160934939
+
+
+ Compare irises with types: 2 x 0
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.60471773036
+Average similarity: 0.307633031311
+Min similarity: 0.032267865824
+
+
+ Compare irises with types: 2 x 1
+Comparing 50 fuzzy sets against each other
+Max similarity: 0.96277029614
+Average similarity: 0.622313873294
+Min similarity: 0.126723918495
+
+
+ Compare irises with types: 2 x 2
+Comparing 50 fuzzy sets against each other
+Max similarity: 1.0
+Average similarity: 0.746131756876
+Min similarity: 0.220148694863
+
+###########################
+Summary:
+
+
+General summary for comparising sets of same types:
+Max similarity: 1.0
+Average similarity: 0.785212576958
+Min similarity: 0.220148694863
+
+
+General summary for comparising sets of different types:
+Max similarity: 0.988729354142
+Average similarity: 0.468084102325
+Min similarity: 0.032267865824
+
+
+Wykresy rozmytych atrybutów dla 30 elementów w uniwersum:
+    Sepal lenght:
+    Uniwersum: 2.5, 2.75, 3.0, 3.24, 3.49, 3.74, 3.99, 4.24, 4.49, 4.73, 4.98, 5.23, 5.48, 5.73, 5.98, 6.22, 6.47, 6.72, 6.97, 7.22, 7.47, 7.71, 7.96, 8.21, 8.46, 8.71, 8.96, 9.2, 9.45, 9.7
+    Skala:
+        0.5: 0, 0, 0, 0, 0, 0, 0, 0.042145593869732483, 0.31800766283524917, 0.59386973180076685, 0.86973180076628354, 0.85440613026819978, 0.5785440613026821, 0.30268199233716436, 0.026819923371647677, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        1.0: 0, 0, 0, 0, 0.10727969348659024, 0.24521072796934887, 0.38314176245210724, 0.52107279693486608, 0.65900383141762453, 0.79693486590038343, 0.93486590038314177, 0.92720306513409989, 0.78927203065134099, 0.65134099616858221, 0.51340996168582387, 0.37547892720306547, 0.23754789272030666, 0.099616858237547803, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        1.5: 0.03703703703703707, 0.12899106002554284, 0.22094508301404858, 0.31289910600255433, 0.40485312899106013, 0.49680715197956588, 0.58876117496807145, 0.68071519795657742, 0.77266922094508295, 0.86462324393358891, 0.95657726692209455, 0.95146871008939993, 0.85951468710089396, 0.7675606641123881, 0.67560664112388247, 0.58365261813537683, 0.49169859514687092, 0.39974457215836501, 0.30779054916985943, 0.21583652618135382, 0.12388250319284821, 0.031928480204341962, 0, 0, 0, 0, 0, 0, 0, 0

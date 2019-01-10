@@ -42,6 +42,9 @@ class AroundValueFuzzySet(object):
     """Triangular set representing 'around x'"""
 
     def __init__(self, range):
+        """
+        :param range: length of trieangular set base 
+        """
         # type: (object) -> object
         self.range = range
 
@@ -59,13 +62,16 @@ class AroundValueFuzzySet(object):
 
 
 class PossibleAttributeValuesCalculator(object):
-    def __init__(self, attributesList, minOffset, maxOffset):
+    def __init__(self, attributesList):
         self.attributesList = attributesList
         self.min = min(attributesList)
         self.max = max(attributesList)
-        self.start = self.min - minOffset
-        self.end = self.max + maxOffset
-        self.attibuteRange = abs(self.min - self.max)
+        self.attributeRange = abs(self.min - self.max)
+        extendRange = self.attributeRange / 2.0
+        self.start = self.min - extendRange
+        self.end = self.max + extendRange
+        self.extendedAttributeRange = abs(self.min - self.max)
+        # print "Attributes: \n\tMin: {},\n \tmax: {},\n \trange: {}".format(self.min, self.max, self.attributeRange)
 
     def getPossibleValues(self, numberOfPossibleValues):
         offset = abs(self.start - self.end) / float(numberOfPossibleValues - 1)
@@ -74,11 +80,12 @@ class PossibleAttributeValuesCalculator(object):
         for n in range(numberOfPossibleValues):
             possibleValues.append(self.start + n * offset)
 
+        # print "Possible values: {}".format(possibleValues)
         return possibleValues
 
 
 class FuzzyIris(object):
-    def __init__(self, sepalLen, sepalWidth, petalLen=[], petalWidth=[], irisType=0):
+    def __init__(self, sepalLen=[], sepalWidth=[], petalLen=[], petalWidth=[], irisType=0):
         """
         
         :param sepalLen: 
@@ -107,40 +114,67 @@ class FuzzyIris(object):
 
 
 class IrisDataSetFuzyficator(object):
-    def __init__(self, wrappedIrisDataSet):
-        self.sepalLenghtPossibleValueCalculator = PossibleAttributeValuesCalculator(
-            wrappedIrisDataSet.getSepalLenghts(), 2, 2)
-        self.aroundSepalLengthFuzzySet = AroundValueFuzzySet(self.sepalLenghtPossibleValueCalculator.attibuteRange)
+    def __init__(self, wrappedIrisDataSet, numberOfPossibleValuesForEachFeature=20,
+                 rangeOfAroudValueFuzzySetScalar=1.0):
+        self.numberOfPossibleValuesSamples = numberOfPossibleValuesForEachFeature
 
-        self.sepalWidthPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getSepalWidths(),
-                                                                                   3, 3)
-        self.aroundSepalWidthFuzzySet = AroundValueFuzzySet(self.sepalWidthPossibleValueCalculator.attibuteRange)
+        print "Fuzzyficating sepal length attribute with number of samples per attribute {} and attribute range factor: {}".format(
+           numberOfPossibleValuesForEachFeature, rangeOfAroudValueFuzzySetScalar)
+        print "\nSepal length:\n"
+        self.sepalLengthPossibleValueCalculator = PossibleAttributeValuesCalculator(
+            wrappedIrisDataSet.getSepalLenghts())
+        sepalLengthPossibleValues = self.sepalLengthPossibleValueCalculator.getPossibleValues(
+            self.numberOfPossibleValuesSamples)
+        aroundSepalTriangularBase = self.sepalLengthPossibleValueCalculator.attributeRange * rangeOfAroudValueFuzzySetScalar
+        self.aroundSepalLengthFuzzySet = AroundValueFuzzySet(aroundSepalTriangularBase)
+        self.printMetadata(self.sepalLengthPossibleValueCalculator)
+        print "Universal: "
+        print self.formatUniverse(sepalLengthPossibleValues)
 
-        self.petalLenPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getPetalLengths(),
-                                                                                 3, 3)
-        self.aroundPetalLenFuzzySet = AroundValueFuzzySet(self.petalLenPossibleValueCalculator.attibuteRange)
+        print "\nSepal width:\n"
+        self.sepalWidthPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getSepalWidths())
+        aroundSepalWidthTriangularBase = self.sepalWidthPossibleValueCalculator.attributeRange * rangeOfAroudValueFuzzySetScalar
+        sepalWidthPossibleValues = self.sepalWidthPossibleValueCalculator.getPossibleValues(
+            self.numberOfPossibleValuesSamples)
+        self.aroundSepalWidthFuzzySet = AroundValueFuzzySet(aroundSepalWidthTriangularBase)
+        self.printMetadata(self.sepalWidthPossibleValueCalculator)
+        print "Universal: "
+        print self.formatUniverse(sepalWidthPossibleValues)
+
+        print "\nPetal Length:\n"
+        self.petalLenPossibleValueCalculator = PossibleAttributeValuesCalculator(wrappedIrisDataSet.getPetalLengths())
+        petalLengthTriangularBase = self.petalLenPossibleValueCalculator.attributeRange * rangeOfAroudValueFuzzySetScalar
+        petalLenPossibleValues = self.petalLenPossibleValueCalculator.getPossibleValues(
+            self.numberOfPossibleValuesSamples)
+        self.aroundPetalLenFuzzySet = AroundValueFuzzySet(petalLengthTriangularBase)
+        self.printMetadata(self.petalLenPossibleValueCalculator)
+        print "Universal: "
+        print self.formatUniverse(petalLenPossibleValues)
 
         self.fuzzyfiedDataset = []
-        self.numberOfPossibleValuesSamples = 20
         for iris in wrappedIrisDataSet.irises:
-            fuzzyficateSepalLength = self.fuzzyficateAttributeValue(iris.sepalLen,
-                                                                    self.sepalLenghtPossibleValueCalculator.getPossibleValues(
-                                                                        self.numberOfPossibleValuesSamples),
+            fuzzyficateSepalLength = self.fuzzyficateAttributeValue(iris.sepalLen, sepalLengthPossibleValues,
                                                                     self.aroundSepalLengthFuzzySet)
 
             fuzzyficateSepalWidth = self.fuzzyficateAttributeValue(iris.sepalWidth,
-                                                                   self.sepalWidthPossibleValueCalculator.getPossibleValues(
-                                                                       self.numberOfPossibleValuesSamples),
+                                                                   sepalWidthPossibleValues,
                                                                    self.aroundSepalWidthFuzzySet)
 
-            fuzzyficatePetalLen = self.fuzzyficateAttributeValue(iris.petalLen,
-                                                                 self.petalLenPossibleValueCalculator.getPossibleValues(
-                                                                     self.numberOfPossibleValuesSamples),
+            fuzzyficatePetalLen = self.fuzzyficateAttributeValue(iris.petalLen, petalLenPossibleValues,
                                                                  self.aroundPetalLenFuzzySet)
 
             self.fuzzyfiedDataset.append(
-                FuzzyIris(fuzzyficateSepalLength, fuzzyficateSepalWidth, petalLen=fuzzyficatePetalLen,
+                FuzzyIris(sepalLen=fuzzyficateSepalLength, sepalWidth=fuzzyficateSepalWidth,
+                          petalLen=[],
                           irisType=iris.type))
+
+    def printMetadata(self, possibleValuesCalculator):
+        print "Metadata: [{}, {}], range: {}".format(possibleValuesCalculator.min,
+                                                     possibleValuesCalculator.max,
+                                                     possibleValuesCalculator.attributeRange)
+
+    def formatUniverse(self, universe):
+        return map(lambda x: float("{0:.2f}".format(x)), universe)
 
     def fuzzyficateAttributeValue(self, attributeActualValue, attributePossibleValues, aroundValueFuzzySet):
         fuzzyficate = []
@@ -159,16 +193,20 @@ class IrisDataSetFuzyficator(object):
         return filter(lambda iris: iris.type == irisType, self.fuzzyfiedDataset)
 
 
-def getFuzzyficatedIrisDataSet():
+def getFuzzyficatedIrisDataSet(numberOfPossibleValuesForEachFeature=20,
+                               rangeOfAroudValueFuzzySetScalar=1.0):
     """
     
     :return: IrisDataSetFuzyficator
     """
     rawIrisDataset = datasets.load_iris()
     irisDataset = IrisDataSet(rawIrisDataset)
-    return IrisDataSetFuzyficator(irisDataset)
+    return IrisDataSetFuzyficator(irisDataset,
+                                  numberOfPossibleValuesForEachFeature=numberOfPossibleValuesForEachFeature,
+                                  rangeOfAroudValueFuzzySetScalar=rangeOfAroudValueFuzzySetScalar)
 
 
+""" Copmaring set with set - probably will not be used
 fuzzyficatedIrisDataSet = getFuzzyficatedIrisDataSet()
 
 print fuzzyficatedIrisDataSet.toFuzzySetFileFormat()
@@ -238,3 +276,4 @@ methods = [
 methods = []
 for configMap in methods:
     compareIrisesWithComparionMethod(configMap)
+"""
