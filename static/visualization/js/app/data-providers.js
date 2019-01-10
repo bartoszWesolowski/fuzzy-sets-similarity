@@ -31,7 +31,7 @@
     }]);
 
     const MAIN_EXAMPLE_SETS = {
-        setA: [0, 0, 0.7,    0, 0, 0.4,    0, 0,      0.6,    0, 0.3, 0],
+        setA: [0, 0, 0.7, 0, 0, 0.4, 0, 0, 0.6, 0, 0.3, 0],
         setB: [0, 0, 0.9585, 0, 0, 0.5257, 0, 0.0104, 0.7333, 0, 0.6023, 0],
     };
 
@@ -377,7 +377,7 @@
             method: 'minkowski'
         };
 
-        const createConfig = function(rValue) {
+        const createConfig = function (rValue) {
             return {
                 r: rValue
             };
@@ -531,7 +531,8 @@
             },
         ];
 
-        this.examples = configureExamples(METHOD, CONFIGS);;
+        this.examples = configureExamples(METHOD, CONFIGS);
+        ;
     });
 
     app.controller("ComparisonDataProvider", ['$scope', 'arrayUtils', 'fuzzyApi', function ($scope, arrayUtils, fuzzyApi) {
@@ -679,10 +680,75 @@
             comparisonCtrl.summaryChartConfig.labels = labels;
         });
 
-        $scope.$watch('comparisonCtrl.selectedDataSetKey', function(newValue) {
+        $scope.$watch('comparisonCtrl.selectedDataSetKey', function (newValue) {
             comparisonCtrl.getDataSet(newValue);
             console.log(newValue);
         }, true);
+    }]);
+
+    app.controller("DrawChartController", ['$scope', 'arrayUtils', 'fuzzyApi', function ($scope, arrayUtils, fuzzyApi) {
+
+
+        const _self = this;
+
+        this.rawSetValues = "0, 0, 0, 0, 0, 0, 0, 0.042145593869732483, 0.31800766283524917, 0.59386973180076685, 0.86973180076628354, 0.85440613026819978, 0.5785440613026821, 0.30268199233716436, 0.026819923371647677, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0";
+
+        this.labels = "2.5, 2.75, 3.0, 3.24, 3.49, 3.74, 3.99, 4.24, 4.49, 4.73, 4.98, 5.23, 5.48, 5.73, 5.98, 6.22, 6.47, 6.72, 6.97, 7.22, 7.47, 7.71, 7.96, 8.21, 8.46, 8.71, 8.96, 9.2, 9.45, 9.7";
+
+        this.chartConfig = {
+            data: [
+                []
+            ],
+            series: ["Set"],
+            colors: [
+                { // grey
+                    fill: false,
+                    backgroundColor: 'rgba(148,159,177,0.2)',
+                    pointBackgroundColor: 'rgba(148,159,177,1)',
+                    pointHoverBackgroundColor: 'rgba(148,159,177,1)',
+                    borderColor: 'rgba(148,159,177,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                },
+                { // dark grey
+                    fill: false,
+                    backgroundColor: 'rgba(77,83,96,0.2)',
+                    pointBackgroundColor: 'rgba(77,83,96,1)',
+                    pointHoverBackgroundColor: 'rgba(77,83,96,1)',
+                    borderColor: 'rgba(77,83,96,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(77,83,96,0.8)'
+                }
+            ],
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            drawOnChartArea: false
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Możliwe wartości atrybutu'
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            drawOnChartArea: false
+                        }
+                    }]
+                }
+            }
+        };
+
+        this.redrawChart = () => {
+            const setValues = arrayUtils.stringToArray(_self.rawSetValues);
+            _self.chartConfig.data = [
+                setValues
+            ];
+            const labels = arrayUtils.stringToArray(_self.labels);
+            _self.chartConfig.labels = labels;
+        }
+
     }]);
 
 

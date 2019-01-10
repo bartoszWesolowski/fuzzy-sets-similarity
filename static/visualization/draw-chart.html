@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <script type="text/javascript" async
+            src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+</head>
+
+<body ng-app="fuzzy-sets">
+
+<div class="col-xs-12 col-sm-10 col-sm-offset-1"
+     ng-controller="DrawChartController as drawChartController">
+
+    <fuzzy-navigation></fuzzy-navigation>
+
+    <div class="draw-chart-form spacing-bottom">
+        <form name="chartDataForm"
+              role="form"
+              ng-submit="drawChartController.redrawChart()">
+            <div class="col-xs-12 col-sm-10">
+                <label>Values</label>
+                <input type="text"
+                       class="form-control"
+                       ng-model="drawChartController.rawSetValues"
+                       title="Set"/>
+                <label>X axis labels:</label>
+                <input type="text"
+                       class="form-control"
+                       ng-model="drawChartController.labels"
+                       title="Labels"/>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <input type="submit" class="btn btn-primary pull-right" value="Redraw"/>
+            </div>
+        </form>
+
+        <div class="row col-xs-12 col-sm-4" style="margin: 25px;">
+
+            <canvas id="line"
+                    class="chart chart-line"
+                    chart-data="drawChartController.chartConfig.data"
+                    chart-labels="drawChartController.chartConfig.labels"
+                    chart-series="drawChartController.chartConfig.series"
+                    chart-colors="drawChartController.chartConfig.colors"
+                    chart-options="drawChartController.chartConfig.options">
+            </canvas>
+            <fuzzy-set-chart
+                    ng-hide="hideChart"
+                    config=""></fuzzy-set-chart>
+        </div>
+
+    </div>
+
+
+    <div class="col-xs-12 col-sm-12">
+        <div ng-repeat="example in comparisonCtrl.configurations"
+             class="col-xs-12 col-sm-6 similarity-config-entry">
+            <similarity-calculator
+                    name="example.method"
+                    hide-chart="true"
+                    hide-sets="true"
+                    method-config="example">
+            </similarity-calculator>
+        </div>
+    </div>
+</div>
+
+<script src="js/libs/angular.js"></script>
+<script src="js/lodash/lodash.min.js"></script>
+<script src="js/libs/chart/Chart-2.6.0.min.js"></script>
+<script src="js/libs/chart/angular-chart.min.js"></script>
+<script type="text/javascript" src="js/app/array-utils.js"></script>
+<script type="text/javascript" src="js/app/app.js"></script>
+<script type="text/javascript" src="js/app/charts.js"></script>
+<script type="text/javascript" src="js/app/data-providers.js"></script>
+</body>
+
+</html>
