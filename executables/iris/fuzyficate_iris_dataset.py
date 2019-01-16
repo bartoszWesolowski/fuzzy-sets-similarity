@@ -27,6 +27,9 @@ class IrisDataSet(object):
     def getPetalWidths(self):
         return map(lambda i: i.petalWidth, self.irises)
 
+    def getClasses(self):
+        return map(lambda iris: iris.type, self.irises)
+
 
 class Iris(object):
     def __init__(self, data, irisType):
@@ -117,6 +120,7 @@ class IrisDataSetFuzyficator(object):
     def __init__(self, wrappedIrisDataSet, numberOfPossibleValuesForEachFeature=20,
                  rangeOfAroudValueFuzzySetScalar=1.0):
         self.numberOfPossibleValuesSamples = numberOfPossibleValuesForEachFeature
+        self.wrappedIrisDataSet = wrappedIrisDataSet
 
         print "Fuzzyficating sepal length attribute with number of samples per attribute {} and attribute range factor: {}".format(
            numberOfPossibleValuesForEachFeature, rangeOfAroudValueFuzzySetScalar)
@@ -165,7 +169,7 @@ class IrisDataSetFuzyficator(object):
 
             self.fuzzyfiedDataset.append(
                 FuzzyIris(sepalLen=fuzzyficateSepalLength, sepalWidth=fuzzyficateSepalWidth,
-                          petalLen=[],
+                          petalLen=fuzzyficatePetalLen,
                           irisType=iris.type))
 
     def printMetadata(self, possibleValuesCalculator):
@@ -192,6 +196,8 @@ class IrisDataSetFuzyficator(object):
     def getIrisesWithType(self, irisType):
         return filter(lambda iris: iris.type == irisType, self.fuzzyfiedDataset)
 
+    def getIrisesTypes(self):
+        return self.wrappedIrisDataSet.getClasses()
 
 def getFuzzyficatedIrisDataSet(numberOfPossibleValuesForEachFeature=20,
                                rangeOfAroudValueFuzzySetScalar=1.0):

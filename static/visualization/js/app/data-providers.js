@@ -695,6 +695,10 @@
 
         this.labels = "2.5, 2.75, 3.0, 3.24, 3.49, 3.74, 3.99, 4.24, 4.49, 4.73, 4.98, 5.23, 5.48, 5.73, 5.98, 6.22, 6.47, 6.72, 6.97, 7.22, 7.47, 7.71, 7.96, 8.21, 8.46, 8.71, 8.96, 9.2, 9.45, 9.7";
 
+        this.xAxisLabel = "";
+
+        this.yAxisLabel = "";
+
         this.chartConfig = {
             data: [
                 []
@@ -734,6 +738,10 @@
                     yAxes: [{
                         gridLines: {
                             drawOnChartArea: false
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Możliwe wartości atrybutu'
                         }
                     }]
                 }
@@ -747,6 +755,9 @@
             ];
             const labels = arrayUtils.stringToArray(_self.labels);
             _self.chartConfig.labels = labels;
+
+            _self.chartConfig.options.scales.xAxes[0].scaleLabel.labelString = _self.xAxisLabel;
+            _self.chartConfig.options.scales.yAxes[0].scaleLabel.labelString = _self.yAxisLabel;
         }
 
     }]);

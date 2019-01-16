@@ -1836,7 +1836,7 @@ module.exports = function(Chart) {
 					return '';
 				},
 				label: function(tooltipItem) {
-					return '(' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ')';
+					return '(' + tooltipItem.xAxisLabel + ', ' + tooltipItem.yLabel + ')';
 				}
 			}
 		}
@@ -2202,7 +2202,7 @@ module.exports = function(Chart) {
 		tooltips: {
 			callbacks: {
 				title: function(tooltipItems, data) {
-					// Pick first xLabel for now
+					// Pick first xAxisLabel for now
 					var title = '';
 
 					if (tooltipItems.length > 0) {
@@ -2217,7 +2217,7 @@ module.exports = function(Chart) {
 				},
 				label: function(tooltipItem, data) {
 					var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-					return datasetLabel + ': ' + tooltipItem.xLabel;
+					return datasetLabel + ': ' + tooltipItem.xAxisLabel;
 				}
 			}
 		}
@@ -2274,7 +2274,7 @@ module.exports = function(Chart) {
 				label: function(tooltipItem, data) {
 					var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
 					var dataPoint = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-					return datasetLabel + ': (' + tooltipItem.xLabel + ', ' + tooltipItem.yLabel + ', ' + dataPoint.r + ')';
+					return datasetLabel + ': (' + tooltipItem.xAxisLabel + ', ' + tooltipItem.yLabel + ', ' + dataPoint.r + ')';
 				}
 			}
 		}
@@ -8262,7 +8262,7 @@ module.exports = function(Chart) {
 			// Args are: (tooltipItems, data)
 			beforeTitle: helpers.noop,
 			title: function(tooltipItems, data) {
-				// Pick first xLabel for now
+				// Pick first xAxisLabel for now
 				var title = '';
 				var labels = data.labels;
 				var labelCount = labels ? labels.length : 0;
@@ -8270,8 +8270,8 @@ module.exports = function(Chart) {
 				if (tooltipItems.length > 0) {
 					var item = tooltipItems[0];
 
-					if (item.xLabel) {
-						title = item.xLabel;
+					if (item.xAxisLabel) {
+						title = item.xAxisLabel;
 					} else if (labelCount > 0 && item.index < labelCount) {
 						title = labels[item.index];
 					}
@@ -8340,7 +8340,7 @@ module.exports = function(Chart) {
 			datasetIndex = element._datasetIndex;
 
 		return {
-			xLabel: xScale ? xScale.getLabelForIndex(index, datasetIndex) : '',
+			xAxisLabel: xScale ? xScale.getLabelForIndex(index, datasetIndex) : '',
 			yLabel: yScale ? yScale.getLabelForIndex(index, datasetIndex) : '',
 			index: index,
 			datasetIndex: datasetIndex,
