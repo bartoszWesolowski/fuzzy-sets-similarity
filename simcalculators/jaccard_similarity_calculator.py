@@ -33,6 +33,7 @@ class JaccardSimilarityCalculator(AbstractSimilarityCalculator):
 
         mainDenominator = denominator1 + denominator2 + denominator3
         if mainDenominator == 0:
-            raise AttributeError("Can not calculate Jaccard similarity. Denominator can not be zero.")
+            return 0.0
+            #raise AttributeError("Can not calculate Jaccard similarity. Denominator can not be zero.")
 
         return m.divide(nominator, mainDenominator)
