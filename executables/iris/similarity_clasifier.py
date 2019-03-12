@@ -10,16 +10,8 @@ from comparators.sets_comparator import SetsComparator
 
 setsComparator = SetsComparator()
 
-fuzzyIrisesDataSet = fuzzy_iris.getFuzzyficatedIrisDataSet(numberOfPossibleValuesForEachFeature=20,
-                                                           rangeOfAroudValueFuzzySetScalar=0.1)
-print "First fuzzy iris sepal lenght set: "
-print fuzzyIrisesDataSet.fuzzyfiedDataset[0].sepalLen
 
-print "Fuzzyficated irises"
-print fuzzyIrisesDataSet.toFuzzySetFileFormat()
-
-
-def groupIrisesUsingSimilarityMethod(methodConfig):
+def groupIrisesUsingSimilarityMethod(methodConfig, fuzzyIrisesDataSet):
     fuzzyIrisesAsLists = []
     for fuzzy_iris in fuzzyIrisesDataSet.fuzzyfiedDataset:
         fuzzyIrisesAsLists.append(fuzzy_iris.fuzzySetArray())
@@ -29,7 +21,11 @@ def groupIrisesUsingSimilarityMethod(methodConfig):
 
     sc = SpectralClustering(3, affinity='precomputed', n_init=100,
                             assign_labels='discretize')
-    predict = sc.fit_predict(comparisonResult.resultMatrix)
+    adjustedSimilarityMatrix = comparisonResult.resultMatrix
+    for i in range(len(fuzzyIrisesAsLists)):
+        adjustedSimilarityMatrix[i][i] = 0
+
+    predict = sc.fit_predict(adjustedSimilarityMatrix)
     # print predict
     return predict
 
@@ -70,7 +66,7 @@ def summarizePrediction(prediction):
     print "Accuracy rate: {}".format(maxAccuracy)
     print "Actual       types: {}".format(fuzzyIrisesDataSet.getIrisesTypes())
     print "max accuracy types: {}".format(bestPrediction)
-    return maxAccuracy
+    return maxAccuracy, bestPrediction
 
 
 methods = [
@@ -110,26 +106,82 @@ methods = [
     },
 ]
 
-headers = "alpha & "
-latexTableContent = ""
 
-for method in methods:
-    headers += "{} & ".format(method['method'])
+def groupIrisesAndPrintAccuracySummaryAsTable():
+    global fuzzyIrisesDataSet
+    headers = "alpha & "
+    latexTableContent = ""
+    for method in methods:
+        headers += "{} & ".format(method['method'])
+    for alpha in np.arange(0.1, 2.1, 0.1):
+        fuzzyIrisesDataSet = fuzzy_iris.getFuzzyficatedIrisDataSet(numberOfPossibleValuesForEachFeature=30,
+                                                                   rangeOfAroudValueFuzzySetScalar=alpha)
+        latexTableContent += "{}\\% &".format(alpha * 100)
+        for index, method in enumerate(methods):
+            print "\n######################\nGrouping irises using config: {}, alpha: {}".format(method, alpha)
+            prediction = groupIrisesUsingSimilarityMethod(method, fuzzyIrisesDataSet)
+            accuracy, bestPrediction = summarizePrediction(prediction=prediction)
+            ending = " \\"
+            if index < len(methods) - 1:
+                ending = " & "
+            latexTableContent += "{}{}".format("{0:.2f}".format(accuracy), ending)
 
-for alpha in np.arange(0.1, 2.1, 0.1):
-    fuzzyIrisesDataSet = fuzzy_iris.getFuzzyficatedIrisDataSet(numberOfPossibleValuesForEachFeature=30,
-                                                               rangeOfAroudValueFuzzySetScalar=alpha)
-    latexTableContent += "{}\\% &".format(alpha * 100)
-    for index, method in enumerate(methods):
-        print "\n######################\nGrouping irises using config: {}", format(method)
-        prediction = groupIrisesUsingSimilarityMethod(method)
-        accuracy = summarizePrediction(prediction=prediction)
-        ending = " \\"
-        if index < len(methods) - 1:
-            ending = " & "
-        latexTableContent += "{}{}".format("{0:.2f}".format(accuracy), ending)
+        latexTableContent += "\\ \n"
+    print headers
+    print latexTableContent
 
-    latexTableContent += "\\ \n"
 
-print headers
-print latexTableContent
+import precision_racall_calculator as prc
+
+
+def groupIrisesAndPrintFScoreSummaryAsTable():
+    global fuzzyIrisesDataSet
+    headers = "alpha & "
+    latexTableContent = ""
+    for method in methods:
+        headers += "{} & ".format(method['method'])
+    for alpha in np.arange(0.1, 2.1, 0.1):
+        fuzzyIrisesDataSet = fuzzy_iris.getFuzzyficatedIrisDataSet(numberOfPossibleValuesForEachFeature=30,
+                                                                   rangeOfAroudValueFuzzySetScalar=alpha)
+        latexTableContent += "{}\\% &".format(alpha * 100)
+        for index, method in enumerate(methods):
+            print "\n######################\nGrouping irises using config: {}, alpha: {}".format(method, alpha)
+            prediction = groupIrisesUsingSimilarityMethod(method, fuzzyIrisesDataSet)
+            accuracy, bestPrediction = summarizePrediction(prediction=prediction)
+            prc.calculatePresisionAndReacall(fuzzyIrisesDataSet.getIrisesTypes(), bestPrediction)
+
+
+import difference_matrix
+
+
+def groupIrisesAndPrintDifferenceMatrix():
+    global fuzzyIrisesDataSet
+    headers = "alpha & "
+    latexTableContent = ""
+    for method in methods:
+        headers += "{} & ".format(method['method'])
+    for alpha in np.arange(0.1, 2.1, 0.5):
+        fuzzyIrisesDataSet = fuzzy_iris.getFuzzyficatedIrisDataSet(numberOfPossibleValuesForEachFeature=30,
+                                                                   rangeOfAroudValueFuzzySetScalar=alpha)
+        latexTableContent += "{}\\% &".format(alpha * 100)
+        fuzzyIrisesAsLists = []
+        for iris in fuzzyIrisesDataSet.fuzzyfiedDataset:
+            fuzzyIrisesAsLists.append(iris.fuzzySetArray())
+
+        latexTableContent += "{}\\% &".format(alpha * 100)
+        for index, method in enumerate(methods):
+            print "\n######################\nGrouping irises using config: {}, alpha: {}".format(method, alpha)
+            prediction = groupIrisesUsingSimilarityMethod(method, fuzzyIrisesDataSet)
+            accuracy, bestPrediction = summarizePrediction(prediction=prediction)
+            difference = difference_matrix.calculateDifferenceMatrix(bestPrediction, fuzzyIrisesAsLists)
+            print "Diff matrix: {}".format(difference)
+            ending = " \\"
+            if index < len(methods) - 1:
+                ending = " & "
+            latexTableContent += "{}{}".format("{0:.2f}".format(difference), ending)
+
+        latexTableContent += "\\ \n"
+    print latexTableContent
+
+
+groupIrisesAndPrintDifferenceMatrix()

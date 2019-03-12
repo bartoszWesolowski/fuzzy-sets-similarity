@@ -1,6 +1,6 @@
 from lukasiewicz_t_konorm import LukasiewiczTkonorm
 from maximum_t_konorm import MaxiumumTkonorm
-from probabilistic_t_konorm import AlgebraicTkonorm
+from probabilistic_t_konorm import ProbabilisticTkonorm
 
 
 class TkonormFactory(object):
@@ -8,7 +8,7 @@ class TkonormFactory(object):
         self.tNorms = [
             LukasiewiczTkonorm(),
             MaxiumumTkonorm(),
-            AlgebraicTkonorm()
+            ProbabilisticTkonorm()
         ]
 
         self.tNormsMap = {}
