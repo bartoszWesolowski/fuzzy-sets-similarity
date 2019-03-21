@@ -2,15 +2,49 @@
 Simple tool for calculating fuzzy sets similarity using different similarity measures.
 ## Supported Similarity Measures
 
+This tool supports currently few selected similarity measures OOTB. List of all supported similarity measures can be found in `simcalculators` package. 
+
+List of all supported measures with descriptions listed below.
+
 #### Minkowski
-TODO
+Measure based on a distance calculated with Minkowski metric. This is implemented in `MinkowskiSimilarityCalculator` (minkowski_similarity_calculator.py).
+
+Similarity is calculated with the following formula:
+ 
+![Minkowski](docs/images/minkowski-formula.PNG?raw=true "Title")
+
 #### Angular Distance
-TODO
-#### Implication
-TODO
+Similarity based on angular distance between two fuzzy sets represented as vectors. 
+
+Similarity is calculated with the following formula:
+
+
+![Angular distance](docs/images/angular-distance-formula.PNG?raw=true "Title")
+
+#### Ko-Implication
+Measure based on fuzzy implication.
+
+Similarity is calculated with the following formula:
+
+![Ko-implication](docs/images/implication-formula-1.PNG?raw=true "Title")
+* f is a function that aggregates vector in single value. All implemented aggregators are available in `aggregators` package. To register new aggregator have a look on `aggregators_factory.py`
+* t stands for t-norm. All t-norms are available in `tnorms` package. To register new t-norm have a look in `t_norm_factory.py`
+* fuzzy implication is represented by the following formula: `a => b = s(v(a), b)` where s is a t-konorm and v is a fuzzy negation. This similarity measure uses the following negation: `v(a) = 1 - a`. List of all available implications is available in `implications` package.
 
 #### Jaccard Index
-TODO
+Measure based on classic set theory calculated with the following formula:
+![Jaccard](docs/images/jaccard-formula.PNG?raw=true "Title")
+* g represents scalar evaluator of fuzzy set
+* intersection of fuzzy set calculated with t-normy minimum
+* complement of a fuzzy set calculated with the following negation: `v(a) = 1 - a`
+
+#### Simplified Jaccard Index
+Measure based on classic set theory calculated with the following formula: 
+
+![Simplified jaccard](docs/images/simiplified-jaccard-formula.PNG?raw=true "Title")
+
+* f is a function that aggregates fuzzy set in single value.
+* sum and intersection of fuzzy sets are calculated based on configurable t-norm and t-konorm
 
 ## Main Scripts
 All executable scripts are placed under `executables` package. Each script contains simple manual which can be displayed by running it with `-h` parameter, for example:
