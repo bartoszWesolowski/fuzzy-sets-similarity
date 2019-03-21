@@ -9,6 +9,6 @@ setup(name='fssimilarity',
       author_email='fssimilarity@test.com',
       license='MIT',
       install_requires=[
-          'markdown', 'flask_cors', 'flask', 'numpy', 'openpyxl'
+          'markdown', 'flask_cors', 'flask', 'numpy', 'openpyxl', 'sklearn'
       ],
       zip_safe=False)

@@ -74,8 +74,8 @@ def findSimilarPatients(patientsComparisonResult, treshold=0.7):
         patients = []
         sourcePatientData = patientsData.getPatientWithId(patientComparison.sourcePatient.id)
         patients.append(sourcePatientData)
-        print "Fuzzy patients result most similar to: "
-        print patientComparison.sourcePatient.toString()
+        # print "Fuzzy patients result most similar to: "
+        # print patientComparison.sourcePatient.toString()
         for similarPatients in patientComparison.getPatientsWithSimilarityGraterThanTreshold(treshold):
             similarPatientsCount = similarPatientsCount + 1
             fuzzyPatient = similarPatients[0]

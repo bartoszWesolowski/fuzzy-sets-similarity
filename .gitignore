@@ -10,3 +10,4 @@ static/visualization/\.idea/
 
 test/
 /static/.idea
+/executables/ovaexpert/input/patient_data.xlsx

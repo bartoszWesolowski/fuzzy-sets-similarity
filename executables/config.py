@@ -8,11 +8,13 @@ sys.path.insert(0, os.path.abspath('..'))
 
 from aggregators.aggregators_factory import AggregatorFactory
 from tnorms.t_norm_factory import TnormFactory
+from tkonorms.t_konorm_factory import  TkonormFactory
 from implications.implication_factory import ImplicationFactory
 
 from fuzzyfacades.similarity_calculator_facade import SimilarityFacade
 from utils import configuration_parameters_names as params
 from utils import parse
+from utils import fuzzysetevaluator
 
 METHOD_PARAMETER = "method"
 
@@ -23,6 +25,7 @@ DEFAULT_FILE_NAME = "config.txt"
 similarityFacade = SimilarityFacade()
 aggregatorFactory = AggregatorFactory()
 tNormFactory = TnormFactory()
+tkonormFactory = TkonormFactory
 implicationFactory = ImplicationFactory()
 
 parser = argparse.ArgumentParser(
@@ -46,10 +49,19 @@ parser.add_argument('-' + params.TNORM,
                     help="Parameter pointing to t-norm function. List of supported t-norms values: {}".format(
                         tNormFactory.getSupportedTNorms())
                     )
+parser.add_argument('-' + params.TKNORM,
+                    help="Parameter pointing to t-knorm function. List of supported t-knorms values: {}".format(
+                        tkonormFactory.getSupportedTkonorms())
+                    )
 
 parser.add_argument('-' + params.IMPLICATION,
                     help="Parameter pointing to implication function. List of supported implications: {}".format(
                         implicationFactory.getSupportedImplications())
+                    )
+
+parser.add_argument('-' + params.EVALUATOR,
+                    help="Parameter pointing to fuzzy set evaluator function. List of supported evaluators: {}".format(
+                        fuzzysetevaluator.getSupportedEvaluators())
                     )
 
 parser.add_argument('args', nargs=argparse.REMAINDER)

@@ -63,8 +63,14 @@ print "Parsed {} configs.".format(len(configs))
 print "Result processor name: " + args.resultParser
 resultProcessor = resultProcessorFactory.createResultProcessor(args.resultParser)
 for index, rawConfig in enumerate(configs):
-    resultFileNameForCurrentConfig = "{}_{}".format(index, args.resultFile)
-    print "Comparing sets for config nr {}, that is : {}. Result file: {}".format(index, rawConfig, resultFileNameForCurrentConfig)
+    filenameParts = args.resultFile.split(".")
+    if len(filenameParts) != 2:
+        raise AttributeError("File name can not contain multiple '.' - the only '.' allowed should separate file name and the extension.")
+    fileName = filenameParts[0]
+    extension = filenameParts[1]
+
+    resultFileNameForCurrentConfig = "{}_{}.{}".format(fileName, index, extension)
+    print "\n\nComparing sets for config nr {}, that is : {}. Result file: {}".format(index, rawConfig, resultFileNameForCurrentConfig)
     parsedConfig = configurationParser.validateAndParse(rawConfig)
     comparisonResult = setsComparator.compareSets(setsList, parsedConfig)
     resultProcessor.processComparisonResult(comparisonResult, resultFileNameForCurrentConfig)

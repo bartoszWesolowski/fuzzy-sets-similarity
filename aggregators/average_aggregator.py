@@ -1,6 +1,7 @@
 from abstract_aggregator import AbstractAggregator
 from utils import constants as c
 
+
 class AverageAggregator(AbstractAggregator):
 
     def getName(self):

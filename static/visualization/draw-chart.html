@@ -20,11 +20,19 @@
               role="form"
               ng-submit="drawChartController.redrawChart()">
             <div class="col-xs-12 col-sm-10">
-                <label>Values</label>
-                <input type="text"
-                       class="form-control"
-                       ng-model="drawChartController.rawSetValues"
-                       title="Set"/>
+                <div ng-repeat="rawSet in drawChartController.rawSets track by $index">
+                    <label>Values: </label>
+                    <input type="text"
+                           class="form-control"
+                           ng-model="rawSet.setAsString"
+                           title="Set {{rawSet}}"/>
+
+                    <label>Label: </label>
+                    <input type="text"
+                           class="form-control"
+                           ng-model="rawSet.label"
+                           title="Label"/>
+                </div>
                 <label>X axis labels:</label>
                 <input type="text"
                        class="form-control"
@@ -43,6 +51,7 @@
             </div>
             <div class="col-xs-12 col-sm-2">
                 <input type="submit" class="btn btn-primary pull-right" value="Redraw"/>
+                <input type="button" class="btn btn-primary pull-right" value="Add set" ng-click="drawChartController.addSet()"/>
             </div>
         </form>
 

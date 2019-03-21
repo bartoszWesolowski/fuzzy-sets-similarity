@@ -17,14 +17,14 @@ app.factory('arrayUtils', function () {
             .map(parseFloat)
             .filter((value) => !isNaN(value));
 
-    }
+    };
 
     const arrayToString = function (possiblyArray) {
         if (angular.isArray(possiblyArray)) {
             return possiblyArray.join(", ");
         }
         return '';
-    }
+    };
 
     return {
         stringToArray,

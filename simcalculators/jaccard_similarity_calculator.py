@@ -1,7 +1,7 @@
 from utils.fuzzyset import FuzzySet
 from utils import fuzzysetevaluator
 from utils import mathutils as m
-from utils import paramethers as params
+from utils import configuration_parameters_names as params
 
 from abstract_similarity_calculator import AbstractSimilarityCalculator
 

@@ -77,6 +77,10 @@ EVALUATORS = {
 }
 
 
+def getSupportedEvaluators():
+    return SUPPORTED_EVALUATORS
+
+
 def getEvaluator(name, universe):
     if name not in SUPPORTED_EVALUATORS:
         raise AttributeError("Unknown evaluator name. Cant find evaluator for name: {}".format(name))

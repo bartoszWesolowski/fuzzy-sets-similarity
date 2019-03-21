@@ -1,0 +1,2 @@
+{"aggregator": "average", "implication": "lukasiewicz", "tnorm": "lukasiewicz", "method": "implication-similarity"}
+{"evaluator": "average", "alpha": 1, "beta": 0, "method": "jaccard-index", "gamma": 0}
