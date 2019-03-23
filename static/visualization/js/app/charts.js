@@ -23,7 +23,7 @@
             scales: {
                 xAxes: [{
                     ticks: {
-                        maxTicksLimit: 20
+                        autoSkip: false,
                     }
                 }]
             }

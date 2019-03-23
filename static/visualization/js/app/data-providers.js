@@ -109,7 +109,7 @@
     ];
 
     const configureExamples = (method, configurations) =>
-        EXAMPLES.map((example, index) =>_.extend(example, method, configurations[index]));
+        EXAMPLES.map((example, index) => _.extend(example, method, configurations[index]));
 
     app.controller("JaccardController", function () {
 
@@ -543,7 +543,84 @@
             data: [
                 [],
                 []
-            ]
+            ],
+            colors: [
+                { // grey
+                    fill: false,
+                    backgroundColor: 'rgba(148,159,177,0.2)',
+                    pointBackgroundColor: 'rgba(148,159,177,1)',
+                    pointHoverBackgroundColor: 'rgba(148,159,177,1)',
+                    borderColor: 'rgba(148,159,177,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                },
+                { // dark grey
+                    fill: false,
+                    backgroundColor: 'rgba(77,83,96,0.2)',
+                    pointBackgroundColor: 'rgba(77,83,96,1)',
+                    pointHoverBackgroundColor: 'rgba(77,83,96,1)',
+                    borderColor: 'rgba(77,83,96,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(77,83,96,0.8)'
+                },
+                { // blue
+                    fill: false,
+                    backgroundColor: 'rgba(0, 0, 255,0.2)',
+                    pointBackgroundColor: 'rgba(0, 0, 255,1)',
+                    pointHoverBackgroundColor: 'rgba(0, 0, 255,1)',
+                    borderColor: 'rgba(0, 0, 255,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(0, 0, 255,0.8)'
+                },
+                { // dark green
+                    fill: false,
+                    backgroundColor: 'rgba(0,100,0,0.2)',
+                    pointBackgroundColor: 'rgba(0,100,0,1)',
+                    pointHoverBackgroundColor: 'rgba(0,100,0,1)',
+                    borderColor: 'rgba(0,100,0,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(0,100,0,0.8)'
+                },
+                { // dark blue
+                    fill: false,
+                    backgroundColor: 'rgba(0, 0, 139,0.2)',
+                    pointBackgroundColor: 'rgba(0, 0, 139,1)',
+                    pointHoverBackgroundColor: 'rgba(0, 0, 139,1)',
+                    borderColor: 'rgba(0, 0, 139,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(0, 0, 139,0.8)'
+                },
+            ],
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: true
+                        },
+                        gridLines: {
+                            drawOnChartArea: false
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Możliwe wartości atrybutu'
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            drawOnChartArea: false
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Możliwe wartości atrybutu'
+                        }
+                    }]
+                },
+                elements: {
+                    line: {
+                        borderWidth: 4
+                    }
+                }
+            }
         };
 
         this.selectedDataSetKey = '';
@@ -557,9 +634,10 @@
             options: {
                 scales: {
                     yAxes: [{
+                        type: 'bar',
                         display: true,
                         ticks: {
-                            suggestedMin: 0
+                            autoSkip: false,
                         }
                     }]
                 }
@@ -624,13 +702,13 @@
             comparisonCtrl.summaryChartConfig.data = [];
             comparisonCtrl.summaryChartConfig.labels = [];
 
-            this.chartConfig = {
+            this.chartConfig = _.extend(this.chartConfig, {
                 data: [
                     setA,
                     setB
                 ],
                 labels: _.range(Math.max(setA.length, setB.length))
-            };
+            });
 
             const configurations = [];
             _.each(this.configurationsWithoutSets, (value, index) => {
@@ -639,7 +717,7 @@
                 copied.setB = setB;
                 copied.id = index;
                 configurations.push(copied);
-            })
+            });
             return configurations;
         };
 
@@ -664,9 +742,12 @@
 
         this.configurations = this.createValidConfigurations();
 
+        this.results = [];
+
         this.calculateResult = function () {
             this.configurations = this.createValidConfigurations();
             this.similarityCalculationResults = {};
+            this.results = [];
         };
 
         $scope.$on('FUZZY_SIMILARITY_CALCULATED', function (event, data) {
@@ -674,10 +755,12 @@
             comparisonCtrl.similarityCalculationResults[data.id] = data;
             const storedResults = Object.values(comparisonCtrl.similarityCalculationResults);
             const sortedResults = _.sortBy(storedResults, ['id']);
-            const results = _.map(sortedResults, o => o.result);
+            const results = _.map(sortedResults, o => o.result.toFixed(2));
             const labels = _.map(sortedResults, o => o.method);
             comparisonCtrl.summaryChartConfig.data = results;
             comparisonCtrl.summaryChartConfig.labels = labels;
+            console.log("labels: " + results.join(" & "));
+            console.log("results: " + labels.join(" "));
         });
 
         $scope.$watch('comparisonCtrl.selectedDataSetKey', function (newValue) {
@@ -691,13 +774,20 @@
 
         const _self = this;
 
-        this.rawSetValues = "0, 0, 0, 0, 0, 0, 0, 0.042145593869732483, 0.31800766283524917, 0.59386973180076685, 0.86973180076628354, 0.85440613026819978, 0.5785440613026821, 0.30268199233716436, 0.026819923371647677, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0";
+        this.rawSetValues = "0 0 0 0 0 0 0 0.08333333333333337 0.16666666666666663 0.25 0.33333333333333337 0.41666666666666663 0.5 0.5833333333333333 0.6666666666666667 0.75 0.8333333333333333 0.9166666666666667 1 1 1 1 1 1 1 1 1 1.01";
 
-        this.labels = "2.5, 2.75, 3.0, 3.24, 3.49, 3.74, 3.99, 4.24, 4.49, 4.73, 4.98, 5.23, 5.48, 5.73, 5.98, 6.22, 6.47, 6.72, 6.97, 7.22, 7.47, 7.71, 7.96, 8.21, 8.46, 8.71, 8.96, 9.2, 9.45, 9.7";
+        this.rawSets = [
+            {
+                setAsString: this.rawSetValues,
+                label: 'Wysocy ludzie'
+            }
+        ];
 
-        this.xAxisLabel = "";
+        this.labels = "0 10 20 30 40 50 60 70 80 90 100 110 120 130 140 150 160 170 180 190 200 210 220 230 240";
 
-        this.yAxisLabel = "";
+        this.xAxisLabel = "Wzrost [cm]";
+
+        this.yAxisLabel = "Stopień przynależności";
 
         this.chartConfig = {
             data: [
@@ -722,11 +812,41 @@
                     borderColor: 'rgba(77,83,96,1)',
                     pointBorderColor: '#fff',
                     pointHoverBorderColor: 'rgba(77,83,96,0.8)'
-                }
+                },
+                { // blue
+                    fill: false,
+                    backgroundColor: 'rgba(0, 0, 255,0.2)',
+                    pointBackgroundColor: 'rgba(0, 0, 255,1)',
+                    pointHoverBackgroundColor: 'rgba(0, 0, 255,1)',
+                    borderColor: 'rgba(0, 0, 255,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(0, 0, 255,0.8)'
+                },
+                { // dark green
+                    fill: false,
+                    backgroundColor: 'rgba(0,100,0,0.2)',
+                    pointBackgroundColor: 'rgba(0,100,0,1)',
+                    pointHoverBackgroundColor: 'rgba(0,100,0,1)',
+                    borderColor: 'rgba(0,100,0,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(0,100,0,0.8)'
+                },
+                { // dark blue
+                    fill: false,
+                    backgroundColor: 'rgba(0, 0, 139,0.2)',
+                    pointBackgroundColor: 'rgba(0, 0, 139,1)',
+                    pointHoverBackgroundColor: 'rgba(0, 0, 139,1)',
+                    borderColor: 'rgba(0, 0, 139,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBorderColor: 'rgba(0, 0, 139,0.8)'
+                },
             ],
             options: {
                 scales: {
                     xAxes: [{
+                        ticks: {
+                            autoSkip: false
+                        },
                         gridLines: {
                             drawOnChartArea: false
                         },
@@ -744,23 +864,61 @@
                             labelString: 'Możliwe wartości atrybutu'
                         }
                     }]
+                },
+                legend: {
+                    display: true,
+                    labels: {
+                        fontColor: 'rgb(0, 0, 0)'
+                    }
+                },
+                elements: {
+                    line: {
+                        borderWidth: 4
+                    }
                 }
             }
         };
 
         this.redrawChart = () => {
-            const setValues = arrayUtils.stringToArray(_self.rawSetValues);
-            _self.chartConfig.data = [
-                setValues
-            ];
-            const labels = arrayUtils.stringToArray(_self.labels);
+            const setValues = _.map(_self.rawSets, (rawSet) => arrayUtils.stringToArray(rawSet.setAsString));
+            console.log("setValues: ");
+            console.log(setValues);
+            _self.chartConfig.data = setValues;
+            _self.chartConfig.series = _.map(_self.rawSets, (rawSet) => rawSet.label);
+            const labels = _self.labels.split(/\s+|,|;/);
+            console.log("labels: ");
+            console.log(labels);
             _self.chartConfig.labels = labels;
 
             _self.chartConfig.options.scales.xAxes[0].scaleLabel.labelString = _self.xAxisLabel;
             _self.chartConfig.options.scales.yAxes[0].scaleLabel.labelString = _self.yAxisLabel;
+        };
+
+        this.addSet = () => {
+            _self.rawSets.push({
+                setAsString: ''
+            });
         }
 
-    }]);
+        this.wysocy = () => {
+            var labels = [];
+            var values = [];
+            for (var i = 0; i <= 240; i += 10) {
+                labels.push(i);
+                if (i <= 60) {
+                    values.push(0);
+                } else if (i >= 240) {
+                    values.push(1);
+                } else {
+                    values.push(i / 120.0 - 0.5);
+                }
+            }
+            console.log(labels);
+            console.log(values);
+        };
+    }
+
+    ]);
 
 
 })(_);
