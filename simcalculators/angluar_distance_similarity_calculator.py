@@ -3,6 +3,7 @@ from utils import mathutils as m
 import math
 from abstract_similarity_calculator import AbstractSimilarityCalculator
 
+
 class AngularDistanceSimilarityCalculator(AbstractSimilarityCalculator):
 
     def calculateSimilarity(self, A, B, config={}):
@@ -19,14 +20,13 @@ class AngularDistanceSimilarityCalculator(AbstractSimilarityCalculator):
         squereSumA = fuzzyA.accumulate(m.squere, sum)
         squereSumB = fuzzyB.accumulate(m.squere, sum)
         denominator = m.multiply(math.sqrt(squereSumA), math.sqrt(squereSumB))
-        #TODO: what if denominator is equal to zero????
+        # TODO: what if denominator is equal to zero????
         if denominator == 0:
             print "Got denominator equal to zero while calculating angular distance for sets: " + str(
                 fuzzyA.elements) + ", " + str(fuzzyB.elements)
             return 0
 
-        return m.divide (multiplied, denominator)
-
+        return m.divide(multiplied, denominator)
 
     @staticmethod
     def multipliedElements(fuzzyA, fuzzyB):

@@ -1,4 +1,4 @@
-#Fuzzy sets similarity calculator
+# Fuzzy sets similarity calculator
 Simple tool for calculating fuzzy sets similarity using different similarity measures.
 
 
@@ -124,7 +124,7 @@ Example usages (for more information use `-h` parameter):
 * `python config.py -r not-valid-type -m minkowski` will throw an exception as r parameter in minkowski similarity measure must be a number
 
 ### Fuzzy Sets Generator
-Script name: `generateFuzzySet.py`
+Script name: `generate_fuzzy_sets.py`
 
 This script is a tool for automatic generating fuzzy sets. Run it wiht `-h` parameter to show current manual.
 Examples:

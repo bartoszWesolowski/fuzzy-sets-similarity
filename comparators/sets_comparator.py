@@ -1,4 +1,4 @@
-from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
+from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorFacade
 from sets_comparosion_result import SetsComparisonResultBuilder
 
 
@@ -13,7 +13,7 @@ class SetsComparator(object):
         :return SetsComparisonResult object"""
         print "Comparing {} fuzzy sets against each other".format(len(listOfSets))
         numberOfSets = len(listOfSets)
-        similarityCalculatorWrapper = SimilarityCalculatorWrapper()
+        similarityCalculatorWrapper = SimilarityCalculatorFacade()
         setsComparisonResultBuilder = SetsComparisonResultBuilder(listOfSets, otherListOfSets) \
             .withConfig(comparisonMethodConfig)
         for i in range(numberOfSets):

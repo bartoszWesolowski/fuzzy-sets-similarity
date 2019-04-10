@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 from fuzzyfacades.raw_configuration_parser import ConfigurationParser
-from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
+from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorFacade
 from utils import fileparser
 from comparators.resultprocessors.setscomparison.console_comparison_result_processor import ConsoleComparisonResultProcessor
 from comparators.resultprocessors.setscomparison.result_processor_factory import  ResultProcessorFactory
@@ -21,7 +21,7 @@ DEFAULT_RESULT_FILE_NAME = 'comparison-result.xlsx'
 
 configurationParser = ConfigurationParser()
 
-similarityCalculatorWrapper = SimilarityCalculatorWrapper()
+similarityCalculatorWrapper = SimilarityCalculatorFacade()
 
 resultProcessorFactory = ResultProcessorFactory()
 
@@ -32,13 +32,6 @@ parser = argparse.ArgumentParser(
                 'Sets must be defined in file, each set in separate line, each set element followed by blank character. ' +
                 'This script uses configuration defined in first line of configuration file.'
 )
-parser.add_argument('-s',
-                    help="Path to the file containing sets definition. Default to: " + DEFAULT_SETS_FILE_NAME,
-                    default=DEFAULT_SETS_FILE_NAME, metavar='setsFile', dest='setsFile')
-parser.add_argument('-c',
-                    help="Path to the file containing configuration definition. Default value: " +
-                         DEFAULT_CONFIG_FILE_NAME,
-                    default=DEFAULT_CONFIG_FILE_NAME, metavar='configFile', dest='configFile')
 parser.add_argument('-resultFile',
                     help="Path to the file that will store the result of comparision. Default value: " +
                          DEFAULT_RESULT_FILE_NAME,
@@ -47,6 +40,13 @@ parser.add_argument('-resultParser',
                     help="Name of the result processor. If no specified result of comparison will be printed on the console. All supported values:  " +
                          str(resultProcessorFactory.supportedProcessorsNames()),
                     default=ConsoleComparisonResultProcessor.NAME, metavar='resultParser', dest='resultParser')
+parser.add_argument('-s',
+                    help="Path to the file containing sets definition. Default to: " + DEFAULT_SETS_FILE_NAME,
+                    default=DEFAULT_SETS_FILE_NAME, metavar='setsFile', dest='setsFile')
+parser.add_argument('-c',
+                    help="Path to the file containing configuration definition. Default value: " +
+                         DEFAULT_CONFIG_FILE_NAME,
+                    default=DEFAULT_CONFIG_FILE_NAME, metavar='configFile', dest='configFile')
 
 
 args = parser.parse_args()

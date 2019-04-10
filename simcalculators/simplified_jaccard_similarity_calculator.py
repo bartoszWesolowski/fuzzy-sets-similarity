@@ -7,8 +7,8 @@ from tkonorms.t_konorm_factory import TkonormFactory
 from utils import configuration_parameters_names as paramNames
 from utils import paramethers as params
 
-class SimplifiedJaccardSimilarityCalculator(AbstractSimilarityCalculator):
 
+class SimplifiedJaccardSimilarityCalculator(AbstractSimilarityCalculator):
 
     def __init__(self):
         self.implicationFactory = ImplicationFactory()
@@ -47,4 +47,3 @@ class SimplifiedJaccardSimilarityCalculator(AbstractSimilarityCalculator):
     def getTkonorm(self, configuration):
         konorm = configuration[paramNames.TKNORM]
         return self.tkonormFactory.getTkonorm(konorm)
-

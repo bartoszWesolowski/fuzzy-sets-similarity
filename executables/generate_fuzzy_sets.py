@@ -1,11 +1,13 @@
 import argparse
 
-#really ugly but any other way did not work
+# really ugly but any other way did not work
 import sys, os
+
 sys.path.insert(0, os.path.abspath('..'))
 import utils.fsgenerator as generator
 import utils.fileutils as fileutils
 import abc as abstract
+
 
 class SetProcessor(object):
     @abstract.abstractmethod
@@ -16,12 +18,14 @@ class SetProcessor(object):
     def comment(self, args):
         raise "Implement me"
 
+
 class PrintToConsoleSetProcessor(SetProcessor):
     def processSet(self, fuzzyList, args):
         print fuzzyList
 
     def comment(self, args):
         print args.comment
+
 
 class AppendToFileSetProcessor(SetProcessor):
     def processSet(self, fuzzyList, args):
@@ -37,21 +41,28 @@ class AppendToFileSetProcessor(SetProcessor):
 def randomSet(args):
     return generator.randomFuzzyList(args.n, args.min, args.max)
 
+
 def smoothRandom(args):
     return generator.smoothRandomFuzzySetList(args.n, args.min, args.max, args.maxDiff)
 
+
 def randomWithRescaled(args):
-    return generator.randomWithRescaled(n=args.n, minimalValue=args.min, maxValue=args.max, maxDiff=args.maxDiff, yScale=args.rescaleY)
+    return generator.randomWithRescaled(n=args.n, minimalValue=args.min, maxValue=args.max, maxDiff=args.maxDiff,
+                                        yScale=args.rescaleY)
+
 
 def sigletonSet(args):
     return generator.singletonFuzzyList(args.n, args.value)
 
+
 def symetricTriangular(args):
     return generator.symetricTriangular(args.n)
+
 
 def symetricTriangularAndRescaled(args):
     original = generator.symetricTriangular(args.n)
     return generator.rescaleSymetricTriangularSets(original.wrappedSet, args.rescaleX, args.rescaleY)
+
 
 def generateSet(arts):
     method = randomSet
@@ -59,8 +70,10 @@ def generateSet(arts):
         method = args.method
     return method(args)
 
+
 def printProcessor(set, args):
     print set
+
 
 def processGeneratedSet(generatedSetWrapper, args):
     setProcessor = PrintToConsoleSetProcessor()

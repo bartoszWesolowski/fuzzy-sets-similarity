@@ -1,12 +1,12 @@
 from comparators.methods_comparison_result import MethodsComparisonResultBuilder
-from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
+from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorFacade
 
 
 class MethodsComparator(object):
     """Class that compares two sets using N similarity measures"""
 
     def __init__(self):
-        self.similarityCalculatorWrapper = SimilarityCalculatorWrapper()
+        self.similarityCalculatorWrapper = SimilarityCalculatorFacade()
 
     def compareTwoSetsUsingMultipleMethods(self, A, B, listOfMethodsConfigurations):
         """

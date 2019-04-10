@@ -183,5 +183,6 @@ def groupIrisesAndPrintDifferenceMatrix():
         latexTableContent += "\\ \n"
     print latexTableContent
 
+groupIrisesAndPrintAccuracySummaryAsTable()
 
-groupIrisesAndPrintDifferenceMatrix()
+# groupIrisesAndPrintDifferenceMatrix()

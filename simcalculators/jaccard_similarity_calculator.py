@@ -5,6 +5,7 @@ from utils import configuration_parameters_names as params
 
 from abstract_similarity_calculator import AbstractSimilarityCalculator
 
+
 class JaccardSimilarityCalculator(AbstractSimilarityCalculator):
 
     # TODO: fix this formula!
@@ -34,6 +35,6 @@ class JaccardSimilarityCalculator(AbstractSimilarityCalculator):
         mainDenominator = denominator1 + denominator2 + denominator3
         if mainDenominator == 0:
             return 0.0
-            #raise AttributeError("Can not calculate Jaccard similarity. Denominator can not be zero.")
+            # raise AttributeError("Can not calculate Jaccard similarity. Denominator can not be zero.")
 
         return m.divide(nominator, mainDenominator)

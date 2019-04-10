@@ -4,7 +4,7 @@ from similarity_calculator_facade import SimilarityFacade
 from utils import constants
 
 
-class SimilarityCalculatorWrapper(object):
+class SimilarityCalculatorFacade(object):
 
     configurationParser = ConfigurationParser()
 

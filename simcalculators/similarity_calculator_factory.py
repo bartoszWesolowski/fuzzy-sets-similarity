@@ -5,6 +5,7 @@ from jaccard_similarity_calculator import JaccardSimilarityCalculator
 from minkowski_similarity_calculator import MinkowskiSimilarityCalculator
 from implication_similaroty_calculator import ImplicationSimilarityCalculator
 
+
 class SimilarityCalculatorFactory(object):
     """Object providing interface for retrieving similarity calculator object
     based on name"""

@@ -11,7 +11,7 @@ from comparators.resultprocessors.methodscomparison.console_result_processor imp
 from utils import fileparser
 from comparators.resultprocessors.setscomparison.console_comparison_result_processor import \
     ConsoleComparisonResultProcessor
-from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
+from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorFacade
 
 # TODO: add result configurable result processor
 # Script that calculate similarity of two sets using methods defined in confifurations passed as separate file
@@ -34,7 +34,7 @@ parser.add_argument('-c',
                          DEFAULT_CONFIG_FILE_NAME,
                     default=DEFAULT_CONFIG_FILE_NAME, metavar='configFile', dest='configFile')
 
-similarityCalculatorWrapper = SimilarityCalculatorWrapper()
+similarityCalculatorWrapper = SimilarityCalculatorFacade()
 
 args = parser.parse_args()
 setsFile, configFile = args.setsFile, args.configFile

@@ -138,7 +138,7 @@ methods = [
 ]
 
 results = []
-comparisonResult = comparePatients(fuzzyPatients, methods[2])
+comparisonResult = comparePatients(fuzzyPatients, methods[5])
 for treshold in np.arange(0.1, 1.01, 0.1):
     similarPatientsSummary = findSimilarPatients(comparisonResult, treshold)
     similarPatientsSummary['treshold'] = treshold

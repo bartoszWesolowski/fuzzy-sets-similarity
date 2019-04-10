@@ -2,7 +2,7 @@ from utils import constants as c
 from utils import mathutils
 from utils.mapvalidator import MapValidator
 
-from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorWrapper
+from fuzzyfacades.similarity_calculator_wrapper import SimilarityCalculatorFacade
 
 class SimilarityRequest:
     setA = []
@@ -10,7 +10,7 @@ class SimilarityRequest:
     method = ""
     rawConfig = {}
 
-    similarityCalculatorWrapper = SimilarityCalculatorWrapper()
+    similarityCalculatorWrapper = SimilarityCalculatorFacade()
 
     requiredParameters = [c.SET_A_REQUEST_PARAMETER_NAME, c.SET_B_REQUEST_PARAMETER_NAME, c.METHOD_REQUEST_PARAMETER_NAME]
 
