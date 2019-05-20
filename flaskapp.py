@@ -57,7 +57,7 @@ def get_fataset_by_key(key):
 
 
 @app.route('/fuzzy/similarity', methods=['POST'])
-def calculate_zsimilarity():
+def calculate_similarity():
     requestBody = request.get_json(force=True)
     print "Got request with body: " + str(requestBody)
     try:
