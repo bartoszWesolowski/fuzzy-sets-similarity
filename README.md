@@ -213,7 +213,7 @@ In case of validation failure an error response with `400` code will be returned
   "status": "FAILURE"
 }
 ```
-##Implementing custom similarity measure
+## Implementing custom similarity measure
 Implementing new similarity measure is fairly simple - it require creating two classes:
 1. Custom similarity calculator. This class have to extend AbstractSimilarityCalculator available in
 abstract_similarity_calculator.py. Extending class must override the `calculateSimilarity` method which will
