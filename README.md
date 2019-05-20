@@ -118,7 +118,7 @@ Each similarity measure requires some parameters. To make it unified along all m
 This script was created to allow automatic generation of wide ranges of configurations. Running this script will generate a json that represents similarity measure configuration and save it in result file. 
 This script takes all parameters like: `-parameterName parameterValue` and pare them as an entry in generated configuration map.
 Example usages (for more information use `-h` parameter):
-* `python config.py -r 2 -m minkowski -fn config.txt` - this will generate the following json `{"r": 4, "method": "minkowski"}` and save it in `config.txt` file (passing `config.txt` is not required as this is a default value)
+* `python config.py -r 2 -m minkowski -fn config.txt` - this will generate the following json `{"r": 2, "method": "minkowski"}` and save it in `config.txt` file (passing `config.txt` is not required as this is a default value)
 * `python config.py -method implication-similarity -aggregator maximum -implication lukasiewicz -tnorm lukasiewicz` will generate the following configuration: `{"aggregator": "maximum", "implication": "lukasiewicz", "tnorm": "lukasiewicz", "method": "implication-similarity"}`
 * `python config.py -r 2` will throw an exception because no similarity measure method is defined, this will also happen if method name is not valid.
 * `python config.py -r not-valid-type -m minkowski` will throw an exception as r parameter in minkowski similarity measure must be a number
@@ -128,10 +128,10 @@ Script name: `generate_fuzzy_sets.py`
 
 This script is a tool for automatic generating fuzzy sets. Run it wiht `-h` parameter to show current manual.
 Examples:
-* `python gerateFuzzySet.py -h` - Help
-* `python gerateFuzzySet.py --random -min 0.3 -max 0.6 -n 100 --appendToFile -file myResultFile.txt` 
+* `python generate_fuzzy_sets.py -h` - Help
+* `python generate_fuzzy_sets.py --random -min 0.3 -max 0.6 -n 100 --appendToFile -file myResultFile.txt` 
  This will create fuzzy set containing 100 elements, each element will be a randomly generated value between 0.3 and 0.6. Because of `--apendToFile` generated fuzzy set will be appended to end of the file provided by `-file` parameter. Without the `--appendToFile` result would be printed to console.
-* `python gerateFuzzySet.py --singleton -value 0.4 -n 30`
+* `python generate_fuzzy_sets.py --singleton -value 0.4 -n 30`
  Running this command will generate a fuzzy set with 30 elements, each with value equal to 0.4 
 
 ### Fuzzy Sets Comparator
