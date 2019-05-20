@@ -1,6 +1,6 @@
-markdown
-flask_cors
-flask
-numpy
-openpyxl
-sklearn
+markdown==3.0.1
+flask_cors==3.0.7
+flask==1.0.2
+numpy==1.16.2
+openpyxl==2.6.1
+scikit-learn==0.20.3

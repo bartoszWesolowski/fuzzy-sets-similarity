@@ -3,7 +3,7 @@ Name: fssimilarity
 Version: 0.1
 Summary: Tool for calculating fuzzy set similarity
 Home-page: https://github.com/bartoszWesolowski/fuzzy-sets-similarity/tree/master/python
-Author: Bartek W
+Author: Bartek Wesolowski
 Author-email: fssimilarity@test.com
 License: MIT
 Description: UNKNOWN
