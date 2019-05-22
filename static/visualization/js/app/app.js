@@ -157,7 +157,7 @@
                 value: 'lukasiewicz'
             },
             {
-                label: 'Algebraqic',
+                label: 'Algebraic',
                 value: 'algebraic'
             }
         ];
